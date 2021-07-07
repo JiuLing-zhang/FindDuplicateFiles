@@ -95,9 +95,9 @@
                         <Border BorderBrush="#3F3F3F" BorderThickness="1">
                             <StackPanel Margin="5">
                                 <Label FontWeight="Bold" Foreground="#E6E6E6">选项</Label>
-                                <CheckBox Name="ChkSize0" Foreground="#E6E6E6" Margin="0,0,0,5">忽略大小为0的文件</CheckBox>
-                                <CheckBox Name="ChkHiddenFile" Foreground="#E6E6E6" Margin="0,0,0,5">忽略隐藏文件</CheckBox>
-                                <CheckBox Name="ChkSmallFile" Foreground="#E6E6E6">忽略小文件（小于1M）</CheckBox>
+                                <CheckBox Name="ChkIgnoreSizeZero" Foreground="#E6E6E6" Margin="0,0,0,5">忽略大小为0的文件</CheckBox>
+                                <CheckBox Name="ChkIgnoreHiddenFile" Foreground="#E6E6E6" Margin="0,0,0,5">忽略隐藏文件</CheckBox>
+                                <CheckBox Name="ChkIgnoreSmallFile" Foreground="#E6E6E6">忽略小文件（小于1024KB）</CheckBox>
                             </StackPanel>
                         </Border>
                     </Grid>
@@ -106,7 +106,7 @@
                         <Border BorderBrush="#3F3F3F" BorderThickness="1">
                             <StackPanel Margin="5">
                                 <Label FontWeight="Bold" Foreground="#E6E6E6">查找路径</Label>
-                                <ListBox ItemsSource="{Binding SearchFolders}" Height="160" Background="Transparent" BorderBrush="#3F3F3F">
+                                <ListBox Name="ListBoxSearchFolders" ItemsSource="{Binding}" Height="160" Background="Transparent" BorderBrush="#3F3F3F">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -126,8 +126,8 @@
                         <StackPanel Orientation="Horizontal">
                             <Button Name="BtnSearch" Click="BtnSearch_Click" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent" Foreground="#999999" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="95,0,0,0">
                                 <WrapPanel Width="80px" Height="30px" >
-                                    <Image Width="24" Height="24" Source="/Images/search.png" Margin="10,5,0,0"></Image>
-                                    <TextBlock Width="46"  Margin="0,5,0,0" Text="查找"/>
+                                    <Image Name="ImgSearch" Width="24" Height="24" Source="/Images/search.png" Margin="10,5,0,0"></Image>
+                                    <TextBlock Name="TxtSearch" Width="46" Margin="0,5,0,0" Text="查找"/>
                                 </WrapPanel>
                             </Button>
                             <Button Name="BtnReset" Click="BtnReset_Click" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent" Foreground="#999999" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="0,0,10,0">
@@ -145,7 +145,7 @@
                         <StackPanel Orientation="Vertical" Margin="5">
                             <StackPanel Name="PanelLoading" Orientation="Horizontal" Margin="0,3,0,3">
                                 <Image Margin="0,0,5,0" Name="ImgLoading" Width="24" Height="24" Source="/Images/loader.png" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5"></Image>
-                                <Label Foreground="#E6E6E6">当前文件名</Label>
+                                <Label Name="LblMessage" Foreground="#E6E6E6">准备查找....</Label>
                             </StackPanel>
                             <ListView Background="#2A2A2A" BorderBrush="#3F3F3F">
                                 <ListView.View>

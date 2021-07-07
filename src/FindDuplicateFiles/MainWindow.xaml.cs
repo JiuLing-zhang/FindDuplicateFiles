@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -8,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using FindDuplicateFiles.Extensions;
+using FindDuplicateFiles.SearchFile;
 
 namespace FindDuplicateFiles
 {
@@ -20,15 +22,19 @@ namespace FindDuplicateFiles
         /// 已选取的要搜索的文件夹
         /// </summary>
         public ObservableCollection<string> SearchFolders { get; set; }
+        /// <summary>
+        /// 是否正在进行搜索
+        /// </summary>
+        private bool _isSearching = false;
+        private readonly SearchDuplicateJob _searchDuplicateJob = new SearchDuplicateJob();
         public MainWindow()
         {
             InitializeComponent();
 
             InitializeSearchConfig();
             InitializeLoading();
-
-            SearchFolders = new ObservableCollection<string>();
-            this.DataContext = this;
+            BindingDataContext();
+            BindingSearchEvent();
         }
 
         private void InitializeSearchConfig()
@@ -38,9 +44,11 @@ namespace FindDuplicateFiles
             ChkFileSize.IsChecked = false;
 
             //选项
-            ChkSize0.IsChecked = true;
-            ChkHiddenFile.IsChecked = true;
-            ChkSmallFile.IsChecked = true;
+            ChkIgnoreSizeZero.IsChecked = true;
+            ChkIgnoreHiddenFile.IsChecked = true;
+            ChkIgnoreSmallFile.IsChecked = true;
+
+            SearchFolders = new ObservableCollection<string>();
         }
         private void InitializeLoading()
         {
@@ -56,6 +64,35 @@ namespace FindDuplicateFiles
             rt.BeginAnimation(RotateTransform.AngleProperty, da);
             PanelLoading.Height = 0;
         }
+
+        /// <summary>
+        /// UI数据绑定
+        /// </summary>
+        private void BindingDataContext()
+        {
+            this.ListBoxSearchFolders.DataContext = SearchFolders;
+        }
+
+        /// <summary>
+        /// 绑定查找任务的内部事件
+        /// </summary>
+        private void BindingSearchEvent()
+        {
+            _searchDuplicateJob.ExecutedMessage = ExecutedMessage;
+        }
+
+        private void ExecutedMessage(string message)
+        {
+            if (LblMessage.Dispatcher.CheckAccess())
+            {
+                LblMessage.Content = message;
+            }
+            else
+            {
+                LblMessage.Dispatcher.Invoke(() => { LblMessage.Content = message; });
+            }
+        }
+
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
@@ -101,7 +138,6 @@ namespace FindDuplicateFiles
             }
 
             SearchFolders.Add(path);
-            //  this.DataContext = this;
         }
 
         private void BtnRemoveSearchFolder_Click(object sender, RoutedEventArgs e)
@@ -115,7 +151,6 @@ namespace FindDuplicateFiles
             SearchFolders.Remove(tag.ToString());
         }
 
-        public string JobFile { get; set; }
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
             if (SearchFolders.Count == 0)
@@ -123,22 +158,83 @@ namespace FindDuplicateFiles
                 MessageBox.Show("请选择要查找的文件夹");
                 return;
             }
+
+            //匹配方式校验
+            SearchMatchEnum searchMatch = 0;
+            if (ChkFileName.IsChecked == true)
+            {
+                searchMatch = searchMatch | SearchMatchEnum.FileName;
+            }
+            if (ChkFileSize.IsChecked == true)
+            {
+                searchMatch = searchMatch | SearchMatchEnum.FileSize;
+            }
+            if (searchMatch == 0)
+            {
+                MessageBox.Show("请选择匹配方式");
+                return;
+            }
+
+            //选项
+            SearchOptionEnum searchOption = 0;
+            if (ChkIgnoreSizeZero.IsChecked == true)
+            {
+                searchOption = searchOption | SearchOptionEnum.IgnoreSizeZero;
+            }
+
+            if (ChkIgnoreHiddenFile.IsChecked == true)
+            {
+                searchOption = searchOption | SearchOptionEnum.IgnoreHiddenFile;
+            }
+
+            if (ChkIgnoreSmallFile.IsChecked == true)
+            {
+                searchOption = searchOption | SearchOptionEnum.IgnoreSmallFile;
+            }
+
+            if (_isSearching)
+            {
+                SetEndSearchStyle();
+                _searchDuplicateJob.Stop();
+            }
+            else
+            {
+                SetBeginSearchStyle();
+
+                var config = new SearchConfigs()
+                {
+                    Folders = new List<string>(SearchFolders.ToList()),
+                    SearchMatch = searchMatch,
+                    SearchOption = searchOption
+                };
+                _searchDuplicateJob.Start(config);
+            }
+        }
+
+        /// <summary>
+        /// 开始搜索
+        /// </summary>
+        private void SetBeginSearchStyle()
+        {
             PanelLoading.Height = 25;
-            Task.Run(() =>
-                  {
-                      var t = System.IO.Directory.GetFiles(@"D:\Work\Doc\1Other");
-                      foreach (var s in t)
-                      {
-                          JobFile = s;
-                          System.Threading.Thread.Sleep(500);
-                      }
-                  });
+            TxtSearch.Text = "停止";
+            ImgSearch.Source = new BitmapImage(new Uri("pack://application:,,,/Images/stop.png"));
+            _isSearching = true;
+        }
+        /// <summary>
+        /// 结束搜索
+        /// </summary>
+        private void SetEndSearchStyle()
+        {
+            PanelLoading.Height = 0;
+            TxtSearch.Text = "开始";
+            ImgSearch.Source = new BitmapImage(new Uri("pack://application:,,,/Images/search.png"));
+            _isSearching = false;
         }
 
         private void BtnReset_Click(object sender, RoutedEventArgs e)
         {
-
+            InitializeSearchConfig();
         }
-
     }
 }

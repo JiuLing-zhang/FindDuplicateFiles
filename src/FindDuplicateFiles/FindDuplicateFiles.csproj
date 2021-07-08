@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="config.json" />
     <None Remove="Images\close.png" />
     <None Remove="Images\delete.png" />
     <None Remove="Images\horizontal_line.png" />
@@ -21,6 +22,14 @@
     <None Remove="Images\restore.png" />
     <None Remove="Images\search.png" />
     <None Remove="Images\stop.png" />
+    <None Remove="Images\ThemeDark.png" />
+    <None Remove="Images\ThemeGreen.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -55,6 +64,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\stop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\ThemeDark.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\ThemeGreen.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

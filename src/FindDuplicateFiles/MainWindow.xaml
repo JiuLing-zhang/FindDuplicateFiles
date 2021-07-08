@@ -15,7 +15,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Name="border" BorderThickness="0" BorderBrush="Black" Background="{TemplateBinding Background}">
+                        <Border Name="border" BorderThickness="0" Background="{TemplateBinding Background}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
@@ -27,9 +27,27 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="ChangeButtonIsMouseOverNoOpacity" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" BorderThickness="0" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <CollectionViewSource x:Key="DuplicateFiles" Source="{Binding}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Key"></PropertyGroupDescription>
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+
     </Window.Resources>
 
-    <Grid Background="#2D2D30"  >
+    <Grid Background="{DynamicResource Background}">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -40,15 +58,29 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="100px"></ColumnDefinition>
                     <ColumnDefinition Width="80px"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <StackPanel Orientation="Horizontal">
                         <Image Width="22px" Margin="10,0,1,0" Source="/Images/package_search.png"></Image>
-                        <Label Foreground="#FFFFFF">重复文件查找</Label>
+                        <Label Foreground="{DynamicResource Title}">重复文件查找</Label>
                     </StackPanel>
                 </Grid>
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="1" Margin="0,0,10,0">
+                    <Border CornerRadius="10"  Background="{DynamicResource ThemeBlockBackground}">
+                        <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                            <Label Foreground="{DynamicResource Title}">主题</Label>
+                            <Button Click="ChangeTheme_Click" Tag="Dark" Width="24px" Height="24px" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
+                                <Image Source="/Images/ThemeDark.png" Margin="1,0,1,0"></Image>
+                            </Button>
+                            <Button Click="ChangeTheme_Click" Tag="Green" Width="24px" Height="24px" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
+                                <Image Source="/Images/ThemeGreen.png" Margin="1,0,1,0"></Image>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+                <Grid Grid.Column="2">
                     <StackPanel Orientation="Horizontal">
                         <Button Name="BtnMinimize" Click="BtnMinimize_Click" Width="24px" Height="24px" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
                             <Image Source="/Images/horizontal_line.png" Margin="1,0,1,0"></Image>
@@ -81,56 +113,56 @@
                         <RowDefinition Height="50"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0" Background="#252525" Margin="0,0,7,7">
-                        <Border BorderBrush="#3F3F3F" BorderThickness="1">
+                    <Grid Grid.Row="0" Background="{DynamicResource GridBackground}" Margin="0,0,7,7">
+                        <Border BorderBrush="{DynamicResource BlockBorder}" BorderThickness="1">
                             <StackPanel Margin="5">
-                                <Label FontWeight="Bold" Foreground="#E6E6E6">匹配方式</Label>
-                                <CheckBox Name="ChkFileName" Foreground="#E6E6E6" Margin="0,0,0,5">文件名</CheckBox>
-                                <CheckBox Name="ChkFileSize" Foreground="#E6E6E6">文件大小</CheckBox>
+                                <Label FontWeight="Bold" Foreground="{DynamicResource FontForeground}">匹配方式</Label>
+                                <CheckBox Name="ChkFileName" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">文件名</CheckBox>
+                                <CheckBox Name="ChkFileSize" Foreground="{DynamicResource FontForeground}">文件大小</CheckBox>
                             </StackPanel>
                         </Border>
                     </Grid>
 
-                    <Grid Grid.Row="1" Background="#252525" Margin="0,0,7,7">
-                        <Border BorderBrush="#3F3F3F" BorderThickness="1">
+                    <Grid Grid.Row="1" Background="{DynamicResource GridBackground}" Margin="0,0,7,7">
+                        <Border BorderBrush="{DynamicResource BlockBorder}" BorderThickness="1">
                             <StackPanel Margin="5">
-                                <Label FontWeight="Bold" Foreground="#E6E6E6">选项</Label>
-                                <CheckBox Name="ChkIgnoreSizeZero" Foreground="#E6E6E6" Margin="0,0,0,5">忽略大小为0的文件</CheckBox>
-                                <CheckBox Name="ChkIgnoreHiddenFile" Foreground="#E6E6E6" Margin="0,0,0,5">忽略隐藏文件</CheckBox>
-                                <CheckBox Name="ChkIgnoreSmallFile" Foreground="#E6E6E6">忽略小文件（小于1024KB）</CheckBox>
+                                <Label FontWeight="Bold" Foreground="{DynamicResource FontForeground}">选项</Label>
+                                <CheckBox Name="ChkIgnoreSizeZero" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">忽略大小为0的文件</CheckBox>
+                                <CheckBox Name="ChkIgnoreHiddenFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">忽略隐藏文件</CheckBox>
+                                <CheckBox Name="ChkIgnoreSmallFile" Foreground="{DynamicResource FontForeground}">忽略小文件（小于1024KB）</CheckBox>
                             </StackPanel>
                         </Border>
                     </Grid>
 
-                    <Grid Grid.Row="2" Background="#252525" Margin="0,0,7,7">
-                        <Border BorderBrush="#3F3F3F" BorderThickness="1">
+                    <Grid Grid.Row="2" Background="{DynamicResource GridBackground}" Margin="0,0,7,7">
+                        <Border BorderBrush="{DynamicResource BlockBorder}" BorderThickness="1">
                             <StackPanel Margin="5">
-                                <Label FontWeight="Bold" Foreground="#E6E6E6">查找路径</Label>
-                                <ListBox Name="ListBoxSearchFolders" ItemsSource="{Binding}" Height="160" Background="Transparent" BorderBrush="#3F3F3F">
+                                <Label FontWeight="Bold" Foreground="{DynamicResource FontForeground}">查找路径</Label>
+                                <ListBox Name="ListBoxSearchFolders" ItemsSource="{Binding}" Height="160" Background="Transparent" BorderBrush="{DynamicResource BlockBorder}">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
                                                 <Button Name="BtnRemoveSearchFolder" Click="BtnRemoveSearchFolder_Click" Tag="{Binding }" Width="14" Height="14" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
                                                     <Image Source="/Images/delete.png"></Image>
                                                 </Button>
-                                                <Label Foreground="#E6E6E6" Content="{Binding }"></Label>
+                                                <Label Foreground="{DynamicResource FontForeground}" Content="{Binding }"></Label>
                                             </StackPanel>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
-                                <Button Margin="0,7,0,0" Name="BtnAddSearchFolder" Click="BtnAddSearchFolder_Click" Width="500" Height="30px" Style="{StaticResource ChangeButtonIsMouseOver}" Background="#3F3F3F" Foreground="#999999" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" >添加</Button>
+                                <Button Margin="0,7,0,0" Name="BtnAddSearchFolder" Click="BtnAddSearchFolder_Click" Width="500" Height="30px" Style="{StaticResource ChangeButtonIsMouseOver}" Background="{DynamicResource BlockBorder}" Foreground="{DynamicResource ButtonForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" >添加</Button>
                             </StackPanel>
                         </Border>
                     </Grid>
                     <Grid Grid.Row="3" Margin="0,0,7,7">
                         <StackPanel Orientation="Horizontal">
-                            <Button Name="BtnSearch" Click="BtnSearch_Click" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent" Foreground="#999999" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="95,0,0,0">
+                            <Button Name="BtnSearch" Click="BtnSearch_Click" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent" Foreground="{DynamicResource ButtonForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="95,0,0,0">
                                 <WrapPanel Width="80px" Height="30px" >
                                     <Image Name="ImgSearch" Width="24" Height="24" Source="/Images/search.png" Margin="10,5,0,0"></Image>
                                     <TextBlock Name="TxtSearch" Width="46" Margin="0,5,0,0" Text="查找"/>
                                 </WrapPanel>
                             </Button>
-                            <Button Name="BtnReset" Click="BtnReset_Click" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent" Foreground="#999999" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="0,0,10,0">
+                            <Button Name="BtnReset" Click="BtnReset_Click" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent" Foreground="{DynamicResource ButtonForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="0,0,10,0">
                                 <WrapPanel Width="80px" Height="30px" >
                                     <Image Width="24" Height="24" Source="/Images/reset.png" Margin="10,5,0,0"></Image>
                                     <TextBlock Width="46"  Margin="0,5,0,0" Text="重置"/>
@@ -141,23 +173,60 @@
                 </Grid>
                 <!-- 列表主面板 -->
                 <Grid Grid.Column="1">
-                    <Border BorderBrush="#3F3F3F" BorderThickness="1">
-                        <StackPanel Orientation="Vertical" Margin="5">
-                            <StackPanel Name="PanelLoading" Orientation="Horizontal" Margin="0,3,0,3">
+                    <Border BorderBrush="{DynamicResource BlockBorder}" BorderThickness="1">
+                        <DockPanel>
+                            <StackPanel Height="0" DockPanel.Dock="Top" Name="PanelLoading" Orientation="Horizontal" Margin="5,8,5,8">
                                 <Image Margin="0,0,5,0" Name="ImgLoading" Width="24" Height="24" Source="/Images/loader.png" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5"></Image>
-                                <Label Name="LblMessage" Foreground="#E6E6E6">准备查找....</Label>
+                                <Label Name="LblMessage" Foreground="{DynamicResource FontForeground}">准备查找....</Label>
                             </StackPanel>
-                            <ListView Background="#2A2A2A" BorderBrush="#3F3F3F">
+                            <ListView Name="ListViewDuplicateFile" ItemsSource="{Binding Source={StaticResource DuplicateFiles}}" Background="{DynamicResource ListViewBackground}" BorderBrush="{DynamicResource BlockBorder}">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="Foreground" Value="{DynamicResource FontForeground}"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="True"> 
+                                                <Setter Property="Background" Value="Transparent" />
+                                                <Setter Property="BorderBrush" Value="Transparent" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Width="auto" Header="文件名" ></GridViewColumn>
-                                        <GridViewColumn Width="auto" Header="大小" ></GridViewColumn>
-                                        <GridViewColumn Width="auto" Header="路径" ></GridViewColumn>
-                                        <GridViewColumn Width="auto" Header="文件预览" ></GridViewColumn>
+                                        <GridViewColumn Width="230" Header="文件名" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                                        <GridViewColumn Width="100" Header="大小" DisplayMemberBinding="{Binding Size}"></GridViewColumn>
+                                        <GridViewColumn Width="auto" Header="路径" DisplayMemberBinding="{Binding Path}"></GridViewColumn>
                                     </GridView>
                                 </ListView.View>
+                                <ListView.GroupStyle>
+                                    <GroupStyle>
+                                        <GroupStyle.ContainerStyle>
+                                            <Style TargetType="{x:Type GroupItem}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <Expander IsExpanded="True">
+                                                                <Expander.Header>
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <TextBlock Foreground="{DynamicResource FontForeground}" VerticalAlignment="Bottom" Text="重复文件数"/>
+                                                                        <TextBlock Foreground="{DynamicResource FontForeground}" Text="{Binding ItemCount}" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
+                                                                        <TextBlock Foreground="{DynamicResource FontForeground}" Text="个" FontStyle="Italic" VerticalAlignment="Bottom" />
+                                                                    </StackPanel>
+                                                                </Expander.Header>
+                                                                <ItemsPresenter />
+                                                            </Expander>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </GroupStyle.ContainerStyle>
+                                    </GroupStyle>
+                                </ListView.GroupStyle>
                             </ListView>
-                        </StackPanel>
+                        </DockPanel>
                     </Border>
                 </Grid>
             </Grid>

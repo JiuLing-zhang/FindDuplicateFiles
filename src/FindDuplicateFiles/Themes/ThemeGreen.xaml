@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:FindDuplicateFiles">
+
+    <SolidColorBrush x:Key="Background" Color="#32b67a"></SolidColorBrush>
+    <SolidColorBrush x:Key="Title" Color="#FFFFFF"></SolidColorBrush>
+    <SolidColorBrush x:Key="FontForeground" Color="#FFFFFF"></SolidColorBrush>
+    <SolidColorBrush x:Key="GridBackground" Color="#8FBC94"></SolidColorBrush>
+    <SolidColorBrush x:Key="BlockBorder" Color="#285943"></SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonForeground" Color="#D6EEFF"></SolidColorBrush>
+    <SolidColorBrush x:Key="ListViewBackground" Color="#C5E99B"></SolidColorBrush>
+    <SolidColorBrush x:Key="ThemeBlockBackground" Color="#8FBC94"></SolidColorBrush>
+</ResourceDictionary>

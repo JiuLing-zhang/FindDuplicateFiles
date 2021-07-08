@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using FindDuplicateFiles.Common;
 using FindDuplicateFiles.Extensions;
 using FindDuplicateFiles.SearchFile;
 
@@ -25,16 +29,33 @@ namespace FindDuplicateFiles
         /// <summary>
         /// 是否正在进行搜索
         /// </summary>
-        private bool _isSearching = false;
-        private readonly SearchDuplicateJob _searchDuplicateJob = new SearchDuplicateJob();
+        private bool _isSearching;
+        private readonly SearchDuplicateJob _searchDuplicateJob = new();
+
+        /// <summary>
+        /// 重复文件集合
+        /// </summary>
+        public ObservableCollection<DuplicateFileInfo> DuplicateFiles { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
 
+            LoadingAppConfig();
+            LoadingTheme(GlobalArgs.AppConfig.Theme);
+
+            BindingItemsSource();
+            BindingSearchEvent();
+
             InitializeSearchConfig();
             InitializeLoading();
-            BindingDataContext();
-            BindingSearchEvent();
+        }
+
+        private void LoadingAppConfig()
+        {
+            string configPath = $"{AppDomain.CurrentDomain.BaseDirectory}{GlobalArgs.AppConfigPath}";
+            string configString = File.ReadAllText(configPath);
+            GlobalArgs.AppConfig = System.Text.Json.JsonSerializer.Deserialize<AppConfigInfo>(configString);
         }
 
         private void InitializeSearchConfig()
@@ -48,7 +69,7 @@ namespace FindDuplicateFiles
             ChkIgnoreHiddenFile.IsChecked = true;
             ChkIgnoreSmallFile.IsChecked = true;
 
-            SearchFolders = new ObservableCollection<string>();
+            SearchFolders.Clear();
         }
         private void InitializeLoading()
         {
@@ -63,14 +84,24 @@ namespace FindDuplicateFiles
             ImgLoading.RenderTransform = rt;
             rt.BeginAnimation(RotateTransform.AngleProperty, da);
             PanelLoading.Height = 0;
+            PanelLoading.Margin = new Thickness(0, 0, 0, 0);
         }
 
         /// <summary>
         /// UI数据绑定
         /// </summary>
-        private void BindingDataContext()
+        private void BindingItemsSource()
         {
-            this.ListBoxSearchFolders.DataContext = SearchFolders;
+            SearchFolders = new ObservableCollection<string>();
+            ListBoxSearchFolders.ItemsSource = SearchFolders;
+
+            DuplicateFiles = new ObservableCollection<DuplicateFileInfo>();
+            ListViewDuplicateFile.ItemsSource = DuplicateFiles;
+
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewDuplicateFile.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Key");
+            view.GroupDescriptions.Add(groupDescription);
+
         }
 
         /// <summary>
@@ -79,6 +110,7 @@ namespace FindDuplicateFiles
         private void BindingSearchEvent()
         {
             _searchDuplicateJob.ExecutedMessage = ExecutedMessage;
+            _searchDuplicateJob.Duplicate = FindDuplicateFile;
         }
 
         private void ExecutedMessage(string message)
@@ -200,7 +232,7 @@ namespace FindDuplicateFiles
             else
             {
                 SetBeginSearchStyle();
-
+                DuplicateFiles.Clear();
                 var config = new SearchConfigs()
                 {
                     Folders = new List<string>(SearchFolders.ToList()),
@@ -217,6 +249,7 @@ namespace FindDuplicateFiles
         private void SetBeginSearchStyle()
         {
             PanelLoading.Height = 25;
+            PanelLoading.Margin = new Thickness(5, 8, 5, 8);
             TxtSearch.Text = "停止";
             ImgSearch.Source = new BitmapImage(new Uri("pack://application:,,,/Images/stop.png"));
             _isSearching = true;
@@ -227,6 +260,7 @@ namespace FindDuplicateFiles
         private void SetEndSearchStyle()
         {
             PanelLoading.Height = 0;
+            PanelLoading.Margin = new Thickness(0, 0, 0, 0);
             TxtSearch.Text = "开始";
             ImgSearch.Source = new BitmapImage(new Uri("pack://application:,,,/Images/search.png"));
             _isSearching = false;
@@ -234,7 +268,55 @@ namespace FindDuplicateFiles
 
         private void BtnReset_Click(object sender, RoutedEventArgs e)
         {
+            if (_isSearching)
+            {
+                MessageBox.Show("任务执行中，禁止重置");
+                return;
+            }
             InitializeSearchConfig();
+        }
+
+        private void ChangeTheme_Click(object sender, RoutedEventArgs e)
+        {
+
+            var tag = (sender as Button)?.Tag;
+            if (tag == null)
+            {
+                MessageBox.Show("修改主题失败：系统错误");
+                return;
+            }
+
+            string theme = tag.ToString();
+
+            LoadingTheme(theme);
+            GlobalArgs.AppConfig.Theme = theme;
+            string appConfigString = System.Text.Json.JsonSerializer.Serialize(GlobalArgs.AppConfig);
+            string configPath = $"{AppDomain.CurrentDomain.BaseDirectory}{GlobalArgs.AppConfigPath}";
+            File.WriteAllText(configPath, appConfigString);
+        }
+
+        private void LoadingTheme(string themeName)
+        {
+            try
+            {
+                var mResourceSkin = new ResourceDictionary()
+                {
+                    Source = new Uri($"/Themes/Theme{themeName}.xaml", UriKind.RelativeOrAbsolute)
+                };
+                Application.Current.Resources.MergedDictionaries[0] = mResourceSkin;
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show($"主题加载失败，{ex.Message}");
+            }
+        }
+
+        private void FindDuplicateFile(string key, SimpleFileInfo simpleFile)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                DuplicateFiles.Add(new DuplicateFileInfo() { Key = key, Name = simpleFile.Name, Path = simpleFile.Path, Size = $"{Math.Round(simpleFile.Size, 2)} KB" });
+            });
         }
     }
 }

@@ -6,9 +6,44 @@
         xmlns:local="clr-namespace:FindDuplicateFiles" 
         mc:Ignorable="d"
         Title="重复文件查找" Height="650" Width="1000" WindowStartupLocation="CenterScreen" Icon="/Images/icon.png"
-        WindowStyle="None" 
-        AllowsTransparency="True"
+ 
         MouseLeftButtonDown="Window_MouseLeftButtonDown">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome UseAeroCaptionButtons="False"  />
+    </WindowChrome.WindowChrome>
+
+    <Window.Style>
+        <Style TargetType="{x:Type Window}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Window}">
+                        <Border>
+                            <Grid>
+                                <AdornerDecorator>
+                                    <ContentPresenter />
+                                </AdornerDecorator>
+                                <ResizeGrip x:Name="WindowResizeGrip"
+                                            HorizontalAlignment="Right"
+                                            IsTabStop="false"
+                                            Visibility="Collapsed"
+                                            VerticalAlignment="Bottom" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="ResizeMode" Value="CanResizeWithGrip" />
+                                    <Condition Property="WindowState" Value="Normal" />
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Visibility" TargetName="WindowResizeGrip" Value="Visible" />
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Style>
 
     <Window.Resources>
         <Style x:Key="ChangeButtonIsMouseOver" TargetType="Button">
@@ -69,7 +104,7 @@
                 </Grid>
                 <Grid Grid.Column="1" Margin="0,0,10,0">
                     <Border CornerRadius="10"  Background="{DynamicResource ThemeBlockBackground}">
-                        <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                        <StackPanel Orientation="Horizontal" Margin="5,0,0,0" WindowChrome.IsHitTestVisibleInChrome="True">
                             <Label Foreground="{DynamicResource Title}">主题</Label>
                             <Button Click="ChangeTheme_Click" Tag="Dark" Width="24px" Height="24px" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
                                 <Image Source="/Images/ThemeDark.png" Margin="1,0,1,0"></Image>
@@ -81,7 +116,7 @@
                     </Border>
                 </Grid>
                 <Grid Grid.Column="2">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" WindowChrome.IsHitTestVisibleInChrome="True">
                         <Button Name="BtnMinimize" Click="BtnMinimize_Click" Width="24px" Height="24px" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
                             <Image Source="/Images/horizontal_line.png" Margin="1,0,1,0"></Image>
                         </Button>

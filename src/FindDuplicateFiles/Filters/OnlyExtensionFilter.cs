@@ -7,7 +7,7 @@ namespace FindDuplicateFiles.Filters
     /// <summary>
     /// 指定扩展名过滤器
     /// </summary>
-    public class OnlyExtensionFilter : IFilePathFilter
+    public class OnlyExtensionFilter : IFileSearchFilter
     {
         private readonly List<string> _extensions;
         /// <summary>

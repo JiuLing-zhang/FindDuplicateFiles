@@ -6,7 +6,7 @@ namespace FindDuplicateFiles.Filters
     /// <summary>
     /// 文件过滤器
     /// </summary>
-    interface IFilePathFilter
+    interface IFileSearchFilter
     {
         /// <summary>
         /// 根据条件过滤

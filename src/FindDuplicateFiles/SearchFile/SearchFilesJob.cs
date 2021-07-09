@@ -88,32 +88,32 @@ namespace FindDuplicateFiles.SearchFile
             //条件过滤器
             if ((searchOption & SearchOptionEnum.IgnoreEmptyFile) == SearchOptionEnum.IgnoreEmptyFile)
             {
-                IFilePathFilter filter = new IgnoreEmptyFileFilter();
+                IFileSearchFilter filter = new IgnoreEmptyFileFilter();
                 files = filter.FilterByCondition(files);
             }
             if ((searchOption & SearchOptionEnum.IgnoreHiddenFile) == SearchOptionEnum.IgnoreHiddenFile)
             {
-                IFilePathFilter filter = new IgnoreHiddenFileFilter();
+                IFileSearchFilter filter = new IgnoreHiddenFileFilter();
                 files = filter.FilterByCondition(files);
             }
             if ((searchOption & SearchOptionEnum.IgnoreSmallFile) == SearchOptionEnum.IgnoreSmallFile)
             {
-                IFilePathFilter filter = new IgnoreSmallFileFilter(1024);
+                IFileSearchFilter filter = new IgnoreSmallFileFilter(1024);
                 files = filter.FilterByCondition(files);
             }
             if ((searchOption & SearchOptionEnum.OnlyDocumentFile) == SearchOptionEnum.OnlyDocumentFile)
             {
-                IFilePathFilter filter = new OnlyExtensionFilter(GlobalArgs.AppConfig.DocumentExtension.Split(';').ToList());
+                IFileSearchFilter filter = new OnlyExtensionFilter(GlobalArgs.AppConfig.DocumentExtension.Split(';').ToList());
                 files = filter.FilterByCondition(files);
             }
             if ((searchOption & SearchOptionEnum.OnlyImageFile) == SearchOptionEnum.OnlyImageFile)
             {
-                IFilePathFilter filter = new OnlyExtensionFilter(GlobalArgs.AppConfig.ImageExtension.Split(';').ToList());
+                IFileSearchFilter filter = new OnlyExtensionFilter(GlobalArgs.AppConfig.ImageExtension.Split(';').ToList());
                 files = filter.FilterByCondition(files);
             }
             if ((searchOption & SearchOptionEnum.OnlyMediaFile) == SearchOptionEnum.OnlyMediaFile)
             {
-                IFilePathFilter filter = new OnlyExtensionFilter(GlobalArgs.AppConfig.MediaExtension.Split(';').ToList());
+                IFileSearchFilter filter = new OnlyExtensionFilter(GlobalArgs.AppConfig.MediaExtension.Split(';').ToList());
                 files = filter.FilterByCondition(files);
             }
 

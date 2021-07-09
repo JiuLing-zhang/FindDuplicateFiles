@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FindDuplicateFiles.Filters
 {
     /// <summary>
     /// 小文件过滤器
     /// </summary>
-    public class IgnoreSmallFileFilter : IFilePathFilter
+    public class IgnoreSmallFileFilter : IFileSearchFilter
     {
         private readonly decimal _minLength;
         /// <summary>

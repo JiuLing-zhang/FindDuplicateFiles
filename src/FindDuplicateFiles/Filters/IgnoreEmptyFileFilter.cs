@@ -7,7 +7,7 @@ namespace FindDuplicateFiles.Filters
     /// <summary>
     /// 空文件过滤器
     /// </summary>
-    public class IgnoreEmptyFileFilter : IFilePathFilter
+    public class IgnoreEmptyFileFilter : IFileSearchFilter
     {
         public List<FileInfo> FilterByCondition(List<FileInfo> files)
         {

@@ -109,8 +109,8 @@ namespace FindDuplicateFiles
         /// </summary>
         private void BindingSearchEvent()
         {
-            _searchDuplicateJob.ExecutedMessage = ExecutedMessage;
-            _searchDuplicateJob.Duplicate = FindDuplicateFile;
+            _searchDuplicateJob.EventMessage = ExecutedMessage;
+            _searchDuplicateJob.EventDuplicateFound = DuplicateFilesFound;
         }
 
         private void ExecutedMessage(string message)
@@ -211,7 +211,7 @@ namespace FindDuplicateFiles
             SearchOptionEnum searchOption = 0;
             if (ChkIgnoreSizeZero.IsChecked == true)
             {
-                searchOption = searchOption | SearchOptionEnum.IgnoreSizeZero;
+                searchOption = searchOption | SearchOptionEnum.IgnoreEmptyFile;
             }
 
             if (ChkIgnoreHiddenFile.IsChecked == true)
@@ -311,7 +311,7 @@ namespace FindDuplicateFiles
             }
         }
 
-        private void FindDuplicateFile(string key, SimpleFileInfo simpleFile)
+        private void DuplicateFilesFound(string key, SimpleFileInfo simpleFile)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {

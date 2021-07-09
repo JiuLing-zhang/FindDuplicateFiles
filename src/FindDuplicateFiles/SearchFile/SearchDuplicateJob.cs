@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
+using FindDuplicateFiles.Filters;
 
 namespace FindDuplicateFiles.SearchFile
 {
@@ -17,56 +19,43 @@ namespace FindDuplicateFiles.SearchFile
         /// <summary>
         /// 执行任务的消息
         /// </summary>
-        public Action<string> ExecutedMessage;
+        public Action<string> EventMessage;
 
         /// <summary>
         /// 文件查找任务队列
         /// </summary>
         private FileProcessingQueue _fileProcessingQueue;
 
-        public Action<string, SimpleFileInfo> Duplicate;
+        public Action<string, SimpleFileInfo> EventDuplicateFound;
 
         public async void Start(SearchConfigs config)
         {
-            ExecutedMessage?.Invoke("准备查找....");
             _isStop = false;
             await Task.Run(() =>
             {
                 _fileProcessingQueue = new FileProcessingQueue
                 {
-                    Duplicate = Duplicate
+                    EventDuplicateFound = EventDuplicateFound,
+                    EventMessage = EventMessage
                 };
 
                 _fileProcessingQueue.Start(config.SearchMatch);
                 foreach (string folderPath in config.Folders)
                 {
-                    EachDirectory(folderPath, fileName =>
+                    EachDirectory(folderPath, paths =>
                     {
-                        ExecutedMessage?.Invoke(fileName);
-                        CalcFileInfo(fileName, config.SearchOption);
+                        CalcFilesInfo(paths, config.SearchOption);
                     });
                 }
 
-                if (_isStop != false)
+                if (_isStop)
                 {
                     _fileProcessingQueue.Finished();
                 }
-
-                // for (int i = 0; i < config.Folders.Count; i++)
-                // {
-                //     var index = i;
-                //     Task.Run(() =>
-                //     {
-                //         EachDirectory(config.Folders[index], fileName =>
-                //         {
-                //             CalcFileInfo(fileName, config.SearchOption);
-                //         });
-                //     });
-                // }
             });
         }
 
-        private void EachDirectory(string folderPath, Action<string> calcFileInfo)
+        private void EachDirectory(string folderPath, Action<List<string>> callbackFilePaths)
         {
             try
             {
@@ -74,52 +63,61 @@ namespace FindDuplicateFiles.SearchFile
                 {
                     return;
                 }
-                Directory.GetFiles(folderPath).ToList().ForEach(calcFileInfo.Invoke);
 
                 Directory.GetDirectories(folderPath).ToList().ForEach(path =>
                 {
                     //继续遍历文件夹内容
-                    EachDirectory(path, calcFileInfo);
+                    EachDirectory(path, callbackFilePaths);
                 });
 
+                callbackFilePaths.Invoke(Directory.GetFiles(folderPath).ToList());
+
+
             }
-            catch (UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException)
             {
                 //todo 没有权限时记录错误
             }
         }
 
-        private void CalcFileInfo(string fileName, SearchOptionEnum searchOption)
+        private void CalcFilesInfo(List<string> paths, SearchOptionEnum searchOption)
         {
-            var fi = new FileInfo(fileName);
-            decimal fileSize = fi.Length;
-            if ((searchOption & SearchOptionEnum.IgnoreSizeZero) == SearchOptionEnum.IgnoreSizeZero && fileSize == 0)
+            EventMessage?.Invoke($"读取文件：{string.Join(",", paths)}");
+            //根据路径加载文件信息
+            var files = paths.Select(path => new FileInfo(path)).ToList();
+
+            //条件过滤器
+            if ((searchOption & SearchOptionEnum.IgnoreEmptyFile) == SearchOptionEnum.IgnoreEmptyFile)
             {
-                return;
+                IFilePathFilter filter = new EmptyFileFilter();
+                files = filter.FilterByCondition(files);
             }
-            if ((searchOption & SearchOptionEnum.IgnoreHiddenFile) == SearchOptionEnum.IgnoreHiddenFile && fi.Attributes == FileAttributes.Hidden)
+            if ((searchOption & SearchOptionEnum.IgnoreHiddenFile) == SearchOptionEnum.IgnoreHiddenFile)
             {
-                return;
+                IFilePathFilter filter = new HiddenFileFilter();
+                files = filter.FilterByCondition(files);
+            }
+            if ((searchOption & SearchOptionEnum.IgnoreSmallFile) == SearchOptionEnum.IgnoreSmallFile)
+            {
+                IFilePathFilter filter = new SmallFileFilter(1024);
+                files = filter.FilterByCondition(files);
             }
 
-            fileSize = fileSize / 1024;
-            if ((searchOption & SearchOptionEnum.IgnoreSmallFile) == SearchOptionEnum.IgnoreSmallFile && fileSize < 1024)
+            files.ForEach(file =>
             {
-                return;
-            }
-
-            var simpleInfo = new SimpleFileInfo()
-            {
-                Name = fi.Name,
-                Path = fi.FullName,
-                Size = fileSize
-            };
-            _fileProcessingQueue.Add(simpleInfo);
+                //符合条件的文件写入队列
+                var simpleInfo = new SimpleFileInfo()
+                {
+                    Name = file.Name,
+                    Path = file.FullName,
+                    Size = file.Length
+                };
+                _fileProcessingQueue.AddOneFileToQueue(simpleInfo);
+            });
         }
         public void Stop()
         {
             _isStop = true;
-            ExecutedMessage?.Invoke("");
             _fileProcessingQueue.Stop();
         }
     }

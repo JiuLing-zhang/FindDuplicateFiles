@@ -28,11 +28,17 @@ namespace FindDuplicateFiles.SearchFile
         private static readonly SemaphoreSlim MySemaphoreSlim = new(5, 5);
         private readonly ConcurrentDictionary<string, List<SimpleFileInfo>> _duplicateFiles = new();
 
-        public Action<string, SimpleFileInfo> Duplicate;
+        /// <summary>
+        /// 执行任务的消息
+        /// </summary>
+        public Action<string> EventMessage;
+        public Action<string, SimpleFileInfo> EventDuplicateFound;
         public async void Start(SearchMatchEnum searchMatch)
         {
+
             _isStop = false;
             _isFinished = false;
+            EventMessage?.Invoke("准备查找....");
             await Task.Run(() =>
             {
                 _searchMatch = searchMatch;
@@ -62,6 +68,7 @@ namespace FindDuplicateFiles.SearchFile
         {
             await MySemaphoreSlim.WaitAsync();
 
+            EventMessage?.Invoke($"重复校验：{fileInfo.Path}");
             string fileKey = "";
             if ((_searchMatch & SearchMatchEnum.FileName) == SearchMatchEnum.FileName)
             {
@@ -81,12 +88,16 @@ namespace FindDuplicateFiles.SearchFile
             }
             else
             {
-                //第一个文件
-                Duplicate?.Invoke(fileKey, _duplicateFiles[fileKey][0]);
+
+                if (_duplicateFiles[fileKey].Count == 1)
+                {
+                    //如果是第一次发现重复，则需要连同之前一次的文件信息一并通知
+                    EventDuplicateFound?.Invoke(fileKey, _duplicateFiles[fileKey][0]);
+                }
 
                 //本次的文件
                 _duplicateFiles[fileKey].Add(fileInfo);
-                Duplicate?.Invoke(fileKey, fileInfo);
+                EventDuplicateFound?.Invoke(fileKey, fileInfo);
             }
 
             MySemaphoreSlim.Release();
@@ -100,14 +111,23 @@ namespace FindDuplicateFiles.SearchFile
             _isFinished = true;
         }
 
-        public void Add(SimpleFileInfo fileInfo)
+        public void AddOneFileToQueue(SimpleFileInfo file)
         {
-            _fileProcessing.Enqueue(fileInfo);
+            _fileProcessing.Enqueue(file);
+        }
+
+        public void AddMultipleFilesToQueue(List<SimpleFileInfo> files)
+        {
+            foreach (var file in files)
+            {
+                _fileProcessing.Enqueue(file);
+            }
         }
 
         public void Stop()
         {
             _isStop = true;
+            EventMessage?.Invoke("任务被终止");
         }
     }
 }

@@ -25,7 +25,7 @@ namespace FindDuplicateFiles
     [Flags]
     public enum SearchOptionEnum
     {
-        IgnoreSizeZero = 1,
+        IgnoreEmptyFile = 1,
         IgnoreHiddenFile = 2,
         IgnoreSmallFile = 4
     }

@@ -33,7 +33,14 @@ namespace FindDuplicateFiles.SearchFile
         /// 执行任务的消息
         /// </summary>
         public Action<string> EventMessage;
+        /// <summary>
+        /// 发现重复文件
+        /// </summary>
         public Action<string, SimpleFileInfo> EventDuplicateFound;
+        /// <summary>
+        /// 搜索完成
+        /// </summary>
+        public Action EventSearchFinished;
         public async void Start(SearchMatchEnum searchMatch)
         {
 
@@ -49,6 +56,7 @@ namespace FindDuplicateFiles.SearchFile
                     {
                         if (_isFinished)
                         {
+                            EventSearchFinished.Invoke();
                             return;
                         }
                         continue;
@@ -71,17 +79,17 @@ namespace FindDuplicateFiles.SearchFile
 
             EventMessage?.Invoke($"重复校验：{fileInfo.Path}");
             string fileKey = "";
-            if ((_searchMatch & SearchMatchEnum.FileName) == SearchMatchEnum.FileName)
+            if ((_searchMatch & SearchMatchEnum.Name) == SearchMatchEnum.Name)
             {
                 fileKey = fileInfo.Name;
             }
-            if ((_searchMatch & SearchMatchEnum.FileSize) == SearchMatchEnum.FileSize)
+            if ((_searchMatch & SearchMatchEnum.Size) == SearchMatchEnum.Size)
             {
                 fileKey = $"{fileKey}${fileInfo.Size}";
             }
             if ((_searchMatch & SearchMatchEnum.LastWriteTime) == SearchMatchEnum.LastWriteTime)
             {
-                fileKey = $"{fileKey}${fileInfo.LastWriteTimeUtc}";
+                fileKey = $"{fileKey}${fileInfo.LastWriteTime:yyyy-MM-dd HH:mm:ss}";
             }
 
             if (!_duplicateFiles.ContainsKey(fileKey))

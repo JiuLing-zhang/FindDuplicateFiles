@@ -11,7 +11,7 @@ namespace FindDuplicateFiles.Filters
     {
         public List<FileInfo> FilterByCondition(List<FileInfo> files)
         {
-            return files.Where(x => x.Length == 0).ToList();
+            return files.Where(x => x.Length != 0).ToList();
         }
     }
 }

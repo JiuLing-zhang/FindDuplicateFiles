@@ -16,8 +16,8 @@ namespace FindDuplicateFiles.Common
     [Flags]
     public enum SearchMatchEnum
     {
-        FileName = 1,
-        FileSize = 2,
+        Name = 1,
+        Size = 2,
         LastWriteTime = 4
     }
     /// <summary>

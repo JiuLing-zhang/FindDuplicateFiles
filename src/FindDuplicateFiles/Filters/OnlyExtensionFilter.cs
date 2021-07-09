@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace FindDuplicateFiles.Filters
 {
@@ -20,7 +21,7 @@ namespace FindDuplicateFiles.Filters
         }
         public List<FileInfo> FilterByCondition(List<FileInfo> files)
         {
-            throw new NotImplementedException();
+            return files.Where(x => _extensions.Contains(x.Extension.ToLower())).ToList();
         }
     }
 }

@@ -142,33 +142,39 @@
                 <!-- 左侧功能面板 -->
                 <Grid Grid.Column="0" >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="80px"></RowDefinition>
                         <RowDefinition Height="100px"></RowDefinition>
+                        <RowDefinition Height="180px"></RowDefinition>
                         <RowDefinition Height="240px"></RowDefinition>
                         <RowDefinition Height="50"></RowDefinition>
                     </Grid.RowDefinitions>
 
+                    <!-- 匹配方式 -->
                     <Grid Grid.Row="0" Background="{DynamicResource GridBackground}" Margin="0,0,7,7">
                         <Border BorderBrush="{DynamicResource BlockBorder}" BorderThickness="1">
                             <StackPanel Margin="5">
                                 <Label FontWeight="Bold" Foreground="{DynamicResource FontForeground}">匹配方式</Label>
                                 <CheckBox Name="ChkFileName" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">文件名</CheckBox>
-                                <CheckBox Name="ChkFileSize" Foreground="{DynamicResource FontForeground}">文件大小</CheckBox>
+                                <CheckBox Name="ChkFileSize" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">文件大小</CheckBox>
+                                <CheckBox Name="ChkFileLastWriteTimeUtc" Foreground="{DynamicResource FontForeground}">文件修改时间</CheckBox>
                             </StackPanel>
                         </Border>
                     </Grid>
-
+                    <!-- 选项 -->
                     <Grid Grid.Row="1" Background="{DynamicResource GridBackground}" Margin="0,0,7,7">
                         <Border BorderBrush="{DynamicResource BlockBorder}" BorderThickness="1">
                             <StackPanel Margin="5">
                                 <Label FontWeight="Bold" Foreground="{DynamicResource FontForeground}">选项</Label>
-                                <CheckBox Name="ChkIgnoreSizeZero" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">忽略大小为0的文件</CheckBox>
+                                <CheckBox Name="ChkIgnoreEmptyFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5" ToolTip="不查找大小为0的文件">忽略空文件</CheckBox>
                                 <CheckBox Name="ChkIgnoreHiddenFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">忽略隐藏文件</CheckBox>
-                                <CheckBox Name="ChkIgnoreSmallFile" Foreground="{DynamicResource FontForeground}">忽略小文件（小于1024KB）</CheckBox>
+                                <CheckBox Name="ChkIgnoreSmallFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">忽略小文件（小于1024KB）</CheckBox>
+                                <RadioButton Name="RdoAllFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">查找所有文件</RadioButton>
+                                <RadioButton Name="RdoOnlyImageFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">仅查找图片文件</RadioButton>
+                                <RadioButton Name="RdoOnlyMediaFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">仅查找媒体文件</RadioButton>
+                                <RadioButton Name="RdoOnlyDocumentFile" Foreground="{DynamicResource FontForeground}">仅查找文档文件</RadioButton>
                             </StackPanel>
                         </Border>
                     </Grid>
-
+                    <!-- 查找路径 -->
                     <Grid Grid.Row="2" Background="{DynamicResource GridBackground}" Margin="0,0,7,7">
                         <Border BorderBrush="{DynamicResource BlockBorder}" BorderThickness="1">
                             <StackPanel Margin="5">
@@ -214,14 +220,11 @@
                                 <Image Margin="0,0,5,0" Name="ImgLoading" Width="24" Height="24" Source="/Images/loader.png" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5"></Image>
                                 <Label Name="LblMessage" Foreground="{DynamicResource FontForeground}">准备查找....</Label>
                             </StackPanel>
-                            <ListView Name="ListViewDuplicateFile" ItemsSource="{Binding Source={StaticResource DuplicateFiles}}" Background="{DynamicResource ListViewBackground}" BorderBrush="{DynamicResource BlockBorder}">
+                            <ListView Name="ListViewDuplicateFile" ItemsSource="{Binding Source={StaticResource DuplicateFiles}}" Background="{DynamicResource ListViewBackground}" BorderBrush="{DynamicResource BlockBorder}" BorderThickness="0" >
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
                                         <Setter Property="Foreground" Value="{DynamicResource FontForeground}"/>
                                         <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Background" Value="Transparent" />
-                                            </Trigger>
                                             <Trigger Property="IsSelected" Value="True"> 
                                                 <Setter Property="Background" Value="Transparent" />
                                                 <Setter Property="BorderBrush" Value="Transparent" />
@@ -232,6 +235,7 @@
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Width="230" Header="文件名" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                                        <GridViewColumn Width="150" Header="修改时间" DisplayMemberBinding="{Binding LastWriteTime, StringFormat=yyyy-MM-dd HH:mm:ss}"></GridViewColumn>
                                         <GridViewColumn Width="100" Header="大小" DisplayMemberBinding="{Binding Size}"></GridViewColumn>
                                         <GridViewColumn Width="auto" Header="路径" DisplayMemberBinding="{Binding Path}"></GridViewColumn>
                                     </GridView>

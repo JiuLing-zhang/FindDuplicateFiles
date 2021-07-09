@@ -25,7 +25,14 @@ namespace FindDuplicateFiles.SearchFile
         /// </summary>
         private CheckDuplicateQueue _checkDuplicateQueue;
 
+        /// <summary>
+        /// 发现重复文件
+        /// </summary>
         public Action<string, SimpleFileInfo> EventDuplicateFound;
+        /// <summary>
+        /// 搜索完成
+        /// </summary>
+        public Action EventSearchFinished;
 
         public async void Start(SearchConfigs config)
         {
@@ -35,7 +42,8 @@ namespace FindDuplicateFiles.SearchFile
                 _checkDuplicateQueue = new CheckDuplicateQueue
                 {
                     EventDuplicateFound = EventDuplicateFound,
-                    EventMessage = EventMessage
+                    EventMessage = EventMessage,
+                    EventSearchFinished = EventSearchFinished
                 };
 
                 _checkDuplicateQueue.Start(config.SearchMatch);
@@ -47,10 +55,7 @@ namespace FindDuplicateFiles.SearchFile
                     });
                 }
 
-                if (_isStop)
-                {
-                    _checkDuplicateQueue.Finished();
-                }
+                _checkDuplicateQueue.Finished();
             });
         }
 
@@ -82,6 +87,10 @@ namespace FindDuplicateFiles.SearchFile
         private void CalcFilesInfo(List<string> paths, SearchOptionEnum searchOption)
         {
             EventMessage?.Invoke($"读取文件：{string.Join(",", paths)}");
+            if (paths.Any(x => x.IndexOf("JZY.rar") >= 0))
+            {
+                // return;
+            }
             //根据路径加载文件信息
             var files = paths.Select(path => new FileInfo(path)).ToList();
 
@@ -125,7 +134,7 @@ namespace FindDuplicateFiles.SearchFile
                     Name = file.Name,
                     Path = file.FullName,
                     Size = file.Length,
-                    LastWriteTimeUtc = file.LastWriteTimeUtc
+                    LastWriteTime = file.LastWriteTime
                 };
                 _checkDuplicateQueue.AddOneFileToQueue(simpleInfo);
             });

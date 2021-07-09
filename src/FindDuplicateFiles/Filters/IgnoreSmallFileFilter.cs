@@ -20,7 +20,7 @@ namespace FindDuplicateFiles.Filters
         }
         public List<FileInfo> FilterByCondition(List<FileInfo> files)
         {
-            return files.Where(x => x.Length / 1024m < _minLength).ToList();
+            return files.Where(x => x.Length / 1024m >= _minLength).ToList();
         }
     }
 }

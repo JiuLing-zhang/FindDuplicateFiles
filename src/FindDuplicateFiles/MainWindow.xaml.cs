@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -47,8 +47,8 @@ namespace FindDuplicateFiles
             BindingItemsSource();
             BindingSearchEvent();
 
-            InitializeSearchConfig();
-            InitializeLoading();
+            InitializeSearchCondition();
+            InitializeLoadingBlock();
         }
 
         private void LoadingAppConfig()
@@ -58,20 +58,22 @@ namespace FindDuplicateFiles
             GlobalArgs.AppConfig = System.Text.Json.JsonSerializer.Deserialize<AppConfigInfo>(configString);
         }
 
-        private void InitializeSearchConfig()
+        private void InitializeSearchCondition()
         {
             //匹配方式
             ChkFileName.IsChecked = true;
-            ChkFileSize.IsChecked = false;
+            ChkFileSize.IsChecked = true;
+            ChkFileLastWriteTimeUtc.IsChecked = true;
 
             //选项
-            ChkIgnoreSizeZero.IsChecked = true;
+            ChkIgnoreEmptyFile.IsChecked = true;
             ChkIgnoreHiddenFile.IsChecked = true;
-            ChkIgnoreSmallFile.IsChecked = true;
+            ChkIgnoreSmallFile.IsChecked = false;
+            RdoAllFile.IsChecked = true;
 
             SearchFolders.Clear();
         }
-        private void InitializeLoading()
+        private void InitializeLoadingBlock()
         {
             DoubleAnimation da = new DoubleAnimation
             {
@@ -100,8 +102,11 @@ namespace FindDuplicateFiles
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewDuplicateFile.ItemsSource);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("Key");
-            view.GroupDescriptions.Add(groupDescription);
+            view.GroupDescriptions?.Add(groupDescription);
 
+            RdoOnlyImageFile.ToolTip = $"仅支持：{GlobalArgs.AppConfig.ImageExtension}文件";
+            RdoOnlyMediaFile.ToolTip = $"仅支持：{GlobalArgs.AppConfig.MediaExtension}文件";
+            RdoOnlyDocumentFile.ToolTip = $"仅支持：{GlobalArgs.AppConfig.DocumentExtension}文件";
         }
 
         /// <summary>
@@ -111,6 +116,7 @@ namespace FindDuplicateFiles
         {
             _searchFilesJob.EventMessage = ExecutedMessage;
             _searchFilesJob.EventDuplicateFound = DuplicateFilesFound;
+            _searchFilesJob.EventSearchFinished = SearchFinished;
         }
 
         private void ExecutedMessage(string message)
@@ -185,9 +191,25 @@ namespace FindDuplicateFiles
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
+            if (_isSearching)
+            {
+                if (MessageBox.Show("确定要停止搜索吗？", "重复文件查找", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel)
+                {
+                    return;
+                }
+                EndSearch();
+            }
+            else
+            {
+                BeginSearch();
+            }
+        }
+
+        private void BeginSearch()
+        {
             if (SearchFolders.Count == 0)
             {
-                MessageBox.Show("请选择要查找的文件夹");
+                MessageBox.Show("请选择要查找的文件夹", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Stop);
                 return;
             }
 
@@ -195,52 +217,58 @@ namespace FindDuplicateFiles
             SearchMatchEnum searchMatch = 0;
             if (ChkFileName.IsChecked == true)
             {
-                searchMatch = searchMatch | SearchMatchEnum.FileName;
+                searchMatch = searchMatch | SearchMatchEnum.Name;
             }
             if (ChkFileSize.IsChecked == true)
             {
-                searchMatch = searchMatch | SearchMatchEnum.FileSize;
+                searchMatch = searchMatch | SearchMatchEnum.Size;
+            }
+            if (ChkFileLastWriteTimeUtc.IsChecked == true)
+            {
+                searchMatch = searchMatch | SearchMatchEnum.LastWriteTime;
             }
             if (searchMatch == 0)
             {
-                MessageBox.Show("请选择匹配方式");
+                MessageBox.Show("请选择匹配方式", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Stop);
                 return;
             }
 
             //选项
             SearchOptionEnum searchOption = 0;
-            if (ChkIgnoreSizeZero.IsChecked == true)
+            if (ChkIgnoreEmptyFile.IsChecked == true)
             {
                 searchOption = searchOption | SearchOptionEnum.IgnoreEmptyFile;
             }
-
             if (ChkIgnoreHiddenFile.IsChecked == true)
             {
                 searchOption = searchOption | SearchOptionEnum.IgnoreHiddenFile;
             }
-
             if (ChkIgnoreSmallFile.IsChecked == true)
             {
                 searchOption = searchOption | SearchOptionEnum.IgnoreSmallFile;
             }
+            if (RdoOnlyImageFile.IsChecked == true)
+            {
+                searchOption = searchOption | SearchOptionEnum.OnlyImageFile;
+            }
+            if (RdoOnlyMediaFile.IsChecked == true)
+            {
+                searchOption = searchOption | SearchOptionEnum.OnlyMediaFile;
+            }
+            if (RdoOnlyDocumentFile.IsChecked == true)
+            {
+                searchOption = searchOption | SearchOptionEnum.OnlyDocumentFile;
+            }
 
-            if (_isSearching)
+            SetBeginSearchStyle();
+            DuplicateFiles.Clear();
+            var config = new SearchConfigs()
             {
-                SetEndSearchStyle();
-                _searchFilesJob.Stop();
-            }
-            else
-            {
-                SetBeginSearchStyle();
-                DuplicateFiles.Clear();
-                var config = new SearchConfigs()
-                {
-                    Folders = new List<string>(SearchFolders.ToList()),
-                    SearchMatch = searchMatch,
-                    SearchOption = searchOption
-                };
-                _searchFilesJob.Start(config);
-            }
+                Folders = new List<string>(SearchFolders.ToList()),
+                SearchMatch = searchMatch,
+                SearchOption = searchOption
+            };
+            _searchFilesJob.Start(config);
         }
 
         /// <summary>
@@ -254,6 +282,13 @@ namespace FindDuplicateFiles
             ImgSearch.Source = new BitmapImage(new Uri("pack://application:,,,/Images/stop.png"));
             _isSearching = true;
         }
+
+        private void EndSearch()
+        {
+            SetEndSearchStyle();
+            _searchFilesJob.Stop();
+        }
+
         /// <summary>
         /// 结束搜索
         /// </summary>
@@ -270,10 +305,10 @@ namespace FindDuplicateFiles
         {
             if (_isSearching)
             {
-                MessageBox.Show("任务执行中，禁止重置");
+                MessageBox.Show("任务执行中，禁止重置", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Stop);
                 return;
             }
-            InitializeSearchConfig();
+            InitializeSearchCondition();
         }
 
         private void ChangeTheme_Click(object sender, RoutedEventArgs e)
@@ -282,7 +317,7 @@ namespace FindDuplicateFiles
             var tag = (sender as Button)?.Tag;
             if (tag == null)
             {
-                MessageBox.Show("修改主题失败：系统错误");
+                MessageBox.Show("修改主题失败：系统错误", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Stop);
                 return;
             }
 
@@ -307,7 +342,7 @@ namespace FindDuplicateFiles
             }
             catch (IOException ex)
             {
-                MessageBox.Show($"主题加载失败，{ex.Message}");
+                MessageBox.Show($"主题加载失败，{ex.Message}", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -315,7 +350,22 @@ namespace FindDuplicateFiles
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                DuplicateFiles.Add(new DuplicateFileInfo() { Key = key, Name = simpleFile.Name, Path = simpleFile.Path, Size = $"{Math.Round(simpleFile.Size, 2)} KB" });
+                DuplicateFiles.Add(new DuplicateFileInfo()
+                {
+                    Key = key,
+                    Name = simpleFile.Name,
+                    Path = simpleFile.Path,
+                    Size = $"{Math.Round(simpleFile.Size / 1024, 2)} KB",
+                    LastWriteTime = simpleFile.LastWriteTime
+                });
+            });
+        }
+        private void SearchFinished()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                SetEndSearchStyle();
+                MessageBox.Show("查找完成", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }
     }

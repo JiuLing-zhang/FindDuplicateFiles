@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Documents;
+using FindDuplicateFiles.Common;
 using FindDuplicateFiles.Filters;
 
 namespace FindDuplicateFiles.SearchFile
 {
-    public class SearchDuplicateJob
+    public class SearchFilesJob
     {
         /// <summary>
         /// 是否停止
@@ -24,7 +23,7 @@ namespace FindDuplicateFiles.SearchFile
         /// <summary>
         /// 文件查找任务队列
         /// </summary>
-        private FileProcessingQueue _fileProcessingQueue;
+        private CheckDuplicateQueue _checkDuplicateQueue;
 
         public Action<string, SimpleFileInfo> EventDuplicateFound;
 
@@ -33,13 +32,13 @@ namespace FindDuplicateFiles.SearchFile
             _isStop = false;
             await Task.Run(() =>
             {
-                _fileProcessingQueue = new FileProcessingQueue
+                _checkDuplicateQueue = new CheckDuplicateQueue
                 {
                     EventDuplicateFound = EventDuplicateFound,
                     EventMessage = EventMessage
                 };
 
-                _fileProcessingQueue.Start(config.SearchMatch);
+                _checkDuplicateQueue.Start(config.SearchMatch);
                 foreach (string folderPath in config.Folders)
                 {
                     EachDirectory(folderPath, paths =>
@@ -50,7 +49,7 @@ namespace FindDuplicateFiles.SearchFile
 
                 if (_isStop)
                 {
-                    _fileProcessingQueue.Finished();
+                    _checkDuplicateQueue.Finished();
                 }
             });
         }
@@ -89,17 +88,32 @@ namespace FindDuplicateFiles.SearchFile
             //条件过滤器
             if ((searchOption & SearchOptionEnum.IgnoreEmptyFile) == SearchOptionEnum.IgnoreEmptyFile)
             {
-                IFilePathFilter filter = new EmptyFileFilter();
+                IFilePathFilter filter = new IgnoreEmptyFileFilter();
                 files = filter.FilterByCondition(files);
             }
             if ((searchOption & SearchOptionEnum.IgnoreHiddenFile) == SearchOptionEnum.IgnoreHiddenFile)
             {
-                IFilePathFilter filter = new HiddenFileFilter();
+                IFilePathFilter filter = new IgnoreHiddenFileFilter();
                 files = filter.FilterByCondition(files);
             }
             if ((searchOption & SearchOptionEnum.IgnoreSmallFile) == SearchOptionEnum.IgnoreSmallFile)
             {
-                IFilePathFilter filter = new SmallFileFilter(1024);
+                IFilePathFilter filter = new IgnoreSmallFileFilter(1024);
+                files = filter.FilterByCondition(files);
+            }
+            if ((searchOption & SearchOptionEnum.OnlyDocumentFile) == SearchOptionEnum.OnlyDocumentFile)
+            {
+                IFilePathFilter filter = new OnlyExtensionFilter(GlobalArgs.AppConfig.DocumentExtension.Split(';').ToList());
+                files = filter.FilterByCondition(files);
+            }
+            if ((searchOption & SearchOptionEnum.OnlyImageFile) == SearchOptionEnum.OnlyImageFile)
+            {
+                IFilePathFilter filter = new OnlyExtensionFilter(GlobalArgs.AppConfig.ImageExtension.Split(';').ToList());
+                files = filter.FilterByCondition(files);
+            }
+            if ((searchOption & SearchOptionEnum.OnlyMediaFile) == SearchOptionEnum.OnlyMediaFile)
+            {
+                IFilePathFilter filter = new OnlyExtensionFilter(GlobalArgs.AppConfig.MediaExtension.Split(';').ToList());
                 files = filter.FilterByCondition(files);
             }
 
@@ -110,15 +124,16 @@ namespace FindDuplicateFiles.SearchFile
                 {
                     Name = file.Name,
                     Path = file.FullName,
-                    Size = file.Length
+                    Size = file.Length,
+                    LastWriteTimeUtc = file.LastWriteTimeUtc
                 };
-                _fileProcessingQueue.AddOneFileToQueue(simpleInfo);
+                _checkDuplicateQueue.AddOneFileToQueue(simpleInfo);
             });
         }
         public void Stop()
         {
             _isStop = true;
-            _fileProcessingQueue.Stop();
+            _checkDuplicateQueue.Stop();
         }
     }
 }

@@ -10,14 +10,14 @@ namespace FindDuplicateFiles.Filters
     /// <summary>
     /// 小文件过滤器
     /// </summary>
-    public class SmallFileFilter : IFilePathFilter
+    public class IgnoreSmallFileFilter : IFilePathFilter
     {
         private readonly decimal _minLength;
         /// <summary>
         /// 初始化过滤器
         /// </summary>
         /// <param name="minLength">最小的文件大小（KB）</param>
-        public SmallFileFilter(decimal minLength)
+        public IgnoreSmallFileFilter(decimal minLength)
         {
             _minLength = minLength;
         }

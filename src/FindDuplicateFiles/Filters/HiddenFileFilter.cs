@@ -10,7 +10,7 @@ namespace FindDuplicateFiles.Filters
     /// <summary>
     /// 隐藏文件过滤器
     /// </summary>
-    public class HiddenFileFilter : IFilePathFilter
+    public class IgnoreHiddenFileFilter : IFilePathFilter
     {
         public List<FileInfo> FilterByCondition(List<FileInfo> files)
         {

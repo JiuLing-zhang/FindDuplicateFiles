@@ -3,10 +3,11 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using FindDuplicateFiles.Common;
 
 namespace FindDuplicateFiles.SearchFile
 {
-    public class FileProcessingQueue
+    public class CheckDuplicateQueue
     {
         /// <summary>
         /// 是否停止
@@ -77,6 +78,10 @@ namespace FindDuplicateFiles.SearchFile
             if ((_searchMatch & SearchMatchEnum.FileSize) == SearchMatchEnum.FileSize)
             {
                 fileKey = $"{fileKey}${fileInfo.Size}";
+            }
+            if ((_searchMatch & SearchMatchEnum.LastWriteTime) == SearchMatchEnum.LastWriteTime)
+            {
+                fileKey = $"{fileKey}${fileInfo.LastWriteTimeUtc}";
             }
 
             if (!_duplicateFiles.ContainsKey(fileKey))

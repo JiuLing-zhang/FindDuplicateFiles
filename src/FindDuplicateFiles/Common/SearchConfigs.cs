@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FindDuplicateFiles
+namespace FindDuplicateFiles.Common
 {
     public class SearchConfigs
     {
@@ -17,7 +17,8 @@ namespace FindDuplicateFiles
     public enum SearchMatchEnum
     {
         FileName = 1,
-        FileSize = 2
+        FileSize = 2,
+        LastWriteTime = 4
     }
     /// <summary>
     /// 查找选项
@@ -27,6 +28,9 @@ namespace FindDuplicateFiles
     {
         IgnoreEmptyFile = 1,
         IgnoreHiddenFile = 2,
-        IgnoreSmallFile = 4
+        IgnoreSmallFile = 4,
+        OnlyImageFile = 8,
+        OnlyMediaFile = 16,
+        OnlyDocumentFile = 32,
     }
 }

@@ -30,7 +30,7 @@ namespace FindDuplicateFiles
         /// 是否正在进行搜索
         /// </summary>
         private bool _isSearching;
-        private readonly SearchDuplicateJob _searchDuplicateJob = new();
+        private readonly SearchFilesJob _searchFilesJob = new();
 
         /// <summary>
         /// 重复文件集合
@@ -109,8 +109,8 @@ namespace FindDuplicateFiles
         /// </summary>
         private void BindingSearchEvent()
         {
-            _searchDuplicateJob.EventMessage = ExecutedMessage;
-            _searchDuplicateJob.EventDuplicateFound = DuplicateFilesFound;
+            _searchFilesJob.EventMessage = ExecutedMessage;
+            _searchFilesJob.EventDuplicateFound = DuplicateFilesFound;
         }
 
         private void ExecutedMessage(string message)
@@ -227,7 +227,7 @@ namespace FindDuplicateFiles
             if (_isSearching)
             {
                 SetEndSearchStyle();
-                _searchDuplicateJob.Stop();
+                _searchFilesJob.Stop();
             }
             else
             {
@@ -239,7 +239,7 @@ namespace FindDuplicateFiles
                     SearchMatch = searchMatch,
                     SearchOption = searchOption
                 };
-                _searchDuplicateJob.Start(config);
+                _searchFilesJob.Start(config);
             }
         }
 

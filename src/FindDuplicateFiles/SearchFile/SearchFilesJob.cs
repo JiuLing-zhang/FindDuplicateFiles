@@ -134,7 +134,8 @@ namespace FindDuplicateFiles.SearchFile
                     Name = file.Name,
                     Path = file.FullName,
                     Size = file.Length,
-                    LastWriteTime = file.LastWriteTime
+                    LastWriteTime = file.LastWriteTime,
+                    Extension = file.Extension.ToLower()
                 };
                 _checkDuplicateQueue.AddOneFileToQueue(simpleInfo);
             });

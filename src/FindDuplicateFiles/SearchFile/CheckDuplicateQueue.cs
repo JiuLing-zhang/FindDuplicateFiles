@@ -92,27 +92,22 @@ namespace FindDuplicateFiles.SearchFile
                 fileKey = $"{fileKey}${fileInfo.LastWriteTime:yyyy-MM-dd HH:mm:ss}";
             }
 
-            if (!_duplicateFiles.ContainsKey(fileKey))
+            var newFile = new List<SimpleFileInfo> { fileInfo };
+            var resultFile = _duplicateFiles.AddOrUpdate(fileKey, newFile, (x, oldValue) =>
+             {
+                 oldValue.Add(fileInfo);
+                 return oldValue;
+             });
+            if (resultFile.Count > 1)
             {
-                _duplicateFiles[fileKey] = new List<SimpleFileInfo>()
-                {
-                    fileInfo
-                };
-            }
-            else
-            {
-
-                if (_duplicateFiles[fileKey].Count == 1)
+                //有重复文件
+                if (resultFile.Count == 2)
                 {
                     //如果是第一次发现重复，则需要连同之前一次的文件信息一并通知
-                    EventDuplicateFound?.Invoke(fileKey, _duplicateFiles[fileKey][0]);
+                    EventDuplicateFound?.Invoke(fileKey, resultFile[0]);
                 }
-
-                //本次的文件
-                _duplicateFiles[fileKey].Add(fileInfo);
                 EventDuplicateFound?.Invoke(fileKey, fileInfo);
             }
-
             MySemaphoreSlim.Release();
         }
 

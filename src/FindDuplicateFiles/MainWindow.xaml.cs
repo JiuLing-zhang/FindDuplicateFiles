@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -130,10 +129,15 @@ namespace FindDuplicateFiles
                 LblMessage.Dispatcher.Invoke(() => { LblMessage.Content = message; });
             }
         }
-
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
+
+            if (GridImage.Visibility == Visibility)
+            {
+                ImgSelected.Source = null;
+                GridImage.Visibility = Visibility.Hidden;
+            }
         }
 
         private void BtnMinimize_Click(object sender, RoutedEventArgs e)
@@ -355,8 +359,9 @@ namespace FindDuplicateFiles
                     Key = key,
                     Name = simpleFile.Name,
                     Path = simpleFile.Path,
-                    Size = $"{Math.Round(simpleFile.Size / 1024, 2)} KB",
-                    LastWriteTime = simpleFile.LastWriteTime
+                    Size = simpleFile.Size,
+                    LastWriteTime = simpleFile.LastWriteTime,
+                    Extension = simpleFile.Extension
                 });
             });
         }
@@ -367,6 +372,21 @@ namespace FindDuplicateFiles
                 SetEndSearchStyle();
                 MessageBox.Show("查找完成", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Information);
             });
+        }
+
+        private void ListViewDuplicateFile_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var lv = sender as ListView;
+            if (!(lv?.SelectedItem is DuplicateFileInfo selectFile))
+            {
+                return;
+            }
+
+            if (GlobalArgs.AppConfig.ImageExtension.Contains(selectFile.Extension))
+            {
+                ImgSelected.Source = new BitmapImage(new Uri(selectFile.Path, UriKind.Absolute));
+                GridImage.Visibility = Visibility.Visible;
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FindDuplicateFiles.Common
+namespace FindDuplicateFiles.Model
 {
     public class SearchConfigs
     {

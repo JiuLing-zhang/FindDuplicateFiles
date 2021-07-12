@@ -4,6 +4,7 @@ using FindDuplicateFiles.SearchFile;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -13,6 +14,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using FindDuplicateFiles.Model;
+using FindDuplicateFiles.ViewModel;
 
 namespace FindDuplicateFiles
 {
@@ -22,20 +25,12 @@ namespace FindDuplicateFiles
     public partial class MainWindow : Window
     {
         /// <summary>
-        /// 已选取的要搜索的文件夹
-        /// </summary>
-        public ObservableCollection<string> SearchFolders { get; set; }
-        /// <summary>
         /// 是否正在进行搜索
         /// </summary>
         private bool _isSearching;
+
         private readonly SearchFilesJob _searchFilesJob = new();
-
-        /// <summary>
-        /// 重复文件集合
-        /// </summary>
-        public ObservableCollection<DuplicateFileInfo> DuplicateFiles { get; set; }
-
+        private readonly MainWindowViewModel _myModel = new();
         public MainWindow()
         {
             InitializeComponent();
@@ -70,7 +65,7 @@ namespace FindDuplicateFiles
             ChkIgnoreSmallFile.IsChecked = false;
             RdoAllFile.IsChecked = true;
 
-            SearchFolders.Clear();
+            _myModel.SearchFolders.Clear();
         }
         private void InitializeLoadingBlock()
         {
@@ -84,8 +79,6 @@ namespace FindDuplicateFiles
             RotateTransform rt = new RotateTransform();
             ImgLoading.RenderTransform = rt;
             rt.BeginAnimation(RotateTransform.AngleProperty, da);
-            PanelLoading.Height = 0;
-            PanelLoading.Margin = new Thickness(0, 0, 0, 0);
         }
 
         /// <summary>
@@ -93,11 +86,8 @@ namespace FindDuplicateFiles
         /// </summary>
         private void BindingItemsSource()
         {
-            SearchFolders = new ObservableCollection<string>();
-            ListBoxSearchFolders.ItemsSource = SearchFolders;
-
-            DuplicateFiles = new ObservableCollection<DuplicateFileInfo>();
-            ListViewDuplicateFile.ItemsSource = DuplicateFiles;
+            ListBoxSearchFolders.ItemsSource = _myModel.SearchFolders;
+            ListViewDuplicateFile.ItemsSource = _myModel.DuplicateFiles;
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewDuplicateFile.ItemsSource);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("Key");
@@ -106,6 +96,7 @@ namespace FindDuplicateFiles
             RdoOnlyImageFile.ToolTip = $"仅支持：{GlobalArgs.AppConfig.ImageExtension}文件";
             RdoOnlyMediaFile.ToolTip = $"仅支持：{GlobalArgs.AppConfig.MediaExtension}文件";
             RdoOnlyDocumentFile.ToolTip = $"仅支持：{GlobalArgs.AppConfig.DocumentExtension}文件";
+            DataContext = _myModel;
         }
 
         /// <summary>
@@ -136,7 +127,7 @@ namespace FindDuplicateFiles
             if (GridImage.Visibility == Visibility)
             {
                 ImgSelected.Source = null;
-                GridImage.Visibility = Visibility.Hidden;
+                GridImage.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -174,12 +165,11 @@ namespace FindDuplicateFiles
                 return;
             }
 
-            if (SearchFolders.Contains(path))
+            if (_myModel.SearchFolders.Contains(path))
             {
                 return;
             }
-
-            SearchFolders.Add(path);
+            _myModel.SearchFolders.Add(path);
         }
 
         private void BtnRemoveSearchFolder_Click(object sender, RoutedEventArgs e)
@@ -190,7 +180,7 @@ namespace FindDuplicateFiles
                 return;
             }
 
-            SearchFolders.Remove(tag.ToString());
+            _myModel.SearchFolders.Remove(tag.ToString());
         }
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
@@ -211,7 +201,7 @@ namespace FindDuplicateFiles
 
         private void BeginSearch()
         {
-            if (SearchFolders.Count == 0)
+            if (_myModel.SearchFolders.Count == 0)
             {
                 MessageBox.Show("请选择要查找的文件夹", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Stop);
                 return;
@@ -265,10 +255,10 @@ namespace FindDuplicateFiles
             }
 
             SetBeginSearchStyle();
-            DuplicateFiles.Clear();
+            _myModel.DuplicateFiles.Clear();
             var config = new SearchConfigs()
             {
-                Folders = new List<string>(SearchFolders.ToList()),
+                Folders = new List<string>(_myModel.SearchFolders.ToList()),
                 SearchMatch = searchMatch,
                 SearchOption = searchOption
             };
@@ -280,11 +270,10 @@ namespace FindDuplicateFiles
         /// </summary>
         private void SetBeginSearchStyle()
         {
-            PanelLoading.Height = 25;
-            PanelLoading.Margin = new Thickness(5, 8, 5, 8);
             TxtSearch.Text = "停止";
             ImgSearch.Source = new BitmapImage(new Uri("pack://application:,,,/Images/stop.png"));
             _isSearching = true;
+            _myModel.IsShowLoading = _isSearching;
         }
 
         private void EndSearch()
@@ -298,11 +287,10 @@ namespace FindDuplicateFiles
         /// </summary>
         private void SetEndSearchStyle()
         {
-            PanelLoading.Height = 0;
-            PanelLoading.Margin = new Thickness(0, 0, 0, 0);
             TxtSearch.Text = "开始";
             ImgSearch.Source = new BitmapImage(new Uri("pack://application:,,,/Images/search.png"));
             _isSearching = false;
+            _myModel.IsShowLoading = _isSearching;
         }
 
         private void BtnReset_Click(object sender, RoutedEventArgs e)
@@ -354,7 +342,7 @@ namespace FindDuplicateFiles
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                DuplicateFiles.Add(new DuplicateFileInfo()
+                _myModel.DuplicateFiles.Add(new DuplicateFileInfo()
                 {
                     Key = key,
                     Name = simpleFile.Name,
@@ -396,6 +384,16 @@ namespace FindDuplicateFiles
                 Owner = this
             };
             about.Show();
+        }
+
+        private void BtnChooseFile_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("抱歉，该功能暂不可用", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void BtnDeleteFile_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("抱歉，该功能暂不可用", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

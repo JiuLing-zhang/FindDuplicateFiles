@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FindDuplicateFiles.SearchFile
+namespace FindDuplicateFiles.Model
 {
     public class SimpleFileInfo
     {

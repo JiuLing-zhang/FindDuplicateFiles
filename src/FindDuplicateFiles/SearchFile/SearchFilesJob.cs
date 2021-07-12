@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using FindDuplicateFiles.Model;
 
 namespace FindDuplicateFiles.SearchFile
 {
@@ -75,8 +76,6 @@ namespace FindDuplicateFiles.SearchFile
                 });
 
                 callbackFilePaths.Invoke(Directory.GetFiles(folderPath).ToList());
-
-
             }
             catch (UnauthorizedAccessException)
             {

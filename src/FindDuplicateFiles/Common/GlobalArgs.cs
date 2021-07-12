@@ -1,4 +1,6 @@
-﻿namespace FindDuplicateFiles.Common
+﻿using FindDuplicateFiles.Model;
+
+namespace FindDuplicateFiles.Common
 {
     public class GlobalArgs
     {

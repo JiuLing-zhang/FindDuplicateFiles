@@ -1,4 +1,4 @@
-﻿namespace FindDuplicateFiles.Common
+﻿namespace FindDuplicateFiles.Model
 {
     public class AppConfigInfo
     {

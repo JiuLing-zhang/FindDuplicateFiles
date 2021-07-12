@@ -3,11 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FindDuplicateFiles" 
+        xmlns:local="clr-namespace:FindDuplicateFiles"
         mc:Ignorable="d"
         Title="重复文件查找" Height="650" Width="1000" WindowStartupLocation="CenterScreen" Icon="/Images/icon.png"
         MouseLeftButtonDown="Window_MouseLeftButtonDown">
-
     <WindowChrome.WindowChrome>
         <WindowChrome UseAeroCaptionButtons="False"  />
     </WindowChrome.WindowChrome>
@@ -78,7 +77,7 @@
                 <PropertyGroupDescription PropertyName="Key"></PropertyGroupDescription>
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
-
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
     </Window.Resources>
 
     <Grid Background="{DynamicResource Background}">
@@ -236,13 +235,32 @@
                     </Grid.ColumnDefinitions>
 
                     <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="2">
+
                         <Border BorderBrush="{DynamicResource BlockBorder}" BorderThickness="1">
                             <DockPanel>
-                                <StackPanel Height="0" DockPanel.Dock="Top" Name="PanelLoading" Orientation="Horizontal" Margin="5,8,5,8">
-                                    <Image Margin="0,0,5,0" Name="ImgLoading" Width="24" Height="24" Source="/Images/loader.png" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5"></Image>
-                                    <Label Name="LblMessage" Foreground="{DynamicResource FontForeground}">准备查找....</Label>
+                                <!-- 重复文件列表功能区 -->
+                                <StackPanel Height="25" DockPanel.Dock="Top" Orientation="Horizontal" Margin="2,5,0,5">
+                                    <Button Name="BtnChooseFile" Click="BtnChooseFile_Click" ToolTip="批量选中重复文件" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent">
+                                        <Image Width="20" Height="20" Source="/Images/multiple_choice.png"></Image>
+                                    </Button>
+                                    <Button Name="BtnDeleteFile" Click="BtnDeleteFile_Click" ToolTip="删除选中文件" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent">
+                                        <Image Width="20" Height="20" Source="/Images/delete_bin.png"></Image>
+                                    </Button>
+
+                                    <!-- loading模块 -->
+                                    <StackPanel Name="Tmp" Orientation="Horizontal" Margin="10,0,0,0" Visibility="{Binding IsShowLoading, Mode=OneWay, Converter={StaticResource BoolToVisConverter}}">
+                                        <Image Name="ImgLoading" Width="20" Height="20" Source="/Images/loader.png" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5"></Image>
+                                        <Label Name="LblMessage" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,-3">准备查找....</Label>
+                                    </StackPanel>
                                 </StackPanel>
-                                <ListView Name="ListViewDuplicateFile" SelectionChanged="ListViewDuplicateFile_SelectionChanged" ItemsSource="{Binding Source={StaticResource DuplicateFiles}}" Background="{DynamicResource ListViewBackground}" BorderBrush="{DynamicResource BlockBorder}" BorderThickness="0" >
+                                <!-- 重复文件列表 -->
+                                <ListView 
+                                    Name="ListViewDuplicateFile" 
+                                    SelectionChanged="ListViewDuplicateFile_SelectionChanged" 
+                                    ItemsSource="{Binding Source={StaticResource DuplicateFiles}}" 
+                                    Background="{DynamicResource ListViewBackground}" 
+                                    BorderBrush="{DynamicResource BlockBorder}" 
+                                    BorderThickness="0" >
                                     <ListView.ItemContainerStyle>
                                         <Style TargetType="ListViewItem">
                                             <Setter Property="Foreground" Value="{DynamicResource FontForeground}"/>
@@ -260,6 +278,13 @@
                                     </ListView.ItemContainerStyle>
                                     <ListView.View>
                                         <GridView>
+                                            <GridViewColumn>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <CheckBox />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
                                             <GridViewColumn Width="230" Header="文件名" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
                                             <GridViewColumn Width="150" Header="修改时间" DisplayMemberBinding="{Binding LastWriteTime, StringFormat=yyyy-MM-dd HH:mm:ss}"></GridViewColumn>
                                             <GridViewColumn Width="100" Header="大小" DisplayMemberBinding="{Binding Size}"></GridViewColumn>
@@ -294,8 +319,10 @@
                             </DockPanel>
                         </Border>
                     </Grid>
-                    <Grid Name="GridImage" Grid.Column="1" Grid.Row="1" Background="{DynamicResource FontForeground}" Visibility="Hidden" Margin="0,0,0,18">
-                        <Image Name="ImgSelected"></Image>
+                    <Grid Name="GridImage" Grid.Column="1" Grid.Row="1" Background="{DynamicResource Title}" Visibility="Hidden" Margin="0,0,18,18">
+                        <Border BorderBrush="{DynamicResource BlockBorder}" BorderThickness="1">
+                            <Image Name="ImgSelected"></Image>
+                        </Border>
                     </Grid>
                 </Grid>
             </Grid>

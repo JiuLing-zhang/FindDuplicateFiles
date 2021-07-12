@@ -1,4 +1,6 @@
-﻿namespace FindDuplicateFiles.SearchFile
+﻿using FindDuplicateFiles.SearchFile;
+
+namespace FindDuplicateFiles.Model
 {
     public class DuplicateFileInfo : SimpleFileInfo
     {

@@ -16,12 +16,14 @@
     <None Remove="Images\about.png" />
     <None Remove="Images\close.png" />
     <None Remove="Images\delete.png" />
+    <None Remove="Images\delete_bin.png" />
     <None Remove="Images\github.png" />
     <None Remove="Images\home_page.png" />
     <None Remove="Images\horizontal_line.png" />
     <None Remove="Images\icon.png" />
     <None Remove="Images\loader.png" />
     <None Remove="Images\maximize.png" />
+    <None Remove="Images\multiple_choice.png" />
     <None Remove="Images\package_search.png" />
     <None Remove="Images\reset.png" />
     <None Remove="Images\restore.png" />
@@ -47,6 +49,9 @@
     <Resource Include="Images\delete.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\delete_bin.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\github.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -63,6 +68,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\maximize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\multiple_choice.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\package_search.png">
@@ -86,6 +94,10 @@
     <Resource Include="Images\ThemeGreen.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Model\" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,10 @@
-﻿using System;
+﻿using FindDuplicateFiles.Common;
+using FindDuplicateFiles.Filters;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using FindDuplicateFiles.Common;
-using FindDuplicateFiles.Filters;
 
 namespace FindDuplicateFiles.SearchFile
 {

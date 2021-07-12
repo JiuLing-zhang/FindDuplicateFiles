@@ -1,9 +1,9 @@
-﻿using System;
+﻿using FindDuplicateFiles.Common;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using FindDuplicateFiles.Common;
 
 namespace FindDuplicateFiles.SearchFile
 {

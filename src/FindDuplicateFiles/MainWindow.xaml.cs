@@ -1,4 +1,7 @@
-﻿using System;
+﻿using FindDuplicateFiles.Common;
+using FindDuplicateFiles.Extensions;
+using FindDuplicateFiles.SearchFile;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -10,9 +13,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using FindDuplicateFiles.Common;
-using FindDuplicateFiles.Extensions;
-using FindDuplicateFiles.SearchFile;
 
 namespace FindDuplicateFiles
 {
@@ -387,6 +387,15 @@ namespace FindDuplicateFiles
                 ImgSelected.Source = new BitmapImage(new Uri(selectFile.Path, UriKind.Absolute));
                 GridImage.Visibility = Visibility.Visible;
             }
+        }
+
+        private void BtnAbout_Click(object sender, RoutedEventArgs e)
+        {
+            var about = new AboutWindow
+            {
+                Owner = this
+            };
+            about.Show();
         }
     }
 }

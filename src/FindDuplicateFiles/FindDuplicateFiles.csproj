@@ -7,12 +7,17 @@
 	<UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <Win32Resource />
+    <Authors>九零</Authors>
+    <Product>重复文件查找</Product>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="config.json" />
+    <None Remove="Images\about.png" />
     <None Remove="Images\close.png" />
     <None Remove="Images\delete.png" />
+    <None Remove="Images\github.png" />
+    <None Remove="Images\home_page.png" />
     <None Remove="Images\horizontal_line.png" />
     <None Remove="Images\icon.png" />
     <None Remove="Images\loader.png" />
@@ -33,10 +38,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\about.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\close.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\delete.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\github.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\home_page.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\horizontal_line.png">

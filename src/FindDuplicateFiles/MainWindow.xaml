@@ -92,37 +92,49 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="100px"></ColumnDefinition>
-                    <ColumnDefinition Width="80px"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="24"></ColumnDefinition>
+                    <ColumnDefinition Width="80"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
+                <!-- 标题 -->
                 <Grid Grid.Column="0">
                     <StackPanel Orientation="Horizontal">
-                        <Image Width="22px" Margin="10,0,1,0" Source="/Images/package_search.png"></Image>
+                        <Image Width="22" Margin="10,0,1,0" Source="/Images/package_search.png"></Image>
                         <Label Foreground="{DynamicResource Title}">重复文件查找</Label>
                     </StackPanel>
                 </Grid>
+                <!-- 主题 -->
                 <Grid Grid.Column="1" Margin="0,0,10,0">
                     <Border CornerRadius="10"  Background="{DynamicResource ThemeBlockBackground}">
                         <StackPanel Orientation="Horizontal" Margin="5,0,0,0" WindowChrome.IsHitTestVisibleInChrome="True">
                             <Label Foreground="{DynamicResource Title}">主题</Label>
-                            <Button Click="ChangeTheme_Click" Tag="Dark" Width="24px" Height="24px" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
+                            <Button Click="ChangeTheme_Click" Tag="Dark" Width="24" Height="24" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
                                 <Image Source="/Images/ThemeDark.png" Margin="1,0,1,0"></Image>
                             </Button>
-                            <Button Click="ChangeTheme_Click" Tag="Green" Width="24px" Height="24px" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
+                            <Button Click="ChangeTheme_Click" Tag="Green" Width="24" Height="24" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
                                 <Image Source="/Images/ThemeGreen.png" Margin="1,0,1,0"></Image>
                             </Button>
                         </StackPanel>
                     </Border>
                 </Grid>
+                <!-- 关于 -->
                 <Grid Grid.Column="2">
+                    <StackPanel Orientation="Horizontal"  WindowChrome.IsHitTestVisibleInChrome="True">
+                        <Button Name="BtnAbout" Click="BtnAbout_Click" Width="24" Height="24" Background="Transparent" ToolTip="关于" Style="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
+                            <Image ToolTip="关于" Source="/Images/about.png"></Image>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+                <!-- 最小化、最大化、关闭 -->
+                <Grid Grid.Column="3">
                     <StackPanel Orientation="Horizontal" WindowChrome.IsHitTestVisibleInChrome="True">
-                        <Button Name="BtnMinimize" Click="BtnMinimize_Click" Width="24px" Height="24px" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
+                        <Button Name="BtnMinimize" Click="BtnMinimize_Click" Width="24" Height="24" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
                             <Image Source="/Images/horizontal_line.png" Margin="1,0,1,0"></Image>
                         </Button>
-                        <Button Name="BtnMaximize" Click="BtnMaximize_Click" Width="24px" Height="24px"  Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
+                        <Button Name="BtnMaximize" Click="BtnMaximize_Click" Width="24" Height="24"  Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
                             <Image Name="ImgMaximize" Source="/Images/maximize.png" Margin="1,0,1,0"></Image>
                         </Button>
-                        <Button Name="BtnClose" Click="BtnClose_Click" Width="24px" Height="24px"  Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
+                        <Button Name="BtnClose" Click="BtnClose_Click" Width="24" Height="24"  Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
                             <Image Source="/Images/close.png" Margin="1,0,1,0"></Image>
                         </Button>
                     </StackPanel>
@@ -141,9 +153,9 @@
                 <!-- 左侧功能面板 -->
                 <Grid Grid.Column="0" >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="100px"></RowDefinition>
-                        <RowDefinition Height="180px"></RowDefinition>
-                        <RowDefinition Height="240px"></RowDefinition>
+                        <RowDefinition Height="100"></RowDefinition>
+                        <RowDefinition Height="180"></RowDefinition>
+                        <RowDefinition Height="240"></RowDefinition>
                         <RowDefinition Height="50"></RowDefinition>
                     </Grid.RowDefinitions>
 
@@ -190,20 +202,20 @@
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
-                                <Button Margin="0,7,0,0" Name="BtnAddSearchFolder" Click="BtnAddSearchFolder_Click" Width="500" Height="30px" Style="{StaticResource ChangeButtonIsMouseOver}" Background="{DynamicResource BlockBorder}" Foreground="{DynamicResource ButtonForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" >添加</Button>
+                                <Button Margin="0,7,0,0" Name="BtnAddSearchFolder" Click="BtnAddSearchFolder_Click" Width="500" Height="30" Style="{StaticResource ChangeButtonIsMouseOver}" Background="{DynamicResource BlockBorder}" Foreground="{DynamicResource ButtonForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" >添加</Button>
                             </StackPanel>
                         </Border>
                     </Grid>
                     <Grid Grid.Row="3" Margin="0,0,7,7">
                         <StackPanel Orientation="Horizontal">
                             <Button Name="BtnSearch" Click="BtnSearch_Click" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent" Foreground="{DynamicResource ButtonForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="95,0,0,0">
-                                <WrapPanel Width="80px" Height="30px" >
+                                <WrapPanel Width="80" Height="30" >
                                     <Image Name="ImgSearch" Width="24" Height="24" Source="/Images/search.png" Margin="10,5,0,0"></Image>
                                     <TextBlock Name="TxtSearch" Width="46" Margin="0,5,0,0" Text="查找"/>
                                 </WrapPanel>
                             </Button>
                             <Button Name="BtnReset" Click="BtnReset_Click" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent" Foreground="{DynamicResource ButtonForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="0,0,10,0">
-                                <WrapPanel Width="80px" Height="30px" >
+                                <WrapPanel Width="80" Height="30" >
                                     <Image Width="24" Height="24" Source="/Images/reset.png" Margin="10,5,0,0"></Image>
                                     <TextBlock Width="46"  Margin="0,5,0,0" Text="重置"/>
                                 </WrapPanel>

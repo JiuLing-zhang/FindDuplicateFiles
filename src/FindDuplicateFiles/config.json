@@ -2,5 +2,6 @@
   "Theme": "Dark",
   "ImageExtension": ".gif;.jpg;.jpeg;.png;.bmp",
   "MediaExtension": ".mp3;.wma;.wav;.mpeg;.avi;.mov;.wmv;.rm;.rmvb;.flv",
-  "DocumentExtension": ".txt;.pdf;.doc;.docx;.xls;.xlsx;.ppt;.pptx"
+  "DocumentExtension": ".txt;.pdf;.doc;.docx;.xls;.xlsx;.ppt;.pptx",
+  "MaxAllowDuplicateFileCount": 500
 }

@@ -67,19 +67,7 @@ namespace FindDuplicateFiles
 
             _myModel.SearchFolders.Clear();
         }
-        private void InitializeLoadingBlock()
-        {
-            DoubleAnimation da = new DoubleAnimation
-            {
-                From = 0,
-                To = 360,
-                Duration = new Duration(TimeSpan.FromSeconds(3)),
-                RepeatBehavior = RepeatBehavior.Forever
-            };
-            RotateTransform rt = new RotateTransform();
-            ImgLoading.RenderTransform = rt;
-            rt.BeginAnimation(RotateTransform.AngleProperty, da);
-        }
+
 
         /// <summary>
         /// UI数据绑定
@@ -108,17 +96,23 @@ namespace FindDuplicateFiles
             _searchFilesJob.EventDuplicateFound = DuplicateFilesFound;
             _searchFilesJob.EventSearchFinished = SearchFinished;
         }
+        private void InitializeLoadingBlock()
+        {
+            DoubleAnimation da = new DoubleAnimation
+            {
+                From = 0,
+                To = 360,
+                Duration = new Duration(TimeSpan.FromSeconds(3)),
+                RepeatBehavior = RepeatBehavior.Forever
+            };
+            RotateTransform rt = new RotateTransform();
+            ImgLoading.RenderTransform = rt;
+            rt.BeginAnimation(RotateTransform.AngleProperty, da);
+        }
 
         private void ExecutedMessage(string message)
         {
-            if (LblMessage.Dispatcher.CheckAccess())
-            {
-                LblMessage.Content = message;
-            }
-            else
-            {
-                LblMessage.Dispatcher.Invoke(() => { LblMessage.Content = message; });
-            }
+            _myModel.JobMessage = message;
         }
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -342,14 +336,15 @@ namespace FindDuplicateFiles
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                _myModel.DuplicateFiles.Add(new DuplicateFileInfo()
+                _myModel.DuplicateFiles.Add(new DuplicateFileModel()
                 {
                     Key = key,
                     Name = simpleFile.Name,
                     Path = simpleFile.Path,
-                    Size = simpleFile.Size,
+                    Size = Math.Ceiling(simpleFile.Size / 1024),
                     LastWriteTime = simpleFile.LastWriteTime,
-                    Extension = simpleFile.Extension
+                    Extension = simpleFile.Extension,
+                    IsCheckedFile = false
                 });
             });
         }
@@ -365,12 +360,11 @@ namespace FindDuplicateFiles
         private void ListViewDuplicateFile_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var lv = sender as ListView;
-            if (!(lv?.SelectedItem is DuplicateFileInfo selectFile))
+            if (!(lv?.SelectedItem is DuplicateFileModel selectFile))
             {
                 return;
             }
-
-            if (GlobalArgs.AppConfig.ImageExtension.Contains(selectFile.Extension))
+            if (selectFile.Extension.IsNotEmpty() && GlobalArgs.AppConfig.ImageExtension.Contains(selectFile.Extension))
             {
                 ImgSelected.Source = new BitmapImage(new Uri(selectFile.Path, UriKind.Absolute));
                 GridImage.Visibility = Visibility.Visible;
@@ -388,12 +382,69 @@ namespace FindDuplicateFiles
 
         private void BtnChooseFile_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("抱歉，该功能暂不可用", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
+            if (_myModel.DuplicateFiles.Count == 0)
+            {
+                MessageBox.Show("没有可用数据", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            if (_myModel.DuplicateFiles.Any(x => x.IsCheckedFile))
+            {
+                RemoveChooseAllFiles();
+            }
+            else
+            {
+                ChooseAllFiles();
+            }
 
+        }
+        private void ChooseAllFiles()
+        {
+            foreach (var duplicateFile in _myModel.DuplicateFiles)
+            {
+                duplicateFile.IsCheckedFile = true;
+            }
+            var keyList = _myModel.DuplicateFiles.GroupBy(x => x.Key);
+            foreach (var keyItem in keyList)
+            {
+                _myModel.DuplicateFiles.First(x => x.Key == keyItem.Key).IsCheckedFile = false;
+            }
+        }
+        private void RemoveChooseAllFiles()
+        {
+            foreach (var duplicateFile in _myModel.DuplicateFiles)
+            {
+                duplicateFile.IsCheckedFile = false;
+            }
+        }
         private void BtnDeleteFile_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("抱歉，该功能暂不可用", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Information);
+            try
+            {
+                if (_myModel.DuplicateFiles.Count == 0)
+                {
+                    MessageBox.Show("没有可用数据", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
+                if (MessageBox.Show($"确认要删除选中文件吗？文件删除后不可恢复！", "重复文件查找", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+
+                foreach (var file in _myModel.DuplicateFiles)
+                {
+                    if (file.IsCheckedFile == false)
+                    {
+                        continue;
+                    }
+                    System.IO.File.Delete(file.Path);
+                }
+                MessageBox.Show("删除完成", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"删除失败：{ex.Message}", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

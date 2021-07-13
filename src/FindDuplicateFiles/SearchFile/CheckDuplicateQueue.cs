@@ -27,7 +27,7 @@ namespace FindDuplicateFiles.SearchFile
         /// </summary>
         private SearchMatchEnum _searchMatch;
 
-        private static readonly SemaphoreSlim MySemaphoreSlim = new(5, 5);
+        private static readonly SemaphoreSlim MySemaphoreSlim = new(1, 2);
         private readonly ConcurrentDictionary<string, List<SimpleFileInfo>> _duplicateFiles = new();
 
         /// <summary>
@@ -77,39 +77,51 @@ namespace FindDuplicateFiles.SearchFile
         private async void SearchDuplicate(SimpleFileInfo fileInfo)
         {
             await MySemaphoreSlim.WaitAsync();
-
-            EventMessage?.Invoke($"重复校验：{fileInfo.Path}");
-            string fileKey = "";
-            if ((_searchMatch & SearchMatchEnum.Name) == SearchMatchEnum.Name)
+            try
             {
-                fileKey = fileInfo.Name;
-            }
-            if ((_searchMatch & SearchMatchEnum.Size) == SearchMatchEnum.Size)
-            {
-                fileKey = $"{fileKey}${fileInfo.Size}";
-            }
-            if ((_searchMatch & SearchMatchEnum.LastWriteTime) == SearchMatchEnum.LastWriteTime)
-            {
-                fileKey = $"{fileKey}${fileInfo.LastWriteTime:yyyy-MM-dd HH:mm:ss}";
-            }
-
-            var newFile = new List<SimpleFileInfo> { fileInfo };
-            var resultFile = _duplicateFiles.AddOrUpdate(fileKey, newFile, (x, oldValue) =>
-             {
-                 oldValue.Add(fileInfo);
-                 return oldValue;
-             });
-            if (resultFile.Count > 1)
-            {
-                //有重复文件
-                if (resultFile.Count == 2)
+                if (_isStop)
                 {
-                    //如果是第一次发现重复，则需要连同之前一次的文件信息一并通知
-                    EventDuplicateFound?.Invoke(fileKey, resultFile[0]);
+                    return;
                 }
-                EventDuplicateFound?.Invoke(fileKey, fileInfo);
+                EventMessage?.Invoke($"重复校验：{fileInfo.Path}");
+                string fileKey = "";
+                if ((_searchMatch & SearchMatchEnum.Name) == SearchMatchEnum.Name)
+                {
+                    fileKey = fileInfo.Name;
+                }
+
+                if ((_searchMatch & SearchMatchEnum.Size) == SearchMatchEnum.Size)
+                {
+                    fileKey = $"{fileKey}${fileInfo.Size}";
+                }
+
+                if ((_searchMatch & SearchMatchEnum.LastWriteTime) == SearchMatchEnum.LastWriteTime)
+                {
+                    fileKey = $"{fileKey}${fileInfo.LastWriteTime:yyyy-MM-dd HH:mm:ss}";
+                }
+
+                var newFile = new List<SimpleFileInfo> {fileInfo};
+                var resultFile = _duplicateFiles.AddOrUpdate(fileKey, newFile, (x, oldValue) =>
+                {
+                    oldValue.Add(fileInfo);
+                    return oldValue;
+                });
+                if (resultFile.Count > 1)
+                {
+                    //有重复文件
+                    if (resultFile.Count == 2)
+                    {
+                        //如果是第一次发现重复，则需要连同之前一次的文件信息一并通知
+                        EventDuplicateFound?.Invoke(fileKey, resultFile[0]);
+                    }
+
+                    EventDuplicateFound?.Invoke(fileKey, fileInfo);
+                }
             }
-            MySemaphoreSlim.Release();
+            finally
+            {
+                MySemaphoreSlim.Release();
+            }
         }
 
         /// <summary>

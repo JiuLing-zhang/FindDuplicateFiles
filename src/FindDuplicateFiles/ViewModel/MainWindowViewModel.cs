@@ -8,7 +8,7 @@ namespace FindDuplicateFiles.ViewModel
         public MainWindowViewModel()
         {
             SearchFolders = new ObservableCollection<string>();
-            DuplicateFiles = new ObservableCollection<DuplicateFileInfo>();
+            DuplicateFiles = new ObservableCollection<DuplicateFileModel>();
         }
 
         private ObservableCollection<string> _searchFolders;
@@ -17,7 +17,7 @@ namespace FindDuplicateFiles.ViewModel
         /// </summary>
         public ObservableCollection<string> SearchFolders
         {
-            get { return _searchFolders; }
+            get => _searchFolders;
             set
             {
                 _searchFolders = value;
@@ -25,13 +25,13 @@ namespace FindDuplicateFiles.ViewModel
             }
         }
 
-        private ObservableCollection<DuplicateFileInfo> _duplicateFiles;
+        private ObservableCollection<DuplicateFileModel> _duplicateFiles;
         /// <summary>
         /// 重复文件集合
         /// </summary>
-        public ObservableCollection<DuplicateFileInfo> DuplicateFiles
+        public ObservableCollection<DuplicateFileModel> DuplicateFiles
         {
-            get { return _duplicateFiles; }
+            get => _duplicateFiles;
             set
             {
                 _duplicateFiles = value;
@@ -45,12 +45,27 @@ namespace FindDuplicateFiles.ViewModel
         /// </summary>
         public bool IsShowLoading
         {
-            get { return _isShowLoading; }
+            get => _isShowLoading;
             set
             {
                 _isShowLoading = value;
-                OnPropertyChanged("IsShowLoading");
+                OnPropertyChanged();
             }
         }
+
+        private string _jobMessage;
+        /// <summary>
+        /// 任务消息
+        /// </summary>
+        public string JobMessage
+        {
+            get => _jobMessage;
+            set
+            {
+                _jobMessage = value;
+                OnPropertyChanged();
+            }
+        }
+ 
     }
 }

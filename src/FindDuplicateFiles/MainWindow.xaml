@@ -285,7 +285,7 @@
                                             <GridViewColumn>
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <CheckBox IsChecked="{Binding IsCheckedFile}"  />
+                                                        <CheckBox Name="ChkIsChecked" Checked="ChkIsChecked_Checked" IsChecked="{Binding IsCheckedFile}"  />
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>

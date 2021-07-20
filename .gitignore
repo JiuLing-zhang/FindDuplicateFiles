@@ -75,3 +75,4 @@ ModelManifest.xml
   
 #Backup file  
 *.bak
+/src/.vs

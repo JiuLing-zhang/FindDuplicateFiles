@@ -379,7 +379,6 @@ namespace FindDuplicateFiles
             };
             about.Show();
         }
-
         private void BtnChooseFile_Click(object sender, RoutedEventArgs e)
         {
             if (_myModel.DuplicateFiles.Count == 0)
@@ -397,8 +396,14 @@ namespace FindDuplicateFiles
             }
 
         }
+
+        /// <summary>
+        /// 是否在全选操作
+        /// </summary>
+        private bool _isSelectingAll = false;
         private void ChooseAllFiles()
         {
+            _isSelectingAll = true;
             foreach (var duplicateFile in _myModel.DuplicateFiles)
             {
                 duplicateFile.IsCheckedFile = true;
@@ -408,7 +413,10 @@ namespace FindDuplicateFiles
             {
                 _myModel.DuplicateFiles.First(x => x.Key == keyItem.Key).IsCheckedFile = false;
             }
+            _isSelectingAll = false;
         }
+
+
         private void RemoveChooseAllFiles()
         {
             foreach (var duplicateFile in _myModel.DuplicateFiles)
@@ -439,11 +447,42 @@ namespace FindDuplicateFiles
                     }
                     System.IO.File.Delete(file.Path);
                 }
-                MessageBox.Show("删除完成", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                _myModel.DuplicateFiles.Clear();
+                 MessageBox.Show("删除完成", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"删除失败：{ex.Message}", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ChkIsChecked_Checked(object sender, RoutedEventArgs e)
+        {
+            if (_isSelectingAll)
+            {
+                //全选操作时，不处理事件
+                return;
+            }
+
+            var chk = (sender as CheckBox);
+            if (chk == null)
+            {
+                MessageBox.Show("选择失败，系统内部错误", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            DuplicateFileModel checkedFile = chk.DataContext as DuplicateFileModel;
+            if (checkedFile == null)
+            {
+                MessageBox.Show("选择失败，系统内部错误", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (!_myModel.DuplicateFiles.Any(x => x.Key == checkedFile.Key && x.IsCheckedFile == false))
+            {
+                MessageBox.Show("必须至少保留重复文件中的一个", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Stop);
+                chk.IsChecked = false;
+                return;
             }
         }
     }

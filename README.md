@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/build-passing-brightgreen) ![](https://img.shields.io/badge/license-MIT-green) ![](https://img.shields.io/badge/version-1.1.0.0-blue)  
+![](https://img.shields.io/badge/build-passing-brightgreen) ![](https://img.shields.io/badge/license-MIT-green) ![](https://img.shields.io/badge/version-1.2.0.0-blue)  
 
 # 重复文件查找
 一个`.NET 5 WPF`写的重复文件查找工具，解放你的硬盘空间，红盘用户的福音。  
@@ -12,7 +12,7 @@
 - [x] 特定文件格式查找
 - [x] 自定义路径查找
 - [x] 图片文件选中后自动预览
-- [ ] UI设计（目前照搬的vs黑色主题，但是有些小细节还没有处理）
+- [x] 换肤
 - [x] 重复文件一键删除
 - [x] 查询任务进行中的UI响应速度优化
 - [x] 重复文件过多时的性能优化

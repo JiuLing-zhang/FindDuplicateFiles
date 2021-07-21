@@ -10,4 +10,5 @@
     <SolidColorBrush x:Key="ButtonForeground" Color="#D6EEFF"></SolidColorBrush>
     <SolidColorBrush x:Key="ListViewBackground" Color="#C5E99B"></SolidColorBrush>
     <SolidColorBrush x:Key="ThemeBlockBackground" Color="#8FBC94"></SolidColorBrush>
+    <SolidColorBrush x:Key="GridHeadBackground" Color="#32A67a"></SolidColorBrush>
 </ResourceDictionary>

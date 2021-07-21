@@ -44,11 +44,25 @@
     </Window.Style>
 
     <Window.Resources>
+        <Style x:Key="HeadStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Foreground" Value="{DynamicResource FontForeground}"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                        <Grid Background="{DynamicResource GridHeadBackground}">
+                            <Border Padding="{TemplateBinding Padding}">
+                                <ContentPresenter Margin="2,4,2,4" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="ChangeButtonIsMouseOver" TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Name="border" BorderThickness="0" Background="{TemplateBinding Background}">
+                        <Border Name="border" BorderThickness="0" Background="{DynamicResource Background}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
@@ -105,7 +119,7 @@
                 <!-- 主题 -->
                 <Grid Grid.Column="1" Margin="0,0,10,0">
                     <Border CornerRadius="10"  Background="{DynamicResource ThemeBlockBackground}">
-                        <StackPanel Orientation="Horizontal" Margin="5,0,0,0" WindowChrome.IsHitTestVisibleInChrome="True">
+                        <StackPanel Orientation="Horizontal" Margin="10,0,0,0" WindowChrome.IsHitTestVisibleInChrome="True">
                             <TextBlock Foreground="{DynamicResource Title}" VerticalAlignment="Center">主题</TextBlock>
                             <Button Click="ChangeTheme_Click" Tag="Dark" Width="24" Height="24" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
                                 <Image Source="/Images/ThemeDark.png" Margin="1,0,1,0"></Image>
@@ -281,7 +295,7 @@
                                         </Style>
                                     </ListView.ItemContainerStyle>
                                     <ListView.View>
-                                        <GridView>
+                                        <GridView ColumnHeaderContainerStyle="{StaticResource HeadStyle}">
                                             <GridViewColumn>
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate>

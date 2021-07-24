@@ -112,7 +112,7 @@
                 <!-- 标题 -->
                 <Grid Grid.Column="0">
                     <StackPanel Orientation="Horizontal">
-                        <Image Width="22" Margin="10,0,1,0" Source="/Images/package_search.png"></Image>
+                        <Image Width="22" Margin="10,0,1,0" Source="{StaticResource ImgTitle}"></Image>
                         <TextBlock Foreground="{DynamicResource Title}" VerticalAlignment="Center">重复文件查找</TextBlock>
                     </StackPanel>
                 </Grid>
@@ -120,7 +120,7 @@
                 <Grid Grid.Column="1" Margin="0,0,10,0">
                     <Border CornerRadius="10"  Background="{DynamicResource ThemeBlockBackground}">
                         <StackPanel Orientation="Horizontal" Margin="10,0,0,0" WindowChrome.IsHitTestVisibleInChrome="True">
-                            <TextBlock Foreground="{DynamicResource Title}" VerticalAlignment="Center">主题</TextBlock>
+                            <TextBlock Foreground="{DynamicResource Title}" VerticalAlignment="Center">换肤</TextBlock>
                             <Button Click="ChangeTheme_Click" Tag="Dark" Width="24" Height="24" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
                                 <Image Source="/Images/ThemeDark.png" Margin="1,0,1,0"></Image>
                             </Button>
@@ -134,7 +134,7 @@
                 <Grid Grid.Column="2">
                     <StackPanel Orientation="Horizontal"  WindowChrome.IsHitTestVisibleInChrome="True">
                         <Button Name="BtnAbout" Click="BtnAbout_Click" Width="24" Height="24" Background="Transparent" ToolTip="关于" Style="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
-                            <Image ToolTip="关于" Source="/Images/about.png"></Image>
+                            <Image ToolTip="关于" Source="{StaticResource ImgAbout}"></Image>
                         </Button>
                     </StackPanel>
                 </Grid>
@@ -142,13 +142,13 @@
                 <Grid Grid.Column="3">
                     <StackPanel Orientation="Horizontal" WindowChrome.IsHitTestVisibleInChrome="True">
                         <Button Name="BtnMinimize" Click="BtnMinimize_Click" Width="24" Height="24" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
-                            <Image Source="/Images/horizontal_line.png" Margin="1,0,1,0"></Image>
+                            <Image Source="{StaticResource ImgMin}" Margin="1,0,1,0"></Image>
                         </Button>
                         <Button Name="BtnMaximize" Click="BtnMaximize_Click" Width="24" Height="24"  Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
-                            <Image Name="ImgMaximize" Source="/Images/maximize.png" Margin="1,0,1,0"></Image>
+                            <Image Name="ImgMaximize" Source="{StaticResource ImgMaximize}" Margin="1,0,1,0"></Image>
                         </Button>
                         <Button Name="BtnClose" Click="BtnClose_Click" Width="24" Height="24"  Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
-                            <Image Source="/Images/close.png" Margin="1,0,1,0"></Image>
+                            <Image Source="{StaticResource ImgClose}" Margin="1,0,1,0"></Image>
                         </Button>
                     </StackPanel>
                 </Grid>
@@ -208,28 +208,28 @@
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
                                                 <Button Name="BtnRemoveSearchFolder" Click="BtnRemoveSearchFolder_Click" Tag="{Binding }" Width="14" Height="14" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
-                                                    <Image Source="/Images/delete.png"></Image>
+                                                    <Image Source="{StaticResource ImgDelete}"></Image>
                                                 </Button>
                                                 <TextBlock Foreground="{DynamicResource FontForeground}" VerticalAlignment="Center" Text="{Binding }"></TextBlock>
                                             </StackPanel>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
-                                <Button Margin="0,7,0,0" Name="BtnAddSearchFolder" Click="BtnAddSearchFolder_Click" Width="500" Height="30" Style="{StaticResource ChangeButtonIsMouseOver}" Background="{DynamicResource BlockBorder}" Foreground="{DynamicResource ButtonForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" >添加</Button>
+                                <Button Margin="0,7,0,0" Name="BtnAddSearchFolder" Click="BtnAddSearchFolder_Click" Width="500" Height="30" Style="{StaticResource ChangeButtonIsMouseOver}" Background="{DynamicResource BlockBorder}" Foreground="{DynamicResource FontForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" >添加</Button>
                             </StackPanel>
                         </Border>
                     </Grid>
                     <Grid Grid.Row="3" Margin="0,0,7,7">
                         <StackPanel Orientation="Horizontal">
-                            <Button Name="BtnSearch" Click="BtnSearch_Click" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent" Foreground="{DynamicResource ButtonForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="95,0,0,0">
+                            <Button Name="BtnSearch" Click="BtnSearch_Click" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent" Foreground="{DynamicResource FontForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="95,0,0,0">
                                 <WrapPanel Width="80" Height="30" >
-                                    <Image Name="ImgSearch" Width="24" Height="24" Source="/Images/search.png" Margin="10,5,0,0"></Image>
+                                    <Image Name="ImgSearch" Width="24" Height="24" Source="{StaticResource ImgSearch}" Margin="10,5,0,0"></Image>
                                     <TextBlock Name="TxtSearch" Width="46" VerticalAlignment="Center" Text="查找"/>
                                 </WrapPanel>
                             </Button>
-                            <Button Name="BtnReset" Click="BtnReset_Click" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent" Foreground="{DynamicResource ButtonForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="0,0,10,0">
+                            <Button Name="BtnReset" Click="BtnReset_Click" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent" Foreground="{DynamicResource FontForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="0,0,10,0">
                                 <WrapPanel Width="80" Height="30" >
-                                    <Image Width="24" Height="24" Source="/Images/reset.png" Margin="10,5,0,0"></Image>
+                                    <Image Width="24" Height="24" Source="{StaticResource ImgReset}" Margin="10,5,0,0"></Image>
                                     <TextBlock Width="46" VerticalAlignment="Center" Text="重置"/>
                                 </WrapPanel>
                             </Button>
@@ -255,15 +255,15 @@
                                 <!-- 重复文件列表功能区 -->
                                 <StackPanel Height="25" DockPanel.Dock="Top" Orientation="Horizontal" Margin="2,5,0,5">
                                     <Button Name="BtnChooseFile" Click="BtnChooseFile_Click" ToolTip="批量选中重复文件" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent">
-                                        <Image Width="20" Height="20" Source="/Images/multiple_choice.png"></Image>
+                                        <Image Width="20" Height="20" Source="{StaticResource ImgMultipleChoice}"></Image>
                                     </Button>
                                     <Button Name="BtnDeleteFile" Click="BtnDeleteFile_Click" ToolTip="删除选中文件" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent">
-                                        <Image Width="20" Height="20" Source="/Images/delete_bin.png"></Image>
+                                        <Image Width="20" Height="20" Source="{StaticResource ImgDeleteBin}"></Image>
                                     </Button>
 
                                     <!-- loading模块 -->
                                     <StackPanel Orientation="Horizontal" Margin="10,0,0,0" Visibility="{Binding IsShowLoading, Mode=OneWay, Converter={StaticResource BoolToVisConverter}}">
-                                        <Image Name="ImgLoading" Width="20" Height="20" Source="/Images/loader.png" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5"></Image>
+                                        <Image Name="ImgLoading" Width="20" Height="20" Source="{StaticResource ImgLoader}" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5"></Image>
                                         <TextBlock Foreground="{DynamicResource FontForeground}" VerticalAlignment="Center" Text="{Binding JobMessage,Mode=OneWay}"></TextBlock>
                                     </StackPanel>
                                 </StackPanel>
@@ -339,7 +339,7 @@
                     </Grid>
                     <Grid Name="GridImage" Grid.Column="1" Grid.Row="1" Background="{DynamicResource Title}" Visibility="Hidden" Margin="0,0,18,18">
                         <Border BorderBrush="{DynamicResource BlockBorder}" BorderThickness="1">
-                            <Image Name="ImgSelected"></Image>
+                            <Image Name="ImgPreview"></Image>
                         </Border>
                     </Grid>
                 </Grid>

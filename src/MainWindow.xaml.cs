@@ -120,7 +120,7 @@ namespace FindDuplicateFiles
 
             if (GridImage.Visibility == Visibility)
             {
-                ImgSelected.Source = null;
+                ImgPreview.Source = null;
                 GridImage.Visibility = Visibility.Collapsed;
             }
         }
@@ -135,12 +135,12 @@ namespace FindDuplicateFiles
             if (this.WindowState == WindowState.Maximized)
             {
                 this.WindowState = WindowState.Normal;
-                this.ImgMaximize.Source = new BitmapImage(new Uri("pack://application:,,,/Images/maximize.png"));
+                this.ImgMaximize.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/Themes/{GlobalArgs.AppConfig.Theme}/maximize.png"));
             }
             else
             {
                 this.WindowState = WindowState.Maximized;
-                this.ImgMaximize.Source = new BitmapImage(new Uri("pack://application:,,,/Images/restore.png"));
+                this.ImgMaximize.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/Themes/{GlobalArgs.AppConfig.Theme}/restore.png"));
             }
         }
 
@@ -265,7 +265,7 @@ namespace FindDuplicateFiles
         private void SetBeginSearchStyle()
         {
             TxtSearch.Text = "停止";
-            ImgSearch.Source = new BitmapImage(new Uri("pack://application:,,,/Images/stop.png"));
+            ImgSearch.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/Themes/{GlobalArgs.AppConfig.Theme}/stop.png"));
             _isSearching = true;
             _myModel.IsShowLoading = _isSearching;
         }
@@ -282,7 +282,7 @@ namespace FindDuplicateFiles
         private void SetEndSearchStyle()
         {
             TxtSearch.Text = "开始";
-            ImgSearch.Source = new BitmapImage(new Uri("pack://application:,,,/Images/search.png"));
+            ImgSearch.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/Themes/{GlobalArgs.AppConfig.Theme}/search.png"));
             _isSearching = false;
             _myModel.IsShowLoading = _isSearching;
         }
@@ -366,7 +366,7 @@ namespace FindDuplicateFiles
             }
             if (selectFile.Extension.IsNotEmpty() && GlobalArgs.AppConfig.ImageExtension.Contains(selectFile.Extension))
             {
-                ImgSelected.Source = new BitmapImage(new Uri(selectFile.Path, UriKind.Absolute));
+                ImgPreview.Source = new BitmapImage(new Uri(selectFile.Path, UriKind.Absolute));
                 GridImage.Visibility = Visibility.Visible;
             }
         }
@@ -377,7 +377,7 @@ namespace FindDuplicateFiles
             {
                 Owner = this
             };
-            about.Show();
+            about.ShowDialog();
         }
         private void BtnChooseFile_Click(object sender, RoutedEventArgs e)
         {
@@ -449,7 +449,7 @@ namespace FindDuplicateFiles
                 }
 
                 _myModel.DuplicateFiles.Clear();
-                 MessageBox.Show("删除完成", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("删除完成", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {

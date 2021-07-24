@@ -177,7 +177,7 @@
                         <Border BorderBrush="{DynamicResource BlockBorder}" BorderThickness="1">
                             <StackPanel Margin="5">
                                 <TextBlock FontWeight="Bold" Foreground="{DynamicResource FontForeground}" VerticalAlignment="Center">匹配方式</TextBlock>
-                                <CheckBox Name="ChkFileName" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">文件名</CheckBox>
+                                <CheckBox Name="ChkFileName" Foreground="{DynamicResource FontForeground}" Margin="0,2,0,5">文件名</CheckBox>
                                 <CheckBox Name="ChkFileSize" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">文件大小</CheckBox>
                                 <CheckBox Name="ChkFileLastWriteTimeUtc" Foreground="{DynamicResource FontForeground}">文件修改时间</CheckBox>
                             </StackPanel>
@@ -188,7 +188,7 @@
                         <Border BorderBrush="{DynamicResource BlockBorder}" BorderThickness="1">
                             <StackPanel Margin="5">
                                 <TextBlock FontWeight="Bold" Foreground="{DynamicResource FontForeground}" VerticalAlignment="Center">选项</TextBlock>
-                                <CheckBox Name="ChkIgnoreEmptyFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5" ToolTip="不查找大小为0的文件">忽略空文件</CheckBox>
+                                <CheckBox Name="ChkIgnoreEmptyFile" Foreground="{DynamicResource FontForeground}" Margin="0,2,0,5" ToolTip="不查找大小为0的文件">忽略空文件</CheckBox>
                                 <CheckBox Name="ChkIgnoreHiddenFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">忽略隐藏文件</CheckBox>
                                 <CheckBox Name="ChkIgnoreSmallFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">忽略小文件（小于1024KB）</CheckBox>
                                 <RadioButton Name="RdoAllFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">查找所有文件</RadioButton>
@@ -203,7 +203,7 @@
                         <Border BorderBrush="{DynamicResource BlockBorder}" BorderThickness="1">
                             <StackPanel Margin="5">
                                 <TextBlock FontWeight="Bold" Foreground="{DynamicResource FontForeground}" VerticalAlignment="Center">查找路径</TextBlock>
-                                <ListBox Name="ListBoxSearchFolders" ItemsSource="{Binding}" Height="160" Background="Transparent" BorderBrush="{DynamicResource BlockBorder}">
+                                <ListBox Name="ListBoxSearchFolders" ItemsSource="{Binding}" Height="160" Background="Transparent" BorderBrush="{DynamicResource BlockBorder}" Margin="0,5,0,0">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">

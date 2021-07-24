@@ -6,7 +6,9 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Navigation;
 using FindDuplicateFiles.Common;
+using FindDuplicateFiles.ViewModel;
 using MessageBox = System.Windows.MessageBox;
+using System.Threading.Tasks;
 
 namespace FindDuplicateFiles
 {
@@ -15,10 +17,12 @@ namespace FindDuplicateFiles
     /// </summary>
     public partial class AboutWindow : Window
     {
+        private readonly AboutWindowViewModel _myModel = new();
         public AboutWindow()
         {
             InitializeComponent();
-            TxtVersion.Text = $"版本：{GlobalArgs.AppVersion}";
+            DataContext = _myModel;
+            _myModel.Version = $"版本：{GlobalArgs.AppVersion}";
         }
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -31,31 +35,35 @@ namespace FindDuplicateFiles
             e.Handled = true;
         }
 
-        private void BtnCheckForUpdates_Click(object sender, RoutedEventArgs e)
+        private void BtnCheckUpdate_Click(object sender, RoutedEventArgs e)
         {
-            try
+            _myModel.UpdateMessage = "正在查找更新....";
+            Task.Run(() =>
             {
-                var (isNewVersion, version, link) = new CheckForUpdates().Check();
-                if (isNewVersion == false)
+                try
                 {
-                    MessageBox.Show($"当前版本已经是最新版本！", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.None);
-                    return;
+                    var (isNewVersion, version, link) = new CheckForUpdates().Check();
+                    if (isNewVersion == false)
+                    {
+                        _myModel.UpdateMessage = "当前版本已经是最新版本！";
+                        return;
+                    }
+                    _myModel.UpdateMessage = $"发现新版本：{version}";
+                    var notify = new NotifyIcon
+                    {
+                        BalloonTipText = $"发现新版本：{version}{System.Environment.NewLine}点击更新",
+                        Icon = new Icon($"{GlobalArgs.AppPath}Images\\icon.ico"),
+                        Tag = link,
+                        Visible = true
+                    };
+                    notify.BalloonTipClicked += notifyIcon_BalloonTipClicked;
+                    notify.ShowBalloonTip(5000);
                 }
-
-                var notify = new NotifyIcon
+                catch (Exception ex)
                 {
-                    BalloonTipText = $"发现新版本：{version}{System.Environment.NewLine}点击更新",
-                    Icon = new Icon($"{GlobalArgs.AppPath}Images\\icon.ico"),
-                    Tag = link,
-                    Visible = true
-                };
-                notify.BalloonTipClicked += notifyIcon_BalloonTipClicked;
-                notify.ShowBalloonTip(5000);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"检查更新失败，{ex.Message}", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+                    _myModel.UpdateMessage = $"检查更新失败，{ex.Message}";
+                }
+            });
         }
         private void notifyIcon_BalloonTipClicked(object sender, EventArgs e)
         {

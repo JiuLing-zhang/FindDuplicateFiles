@@ -10,6 +10,7 @@
     <SolidColorBrush x:Key="ListViewBackground" Color="#2A2A2A"></SolidColorBrush>
     <SolidColorBrush x:Key="ThemeBlockBackground" Color="#B600A0"></SolidColorBrush>
     <SolidColorBrush x:Key="GridHeadBackground" Color="#3E3E3E"></SolidColorBrush>
+    <SolidColorBrush x:Key="AboutBackground" Color="#3F3F3F"></SolidColorBrush>
 
     <BitmapImage x:Key="ImgTitle" UriSource="/Images/Themes/Dark/package_search.png" />
     <BitmapImage x:Key="ImgAbout" UriSource="/Images/Themes/Dark/about.png" />
@@ -22,4 +23,9 @@
     <BitmapImage x:Key="ImgMultipleChoice" UriSource="/Images/Themes/Dark/multiple_choice.png" />
     <BitmapImage x:Key="ImgDeleteBin" UriSource="/Images/Themes/Dark/delete_bin.png" />
     <BitmapImage x:Key="ImgLoader" UriSource="/Images/Themes/Dark/loader.png" />
+
+    <BitmapImage x:Key="ImgHomePage" UriSource="/Images/Themes/Dark/home_page.png" />
+    <BitmapImage x:Key="ImgGitHub" UriSource="/Images/Themes/Dark/github.png" />
+    <BitmapImage x:Key="ImgSourceCode" UriSource="/Images/Themes/Dark/c_sharp_logo.png" />
+    
 </ResourceDictionary>

@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using FindDuplicateFiles.Model;
 
 namespace FindDuplicateFiles.ViewModel
 {
@@ -66,6 +65,5 @@ namespace FindDuplicateFiles.ViewModel
                 OnPropertyChanged();
             }
         }
- 
     }
 }

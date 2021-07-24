@@ -10,8 +10,10 @@
     <SolidColorBrush x:Key="ListViewBackground" Color="#2A2A2A"></SolidColorBrush>
     <SolidColorBrush x:Key="ThemeBlockBackground" Color="#B600A0"></SolidColorBrush>
     <SolidColorBrush x:Key="GridHeadBackground" Color="#3E3E3E"></SolidColorBrush>
+    <SolidColorBrush x:Key="GridMouseBackground" Color="#252525"></SolidColorBrush>
+    <SolidColorBrush x:Key="GridMouseForeground" Color="#E6E6E6"></SolidColorBrush>
     <SolidColorBrush x:Key="AboutBackground" Color="#3F3F3F"></SolidColorBrush>
-
+    
     <BitmapImage x:Key="ImgTitle" UriSource="/Images/Themes/Dark/package_search.png" />
     <BitmapImage x:Key="ImgAbout" UriSource="/Images/Themes/Dark/about.png" />
     <BitmapImage x:Key="ImgMin" UriSource="/Images/Themes/Dark/horizontal_line.png" />

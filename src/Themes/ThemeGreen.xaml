@@ -2,13 +2,31 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:FindDuplicateFiles">
 
-    <SolidColorBrush x:Key="Background" Color="#32b67a"></SolidColorBrush>
-    <SolidColorBrush x:Key="Title" Color="#FFFFFF"></SolidColorBrush>
-    <SolidColorBrush x:Key="FontForeground" Color="#FFFFFF"></SolidColorBrush>
-    <SolidColorBrush x:Key="GridBackground" Color="#8FBC94"></SolidColorBrush>
-    <SolidColorBrush x:Key="BlockBorder" Color="#285943"></SolidColorBrush>
-    <SolidColorBrush x:Key="ButtonForeground" Color="#D6EEFF"></SolidColorBrush>
-    <SolidColorBrush x:Key="ListViewBackground" Color="#C5E99B"></SolidColorBrush>
-    <SolidColorBrush x:Key="ThemeBlockBackground" Color="#8FBC94"></SolidColorBrush>
-    <SolidColorBrush x:Key="GridHeadBackground" Color="#32A67a"></SolidColorBrush>
+    <SolidColorBrush x:Key="Background" Color="#8BC34A"></SolidColorBrush>
+    <SolidColorBrush x:Key="Title" Color="#212121"></SolidColorBrush>
+    <SolidColorBrush x:Key="FontForeground" Color="#212121"></SolidColorBrush>
+    <SolidColorBrush x:Key="GridBackground" Color="#689F38"></SolidColorBrush>
+    <SolidColorBrush x:Key="BlockBorder" Color="#DCEDC8"></SolidColorBrush>
+    <SolidColorBrush x:Key="ListViewBackground" Color="#F0F4C3"></SolidColorBrush>
+    <SolidColorBrush x:Key="ThemeBlockBackground" Color="#B2DFDB"></SolidColorBrush>
+    <SolidColorBrush x:Key="GridHeadBackground" Color="#FFFFFF"></SolidColorBrush>
+    <SolidColorBrush x:Key="GridMouseBackground" Color="#689F38"></SolidColorBrush>
+    <SolidColorBrush x:Key="GridMouseForeground" Color="#B2DFDB"></SolidColorBrush>
+    <SolidColorBrush x:Key="AboutBackground" Color="#4CAF50"></SolidColorBrush>
+
+    <BitmapImage x:Key="ImgTitle" UriSource="/Images/Themes/Green/package_search.png" />
+    <BitmapImage x:Key="ImgAbout" UriSource="/Images/Themes/Green/about.png" />
+    <BitmapImage x:Key="ImgMin" UriSource="/Images/Themes/Green/horizontal_line.png" />
+    <BitmapImage x:Key="ImgMaximize" UriSource="/Images/Themes/Green/maximize.png" />
+    <BitmapImage x:Key="ImgClose" UriSource="/Images/Themes/Green/close.png" />
+    <BitmapImage x:Key="ImgDelete" UriSource="/Images/Themes/Green/delete.png" />
+    <BitmapImage x:Key="ImgSearch" UriSource="/Images/Themes/Green/search.png" />
+    <BitmapImage x:Key="ImgReset" UriSource="/Images/Themes/Green/reset.png" />
+    <BitmapImage x:Key="ImgMultipleChoice" UriSource="/Images/Themes/Green/multiple_choice.png" />
+    <BitmapImage x:Key="ImgDeleteBin" UriSource="/Images/Themes/Green/delete_bin.png" />
+    <BitmapImage x:Key="ImgLoader" UriSource="/Images/Themes/Green/loader.png" />
+
+    <BitmapImage x:Key="ImgHomePage" UriSource="/Images/Themes/Green/home_page.png" />
+    <BitmapImage x:Key="ImgGitHub" UriSource="/Images/Themes/Green/github.png" />
+    <BitmapImage x:Key="ImgSourceCode" UriSource="/Images/Themes/Green/c_sharp_logo.png" />
 </ResourceDictionary>

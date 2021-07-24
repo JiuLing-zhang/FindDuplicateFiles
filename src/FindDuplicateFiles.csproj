@@ -53,6 +53,23 @@
     <None Remove="Images\Themes\Dark\restore.png" />
     <None Remove="Images\Themes\Dark\search.png" />
     <None Remove="Images\Themes\Dark\stop.png" />
+    <None Remove="Images\Themes\Green\about.png" />
+    <None Remove="Images\Themes\Green\available_updates.png" />
+    <None Remove="Images\Themes\Green\close.png" />
+    <None Remove="Images\Themes\Green\c_sharp_logo.png" />
+    <None Remove="Images\Themes\Green\delete.png" />
+    <None Remove="Images\Themes\Green\delete_bin.png" />
+    <None Remove="Images\Themes\Green\github.png" />
+    <None Remove="Images\Themes\Green\home_page.png" />
+    <None Remove="Images\Themes\Green\horizontal_line.png" />
+    <None Remove="Images\Themes\Green\loader.png" />
+    <None Remove="Images\Themes\Green\maximize.png" />
+    <None Remove="Images\Themes\Green\multiple_choice.png" />
+    <None Remove="Images\Themes\Green\package_search.png" />
+    <None Remove="Images\Themes\Green\reset.png" />
+    <None Remove="Images\Themes\Green\restore.png" />
+    <None Remove="Images\Themes\Green\search.png" />
+    <None Remove="Images\Themes\Green\stop.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -123,6 +140,57 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Themes\Dark\stop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Themes\Green\about.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Themes\Green\available_updates.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Themes\Green\close.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Themes\Green\c_sharp_logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Themes\Green\delete.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Themes\Green\delete_bin.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Themes\Green\github.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Themes\Green\home_page.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Themes\Green\horizontal_line.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Themes\Green\loader.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Themes\Green\maximize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Themes\Green\multiple_choice.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Themes\Green\package_search.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Themes\Green\reset.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Themes\Green\restore.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Themes\Green\search.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Themes\Green\stop.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -284,11 +284,11 @@
                                             <Setter Property="Foreground" Value="{DynamicResource FontForeground}"/>
                                             <Style.Triggers>
                                                 <Trigger Property="IsSelected" Value="True">
-                                                    <Setter Property="Background" Value="{DynamicResource GridBackground}" />
+                                                    <Setter Property="Background" Value="{DynamicResource GridMouseBackground}" />
                                                 </Trigger>
                                                 <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="{DynamicResource FontForeground}" />
-                                                    <Setter Property="Foreground" Value="{DynamicResource GridBackground}" />
+                                                    <Setter Property="Background" Value="{DynamicResource GridMouseForeground}" />
+                                                    <Setter Property="Foreground" Value="{DynamicResource GridMouseBackground}" />
                                                 </Trigger>
 
                                             </Style.Triggers>

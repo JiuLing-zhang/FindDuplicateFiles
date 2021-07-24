@@ -1,4 +1,5 @@
-﻿using FindDuplicateFiles.Model;
+﻿using System;
+using FindDuplicateFiles.Model;
 
 namespace FindDuplicateFiles.Common
 {
@@ -9,5 +10,7 @@ namespace FindDuplicateFiles.Common
         /// </summary>
         public const string AppConfigPath = "/config.json";
         public static AppConfigInfo AppConfig = new();
+        public static string AppVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString();
+        public static string AppPath = AppDomain.CurrentDomain.BaseDirectory;
     }
 }

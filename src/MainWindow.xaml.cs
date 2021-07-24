@@ -47,7 +47,7 @@ namespace FindDuplicateFiles
 
         private void LoadingAppConfig()
         {
-            string configPath = $"{AppDomain.CurrentDomain.BaseDirectory}{GlobalArgs.AppConfigPath}";
+            string configPath = $"{GlobalArgs.AppPath}{GlobalArgs.AppConfigPath}";
             string configString = File.ReadAllText(configPath);
             GlobalArgs.AppConfig = System.Text.Json.JsonSerializer.Deserialize<AppConfigInfo>(configString);
         }
@@ -312,7 +312,7 @@ namespace FindDuplicateFiles
             LoadingTheme(theme);
             GlobalArgs.AppConfig.Theme = theme;
             string appConfigString = System.Text.Json.JsonSerializer.Serialize(GlobalArgs.AppConfig);
-            string configPath = $"{AppDomain.CurrentDomain.BaseDirectory}{GlobalArgs.AppConfigPath}";
+            string configPath = $"{GlobalArgs.AppPath}{GlobalArgs.AppConfigPath}";
             File.WriteAllText(configPath, appConfigString);
         }
 

@@ -9,18 +9,22 @@
     <Win32Resource />
     <Authors>九零</Authors>
     <Product>重复文件查找</Product>
-    <Version>1.2.0.0</Version>
+    <Version>1.3.0.0</Version>
+    <AssemblyName>重复文件查找</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="config.json" />
     <None Remove="Images\about.png" />
+    <None Remove="Images\available_updates.png" />
     <None Remove="Images\close.png" />
+    <None Remove="Images\c_sharp_logo.png" />
     <None Remove="Images\delete.png" />
     <None Remove="Images\delete_bin.png" />
     <None Remove="Images\github.png" />
     <None Remove="Images\home_page.png" />
     <None Remove="Images\horizontal_line.png" />
+    <None Remove="Images\icon.ico" />
     <None Remove="Images\icon.png" />
     <None Remove="Images\loader.png" />
     <None Remove="Images\maximize.png" />
@@ -41,64 +45,69 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\about.png">
+    <Content Include="Images\about.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\close.png">
+    </Content>
+    <Content Include="Images\available_updates.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\delete.png">
+    </Content>
+    <Content Include="Images\close.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\delete_bin.png">
+    </Content>
+    <Content Include="Images\c_sharp_logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\github.png">
+    </Content>
+    <Content Include="Images\delete.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\home_page.png">
+    </Content>
+    <Content Include="Images\icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\horizontal_line.png">
+    </Content>
+    <Content Include="Images\delete_bin.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\icon.png">
+    </Content>
+    <Content Include="Images\github.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\loader.png">
+    </Content>
+    <Content Include="Images\home_page.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\maximize.png">
+    </Content>
+    <Content Include="Images\horizontal_line.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\multiple_choice.png">
+    </Content>
+    <Content Include="Images\icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\package_search.png">
+    </Content>
+    <Content Include="Images\loader.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\reset.png">
+    </Content>
+    <Content Include="Images\maximize.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\restore.png">
+    </Content>
+    <Content Include="Images\multiple_choice.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\search.png">
+    </Content>
+    <Content Include="Images\package_search.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\stop.png">
+    </Content>
+    <Content Include="Images\reset.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\ThemeDark.png">
+    </Content>
+    <Content Include="Images\restore.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\ThemeGreen.png">
+    </Content>
+    <Content Include="Images\search.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Model\" />
+    </Content>
+    <Content Include="Images\stop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ThemeDark.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ThemeGreen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

@@ -10,13 +10,28 @@
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True"
-        WindowStartupLocation="CenterOwner"
-        Deactivated="Window_Deactivated"
+        WindowStartupLocation="CenterOwner" 
         MouseDown="Window_MouseDown"
-      >
+              >
     <Window.Resources>
         <Style TargetType="Hyperlink">
             <Setter Property="TextBlock.TextDecorations" Value="{x:Null}"></Setter>
+        </Style>
+        <Style x:Key="ChangeButtonIsMouseOver" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" BorderThickness="0" Background="#AAAAAA">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
 
@@ -30,6 +45,12 @@
             <StackPanel Orientation="Horizontal" Margin="10">
                 <TextBlock Foreground="#FFFFFF" FontSize="22" Margin="10,2,0,0">重复文件查找</TextBlock>
                 <TextBlock Name="TxtVersion" Foreground="#FFFFFF" FontSize="15" FontStyle="Oblique" Margin="20,11,0,0"></TextBlock>
+                <Button Name="BtnCheckForUpdates" Click="BtnCheckForUpdates_Click" Width="18" Height="18" ToolTip="检查更新" Margin="7,6,1,0" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
+                    <Image Source="/Images/available_updates.png"></Image>
+                </Button>
+                <Button Name="BtnClose" Click="BtnClose_Click" Width="18" Height="18" Margin="7,-25,1,0" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
+                    <Image Source="/Images/close.png"></Image>
+                </Button>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1" Background="#CCCCCC">
@@ -42,13 +63,18 @@
             <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
                 <TextBlock Foreground="#000000" FontSize="14" Margin="0,8,0,0">作者：九零</TextBlock>
                 <TextBlock Margin="10,3,8,0">           
-                    <Hyperlink Name="LinkBlog" NavigateUri="https://jiuling.me" RequestNavigate="GoWebsite_RequestNavigate" >
+                    <Hyperlink NavigateUri="https://jiuling.me" RequestNavigate="GoWebsite_RequestNavigate" >
                         <Image ToolTip="博客" Width="24" Source="/Images/home_page.png"></Image>
                     </Hyperlink>
                 </TextBlock>
                 <TextBlock Margin="0,3,0,0">           
-                    <Hyperlink Name="LinkGitHub" NavigateUri="https://github.com/JiuLing-zhang" RequestNavigate="GoWebsite_RequestNavigate">
+                    <Hyperlink NavigateUri="https://github.com/JiuLing-zhang" RequestNavigate="GoWebsite_RequestNavigate">
                         <Image ToolTip="Github" Width="24" Source="/Images/github.png"></Image>
+                    </Hyperlink>
+                </TextBlock>
+                <TextBlock Margin="10,3,0,0">           
+                    <Hyperlink NavigateUri="https://github.com/JiuLing-zhang/FindDuplicateFiles" RequestNavigate="GoWebsite_RequestNavigate">
+                        <Image ToolTip="程序源码" Width="24" Source="/Images/c_sharp_logo.png"></Image>
                     </Hyperlink>
                 </TextBlock>
             </StackPanel>

@@ -207,7 +207,7 @@
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                <Button Name="BtnRemoveSearchFolder" Click="BtnRemoveSearchFolder_Click" Tag="{Binding }" Width="14" Height="14" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
+                                                <Button Name="BtnRemoveSearchFolder" Click="BtnRemoveSearchFolder_Click" Tag="{Binding }" ToolTip="删除" Width="14" Height="14" Background="Transparent" Margin="-3,0,3,0" Style="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
                                                     <Image Source="{StaticResource ImgDelete}"></Image>
                                                 </Button>
                                                 <TextBlock Foreground="{DynamicResource FontForeground}" VerticalAlignment="Center" Text="{Binding }"></TextBlock>
@@ -229,7 +229,7 @@
                             </Button>
                             <Button Name="BtnReset" Click="BtnReset_Click" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent" Foreground="{DynamicResource FontForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="0,0,10,0">
                                 <WrapPanel Width="80" Height="30" >
-                                    <Image Width="24" Height="24" Source="{StaticResource ImgReset}" Margin="10,5,0,0"></Image>
+                                    <Image Name="ImgReset" Width="24" Height="24" Source="{StaticResource ImgReset}" Margin="10,5,0,0"></Image>
                                     <TextBlock Width="46" VerticalAlignment="Center" Text="重置"/>
                                 </WrapPanel>
                             </Button>
@@ -255,10 +255,10 @@
                                 <!-- 重复文件列表功能区 -->
                                 <StackPanel Height="25" DockPanel.Dock="Top" Orientation="Horizontal" Margin="2,5,0,5">
                                     <Button Name="BtnChooseFile" Click="BtnChooseFile_Click" ToolTip="批量选中重复文件" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent">
-                                        <Image Width="20" Height="20" Source="{StaticResource ImgMultipleChoice}"></Image>
+                                        <Image Name="ImgMultipleChoice" Width="20" Height="20" Source="{StaticResource ImgMultipleChoice}"></Image>
                                     </Button>
                                     <Button Name="BtnDeleteFile" Click="BtnDeleteFile_Click" ToolTip="删除选中文件" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent">
-                                        <Image Width="20" Height="20" Source="{StaticResource ImgDeleteBin}"></Image>
+                                        <Image Name="ImgDeleteBin" Width="20" Height="20" Source="{StaticResource ImgDeleteBin}"></Image>
                                     </Button>
 
                                     <!-- loading模块 -->

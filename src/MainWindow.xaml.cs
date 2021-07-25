@@ -279,7 +279,7 @@ namespace FindDuplicateFiles
         /// </summary>
         private void SetEndSearchStyle()
         {
-            TxtSearch.Text = "开始";
+            TxtSearch.Text = "查找";
             ImgSearch.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/Themes/{GlobalArgs.AppConfig.Theme}/search.png"));
             _isSearching = false;
             _myModel.IsShowLoading = _isSearching;
@@ -297,6 +297,11 @@ namespace FindDuplicateFiles
 
         private void ChangeTheme_Click(object sender, RoutedEventArgs e)
         {
+            if (_isSearching)
+            {
+                MessageBox.Show("任务执行中不允许换肤", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Stop);
+                return;
+            }
 
             var tag = (sender as Button)?.Tag;
             if (tag == null)
@@ -306,12 +311,12 @@ namespace FindDuplicateFiles
             }
 
             string theme = tag.ToString();
-
-            LoadingTheme(theme);
             GlobalArgs.AppConfig.Theme = theme;
             string appConfigString = System.Text.Json.JsonSerializer.Serialize(GlobalArgs.AppConfig);
             string configPath = $"{GlobalArgs.AppPath}{GlobalArgs.AppConfigPath}";
             File.WriteAllText(configPath, appConfigString);
+
+            LoadingTheme(theme);
         }
 
         private void LoadingTheme(string themeName)
@@ -323,6 +328,12 @@ namespace FindDuplicateFiles
                     Source = new Uri($"/Themes/Theme{themeName}.xaml", UriKind.RelativeOrAbsolute)
                 };
                 Application.Current.Resources.MergedDictionaries[0] = mResourceSkin;
+
+                ImgSearch.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/Themes/{GlobalArgs.AppConfig.Theme}/search.png"));
+                ImgReset.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/Themes/{GlobalArgs.AppConfig.Theme}/reset.png"));
+                ImgMultipleChoice.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/Themes/{GlobalArgs.AppConfig.Theme}/multiple_choice.png"));
+                ImgDeleteBin.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/Themes/{GlobalArgs.AppConfig.Theme}/delete_bin.png"));
+                ImgLoading.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/Themes/{GlobalArgs.AppConfig.Theme}/loader.png"));
             }
             catch (IOException ex)
             {

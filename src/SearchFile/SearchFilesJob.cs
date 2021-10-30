@@ -86,10 +86,6 @@ namespace FindDuplicateFiles.SearchFile
         private void CalcFilesInfo(List<string> paths, SearchOptionEnum searchOption)
         {
             EventMessage?.Invoke($"读取文件：{string.Join(",", paths)}");
-            if (paths.Any(x => x.IndexOf("JZY.rar") >= 0))
-            {
-                // return;
-            }
             //根据路径加载文件信息
             var files = paths.Select(path => new FileInfo(path)).ToList();
 

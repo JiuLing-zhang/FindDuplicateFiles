@@ -70,6 +70,7 @@
     <None Remove="Images\Themes\Green\restore.png" />
     <None Remove="Images\Themes\Green\search.png" />
     <None Remove="Images\Themes\Green\stop.png" />
+    <None Remove="Updates\Update" />
     <None Remove="首次运行请看这里！！！.txt" />
   </ItemGroup>
 
@@ -194,12 +195,19 @@
     <Content Include="Images\Themes\Green\stop.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Updates\Update">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="首次运行请看这里！！！.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JiuLing.CommonLibs" Version="1.1.12" />
   </ItemGroup>
 
 </Project>

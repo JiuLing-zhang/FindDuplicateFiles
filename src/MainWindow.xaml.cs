@@ -48,6 +48,10 @@ namespace FindDuplicateFiles
             string configPath = $"{GlobalArgs.AppPath}{GlobalArgs.AppConfigPath}";
             string configString = File.ReadAllText(configPath);
             GlobalArgs.AppConfig = System.Text.Json.JsonSerializer.Deserialize<AppConfigInfo>(configString);
+
+            string updateConfigPath = $"{GlobalArgs.AppPath}{GlobalArgs.UpdateConfigPath}";
+            string updateConfigString = File.ReadAllText(updateConfigPath);
+            GlobalArgs.UpdateConfig = System.Text.Json.JsonSerializer.Deserialize<UpdateConfigInfo>(updateConfigString);
         }
 
         private void InitializeSearchCondition()

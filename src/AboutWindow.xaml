@@ -28,7 +28,7 @@
             <Setter Property="Visibility" Value="Visible"></Setter>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding DownloadUrl}" Value="https://github.com/JiuLing-zhang">
-                    <Setter Property="Visibility" Value="Hidden"></Setter>
+                    <Setter Property="Visibility" Value="Collapsed"></Setter>
                 </DataTrigger>
             </Style.Triggers>
         </Style>

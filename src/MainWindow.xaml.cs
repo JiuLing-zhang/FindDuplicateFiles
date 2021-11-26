@@ -1,7 +1,4 @@
-﻿using FindDuplicateFiles.Common;
-using FindDuplicateFiles.Extensions;
-using FindDuplicateFiles.SearchFile;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,8 +9,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using FindDuplicateFiles.Common;
 using FindDuplicateFiles.Model;
+using FindDuplicateFiles.SearchFile;
 using FindDuplicateFiles.ViewModel;
+using JiuLing.CommonLibs.ExtensionMethods;
 
 namespace FindDuplicateFiles
 {

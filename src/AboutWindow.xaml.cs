@@ -1,11 +1,11 @@
-﻿using FindDuplicateFiles.Updates;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Navigation;
 using FindDuplicateFiles.Common;
 using FindDuplicateFiles.ViewModel;
 using System.Threading.Tasks;
+using FindDuplicateFiles.Updates;
 
 namespace FindDuplicateFiles
 {

@@ -169,7 +169,7 @@
                 <Grid Grid.Column="0" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="100"></RowDefinition>
-                        <RowDefinition Height="180"></RowDefinition>
+                        <RowDefinition Height="200"></RowDefinition>
                         <RowDefinition Height="240"></RowDefinition>
                         <RowDefinition Height="50"></RowDefinition>
                     </Grid.RowDefinitions>
@@ -192,6 +192,7 @@
                                 <TextBlock FontWeight="Bold" Foreground="{DynamicResource FontForeground}" VerticalAlignment="Center">选项</TextBlock>
                                 <CheckBox Name="ChkIgnoreEmptyFile" Foreground="{DynamicResource FontForeground}" Margin="0,2,0,5" ToolTip="不查找大小为0的文件">忽略空文件</CheckBox>
                                 <CheckBox Name="ChkIgnoreHiddenFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">忽略隐藏文件</CheckBox>
+                                <CheckBox Name="ChkIgnoreSystemFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">忽略系统文件</CheckBox>
                                 <CheckBox Name="ChkIgnoreSmallFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">忽略小文件（小于1024KB）</CheckBox>
                                 <RadioButton Name="RdoAllFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">查找所有文件</RadioButton>
                                 <RadioButton Name="RdoOnlyImageFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">仅查找图片文件</RadioButton>

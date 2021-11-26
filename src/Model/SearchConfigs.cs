@@ -32,5 +32,6 @@ namespace FindDuplicateFiles.Model
         OnlyImageFile = 8,
         OnlyMediaFile = 16,
         OnlyDocumentFile = 32,
+        IgnoreSystemFile = 64,
     }
 }

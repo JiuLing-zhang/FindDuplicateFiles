@@ -105,6 +105,11 @@ namespace FindDuplicateFiles.SearchFile
                 IFileSearchFilter filter = new IgnoreSmallFileFilter(1024);
                 files = filter.FilterByCondition(files);
             }
+            if ((searchOption & SearchOptionEnum.IgnoreSystemFile) == SearchOptionEnum.IgnoreSystemFile)
+            {
+                IFileSearchFilter filter = new IgnoreExtensionFilter(GlobalArgs.AppConfig.SystemExtension.Split(';').ToList());
+                files = filter.FilterByCondition(files);
+            }
             if ((searchOption & SearchOptionEnum.OnlyDocumentFile) == SearchOptionEnum.OnlyDocumentFile)
             {
                 IFileSearchFilter filter = new OnlyExtensionFilter(GlobalArgs.AppConfig.DocumentExtension.Split(';').ToList());

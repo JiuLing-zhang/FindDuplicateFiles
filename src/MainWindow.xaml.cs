@@ -64,6 +64,7 @@ namespace FindDuplicateFiles
             //选项
             ChkIgnoreEmptyFile.IsChecked = true;
             ChkIgnoreHiddenFile.IsChecked = true;
+            ChkIgnoreSystemFile.IsChecked = true;
             ChkIgnoreSmallFile.IsChecked = false;
             RdoAllFile.IsChecked = true;
 
@@ -83,9 +84,10 @@ namespace FindDuplicateFiles
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("Key");
             view.GroupDescriptions?.Add(groupDescription);
 
-            RdoOnlyImageFile.ToolTip = $"仅支持：{GlobalArgs.AppConfig.ImageExtension}文件";
-            RdoOnlyMediaFile.ToolTip = $"仅支持：{GlobalArgs.AppConfig.MediaExtension}文件";
-            RdoOnlyDocumentFile.ToolTip = $"仅支持：{GlobalArgs.AppConfig.DocumentExtension}文件";
+            RdoOnlyImageFile.ToolTip = $"包括：{GlobalArgs.AppConfig.ImageExtension}文件";
+            RdoOnlyMediaFile.ToolTip = $"包括：{GlobalArgs.AppConfig.MediaExtension}文件";
+            RdoOnlyDocumentFile.ToolTip = $"包括：{GlobalArgs.AppConfig.DocumentExtension}文件";
+            ChkIgnoreSystemFile.ToolTip = $"包括：{GlobalArgs.AppConfig.SystemExtension}文件";
             DataContext = _myModel;
         }
 
@@ -232,6 +234,10 @@ namespace FindDuplicateFiles
             if (ChkIgnoreHiddenFile.IsChecked == true)
             {
                 searchOption = searchOption | SearchOptionEnum.IgnoreHiddenFile;
+            }
+            if (ChkIgnoreSystemFile.IsChecked == true)
+            {
+                searchOption = searchOption | SearchOptionEnum.IgnoreSystemFile;
             }
             if (ChkIgnoreSmallFile.IsChecked == true)
             {

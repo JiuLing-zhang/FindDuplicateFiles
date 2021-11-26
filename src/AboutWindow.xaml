@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:FindDuplicateFiles"
         mc:Ignorable="d"
         ShowInTaskbar="False" 
-        Title="AboutWindow" Height="300" Width="450"
+        Title="AboutWindow" 
+        Height="300" Width="450"  
         WindowStyle="None"
         Background="Transparent"
         BorderThickness="24"
@@ -22,6 +23,16 @@
         <Style TargetType="Hyperlink">
             <Setter Property="TextBlock.TextDecorations" Value="{x:Null}"></Setter>
         </Style>
+
+        <Style x:Key="ShowDownload" TargetType="TextBlock">
+            <Setter Property="Visibility" Value="Visible"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding DownloadUrl}" Value="https://github.com/JiuLing-zhang">
+                    <Setter Property="Visibility" Value="Hidden"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
         <Style x:Key="ChangeButtonIsMouseOver" TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
@@ -41,7 +52,7 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="78*"></RowDefinition> 
+            <RowDefinition Height="78*"></RowDefinition>
             <RowDefinition Height="22*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="{DynamicResource AboutBackground}">
@@ -49,22 +60,24 @@
                 <Image Width="48" Height="48" Source="/Images/icon.png"></Image>
                 <TextBlock Foreground="{DynamicResource FontForeground}" Margin="0,10,0,0" FontSize="22"  TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center">重复文件查找</TextBlock>
                 <TextBlock Text="{Binding Version,Mode=OneWay}" Foreground="{DynamicResource FontForeground}" FontSize="15" Margin="0,5,0,0" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Text="{Binding UpdateMessage,Mode=OneWay}" Foreground="{DynamicResource FontForeground}" FontSize="13" Margin="0,28,0,0" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,28,0,0">
+                    <TextBlock Text="{Binding UpdateMessage,Mode=OneWay}" Foreground="{DynamicResource FontForeground}" FontSize="13"  TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Margin="10,0,0,0" Style="{DynamicResource ShowDownload}">           
+                        <Hyperlink NavigateUri="{Binding DownloadUrl}" RequestNavigate="GoWebsite_RequestNavigate">
+                            <Image ToolTip="下载" Width="16" Source="{StaticResource ImgDownload}"></Image>
+                        </Hyperlink>
+                    </TextBlock>
+                </StackPanel>
                 <Button Name="BtnCheckUpdate" Click="BtnCheckUpdate_Click" Width="55" Height="25" FontSize="13" Margin="0,2,0,0" Foreground="{DynamicResource FontForeground}" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
-                   检查更新
+                    检查更新
                 </Button>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1" Background="{DynamicResource AboutBackground}">
             <Border BorderBrush="{DynamicResource FontForeground}" BorderThickness="0,1,0,0"/>
-                <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
+            <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
                 <TextBlock Foreground="{DynamicResource FontForeground}" FontSize="15" Margin="0,15,0,0">作者：九零</TextBlock>
-                <TextBlock Margin="10,9,8,0">           
-                    <Hyperlink NavigateUri="https://jiuling.me" RequestNavigate="GoWebsite_RequestNavigate" >
-                        <Image ToolTip="博客" Width="24" Source="{StaticResource ImgHomePage}"></Image>
-                    </Hyperlink>
-                </TextBlock>
-                <TextBlock Margin="0,9,0,0">           
+                <TextBlock Margin="10,9,0,0">           
                     <Hyperlink NavigateUri="https://github.com/JiuLing-zhang" RequestNavigate="GoWebsite_RequestNavigate">
                         <Image ToolTip="Github" Width="24" Source="{StaticResource ImgGitHub}"></Image>
                     </Hyperlink>
@@ -74,7 +87,7 @@
                         <Image ToolTip="源码" Width="24" Source="{StaticResource ImgSourceCode}"></Image>
                     </Hyperlink>
                 </TextBlock>
-                <Button Name="BtnClose" Click="BtnClose_Click"   FontSize="20" Margin="165,12,0,0" Foreground="{DynamicResource FontForeground}" Style="{StaticResource ChangeButtonIsMouseOver}">
+                <Button Name="BtnClose" Click="BtnClose_Click"   FontSize="20" Margin="200,12,0,0" Foreground="{DynamicResource FontForeground}" Style="{StaticResource ChangeButtonIsMouseOver}">
                     关闭
                 </Button>
             </StackPanel>

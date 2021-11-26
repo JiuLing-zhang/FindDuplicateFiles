@@ -29,4 +29,5 @@
     <BitmapImage x:Key="ImgHomePage" UriSource="/Images/Themes/Green/home_page.png" />
     <BitmapImage x:Key="ImgGitHub" UriSource="/Images/Themes/Green/github.png" />
     <BitmapImage x:Key="ImgSourceCode" UriSource="/Images/Themes/Green/c_sharp_logo.png" />
+    <BitmapImage x:Key="ImgDownload" UriSource="/Images/Themes/Green/download.png" />
 </ResourceDictionary>

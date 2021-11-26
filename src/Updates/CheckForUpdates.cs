@@ -36,7 +36,7 @@ namespace FindDuplicateFiles.Updates
             Version newVersion = new Version(appInfo.data.versionName);
             Version currentVersion = new Version(GlobalArgs.AppVersion);
 
-            var result = JiuLing.CommonLibs.VersionUtils.CheckNeedUpdate(newVersion, currentVersion);
+            var result = JiuLing.CommonLibs.VersionUtils.CheckNeedUpdate(currentVersion, newVersion);
 
             if (result == false)
             {

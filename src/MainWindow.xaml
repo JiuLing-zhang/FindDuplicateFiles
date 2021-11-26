@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FindDuplicateFiles"
         mc:Ignorable="d"
-        Title="重复文件查找" Height="650" Width="1000" WindowStartupLocation="CenterScreen" Icon="/Images/icon.png"
+        Title="重复文件查找" 
+        Height="650" Width="1000"
+        WindowStartupLocation="CenterScreen" Icon="/Images/icon.png"
         MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <WindowChrome.WindowChrome>
         <WindowChrome UseAeroCaptionButtons="False"  />

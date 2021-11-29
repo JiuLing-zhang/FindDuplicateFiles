@@ -190,9 +190,9 @@
                                     </Button>
 
                                     <!-- loading模块 -->
-                                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0" Visibility="{Binding IsShowLoading, Mode=OneWay, Converter={StaticResource BoolToVisConverter}}">
-                                        <Image Name="ImgLoading" Width="20" Height="20" Source="{StaticResource ImgLoader}" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5"></Image>
-                                        <TextBlock Foreground="{DynamicResource FontForeground}" VerticalAlignment="Center" Text="{Binding JobMessage,Mode=OneWay}"></TextBlock>
+                                    <StackPanel Visibility="{Binding IsShowLoading, Mode=OneWay, Converter={StaticResource BoolToVisConverter}}" Style="{StaticResource LoadingStackPanel}">
+                                        <Image Name="ImgLoading" Source="{StaticResource ImgLoader}" Style="{StaticResource Loading}"></Image>
+                                        <TextBlock Text="{Binding JobMessage,Mode=OneWay}" Style="{DynamicResource LoadingTextBlock}"></TextBlock>
                                     </StackPanel>
                                 </StackPanel>
                                 <!-- 重复文件列表 -->

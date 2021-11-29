@@ -139,10 +139,29 @@
     </Style>
 
     <Style x:Key="MenuImage" TargetType="Image">
-        <Setter Property="Margin" Value="1,0,1,0"></Setter> 
+        <Setter Property="Margin" Value="1,0,1,0"></Setter>
     </Style>
 
     <Style x:Key="GridMain" TargetType="Grid">
         <Setter Property="Margin" Value="10,5,10,10"></Setter>
     </Style>
+
+    <Style x:Key="LoadingStackPanel" TargetType="StackPanel">
+        <Setter Property="Orientation" Value="Horizontal"></Setter>
+        <Setter Property="Margin" Value="10,0,0,0"></Setter>
+    </Style>
+
+    <Style x:Key="Loading" TargetType="Image">
+        <Setter Property="Width" Value="20"></Setter>
+        <Setter Property="Height" Value="20"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5"></Setter>
+    </Style>
+
+    <Style x:Key="LoadingTextBlock" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource FontForeground}"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+    </Style>
+    
 </ResourceDictionary>

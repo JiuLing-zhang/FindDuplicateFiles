@@ -28,7 +28,7 @@
         </Grid.RowDefinitions>
 
         <!-- 标题栏 -->
-        <Grid Grid.Row="0" Margin="0,10,0,0">
+        <Grid Grid.Row="0" Style="{DynamicResource GridTitle}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
@@ -39,43 +39,43 @@
                 <!-- 标题 -->
                 <Grid Grid.Column="0">
                     <StackPanel Orientation="Horizontal">
-                        <Image Width="22" Margin="10,0,1,0" Source="{StaticResource ImgTitle}"></Image>
-                        <TextBlock Foreground="{DynamicResource Title}" VerticalAlignment="Center">重复文件查找</TextBlock>
+                        <Image Style="{DynamicResource ImageTitle}"></Image>
+                        <TextBlock Style="{DynamicResource TextBlockTitle}"></TextBlock>
                     </StackPanel>
                 </Grid>
                 <!-- 主题 -->
-                <Grid Grid.Column="1" Margin="0,0,10,0">
+                <Grid Grid.Column="1" Style="{DynamicResource GridTheme}">
                     <Border CornerRadius="10"  Background="{DynamicResource ThemeBlockBackground}">
-                        <StackPanel Orientation="Horizontal" Margin="10,0,0,0" WindowChrome.IsHitTestVisibleInChrome="True">
-                            <TextBlock Foreground="{DynamicResource Title}" VerticalAlignment="Center">换肤</TextBlock>
-                            <Button Click="ChangeTheme_Click" Tag="Dark" Width="24" Height="24" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
-                                <Image Source="/Images/ThemeDark.png" Margin="1,0,1,0"></Image>
+                        <StackPanel Style="{DynamicResource StackPanelTheme}">
+                            <TextBlock Style="{DynamicResource TitleTheme}"></TextBlock>
+                            <Button Click="ChangeTheme_Click" Style="{StaticResource ChangeThemeDark}">
+                                <Image Source="/Images/ThemeDark.png" Style="{StaticResource ChangeThemeImage}"></Image>
                             </Button>
-                            <Button Click="ChangeTheme_Click" Tag="Green" Width="24" Height="24" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
-                                <Image Source="/Images/ThemeGreen.png" Margin="1,0,1,0"></Image>
+                            <Button Click="ChangeTheme_Click" Style="{StaticResource ChangeThemeGreen}">
+                                <Image Source="/Images/ThemeGreen.png" Style="{StaticResource ChangeThemeImage}"></Image>
                             </Button>
                         </StackPanel>
                     </Border>
                 </Grid>
                 <!-- 关于 -->
                 <Grid Grid.Column="2">
-                    <StackPanel Orientation="Horizontal"  WindowChrome.IsHitTestVisibleInChrome="True">
-                        <Button Name="BtnAbout" Click="BtnAbout_Click" Width="24" Height="24" Background="Transparent" ToolTip="关于" Style="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
+                    <StackPanel Style="{StaticResource WindowChromeTheme}">
+                        <Button Name="BtnAbout" Click="BtnAbout_Click" Style="{StaticResource AboutButton}">
                             <Image ToolTip="关于" Source="{StaticResource ImgAbout}"></Image>
                         </Button>
                     </StackPanel>
                 </Grid>
                 <!-- 最小化、最大化、关闭 -->
                 <Grid Grid.Column="3">
-                    <StackPanel Orientation="Horizontal" WindowChrome.IsHitTestVisibleInChrome="True">
-                        <Button Name="BtnMinimize" Click="BtnMinimize_Click" Width="24" Height="24" Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
-                            <Image Source="{StaticResource ImgMin}" Margin="1,0,1,0"></Image>
+                    <StackPanel Style="{StaticResource WindowChromeTheme}">
+                        <Button Name="BtnMinimize" Click="BtnMinimize_Click" Style="{StaticResource MenuButton}">
+                            <Image Source="{StaticResource ImgMin}" Style="{StaticResource MenuImage}"></Image>
                         </Button>
-                        <Button Name="BtnMaximize" Click="BtnMaximize_Click" Width="24" Height="24"  Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
-                            <Image Name="ImgMaximize" Source="{StaticResource ImgMaximize}" Margin="1,0,1,0"></Image>
+                        <Button Name="BtnMaximize" Click="BtnMaximize_Click" Style="{StaticResource MenuButton}">
+                            <Image Name="ImgMaximize" Source="{StaticResource ImgMaximize}" Style="{StaticResource MenuImage}"></Image>
                         </Button>
-                        <Button Name="BtnClose" Click="BtnClose_Click" Width="24" Height="24"  Background="Transparent" Style="{StaticResource ChangeButtonIsMouseOver}">
-                            <Image Source="{StaticResource ImgClose}" Margin="1,0,1,0"></Image>
+                        <Button Name="BtnClose" Click="BtnClose_Click" Style="{StaticResource MenuButton}">
+                            <Image Source="{StaticResource ImgClose}" Style="{StaticResource MenuImage}"></Image>
                         </Button>
                     </StackPanel>
                 </Grid>
@@ -83,7 +83,7 @@
         </Grid>
 
         <!-- 主窗口 -->
-        <Grid Grid.Row="1" Margin="10,5,10,10">
+        <Grid Grid.Row="1" Style="{DynamicResource GridMain}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="250" />

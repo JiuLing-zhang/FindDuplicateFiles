@@ -81,4 +81,68 @@
     </CollectionViewSource>
     <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
 
+    <Style x:Key="GridTitle" TargetType="Grid">
+        <Setter Property="Margin" Value="0,10,0,0"></Setter>
+    </Style>
+    <Style x:Key="ImageTitle" TargetType="Image">
+        <Setter Property="Margin" Value="10,0,1,0"></Setter>
+        <Setter Property="Width" Value="22"></Setter>
+        <Setter Property="Source" Value="{StaticResource ImgTitle}"></Setter>
+    </Style>
+    <Style x:Key="TextBlockTitle" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource Title}"></Setter>
+        <Setter Property="Text" Value="重复文件查找"></Setter>
+    </Style>
+    <Style x:Key="ChangeThemeButton" TargetType="Button" BasedOn="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
+        <Setter Property="Width" Value="24"></Setter>
+        <Setter Property="Height" Value="24"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
+    </Style>
+    <Style x:Key="ChangeThemeDark" TargetType="Button" BasedOn="{StaticResource ChangeThemeButton}">
+        <Setter Property="Tag" Value="Dark"></Setter>
+    </Style>
+    <Style x:Key="ChangeThemeGreen" TargetType="Button" BasedOn="{StaticResource ChangeThemeButton}">
+        <Setter Property="Tag" Value="Green"></Setter>
+    </Style>
+    <Style x:Key="ChangeThemeImage" TargetType="Image">
+        <Setter Property="Margin" Value="1,0,1,0"></Setter>
+    </Style>
+
+    <Style x:Key="GridTheme" TargetType="Grid">
+        <Setter Property="Margin" Value="0,0,10,0"></Setter>
+    </Style>
+
+    <Style x:Key="WindowChromeTheme" TargetType="StackPanel">
+        <Setter Property="Orientation" Value="Horizontal"></Setter>
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"></Setter>
+    </Style>
+
+    <Style x:Key="StackPanelTheme" TargetType="StackPanel" BasedOn="{StaticResource WindowChromeTheme}">
+        <Setter Property="Margin" Value="10,0,0,0"></Setter>
+    </Style>
+
+    <Style x:Key="TitleTheme" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource Title}"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Setter Property="Text" Value="换肤"></Setter>
+    </Style>
+
+    <Style x:Key="MenuButton" TargetType="Button" BasedOn="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
+        <Setter Property="Width" Value="24"></Setter>
+        <Setter Property="Height" Value="24"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
+    </Style>
+
+    <Style x:Key="AboutButton" TargetType="Button" BasedOn="{StaticResource MenuButton}">
+        <Setter Property="ToolTip" Value="关于"></Setter>
+    </Style>
+
+    <Style x:Key="MenuImage" TargetType="Image">
+        <Setter Property="Margin" Value="1,0,1,0"></Setter> 
+    </Style>
+
+    <Style x:Key="GridMain" TargetType="Grid">
+        <Setter Property="Margin" Value="10,5,10,10"></Setter>
+    </Style>
 </ResourceDictionary>

@@ -1,221 +1,235 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
-	<UseWindowsForms>true</UseWindowsForms>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
-    <Win32Resource />
-    <Authors>九零</Authors>
-    <Product>重复文件查找</Product>
-    <Version>1.5.0</Version>
-    <AssemblyName>重复文件查找</AssemblyName>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ApplicationIcon>icon.ico</ApplicationIcon>
+		<Win32Resource />
+		<Authors>九零</Authors>
+		<Product>重复文件查找</Product>
+		<Version>1.5.0</Version>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="config.json" />
-    <None Remove="Images\about.png" />
-    <None Remove="Images\available_updates.png" />
-    <None Remove="Images\close.png" />
-    <None Remove="Images\c_sharp_logo.png" />
-    <None Remove="Images\delete.png" />
-    <None Remove="Images\delete_bin.png" />
-    <None Remove="Images\github.png" />
-    <None Remove="Images\home_page.png" />
-    <None Remove="Images\horizontal_line.png" />
-    <None Remove="Images\icon.ico" />
-    <None Remove="Images\icon.png" />
-    <None Remove="Images\loader.png" />
-    <None Remove="Images\maximize.png" />
-    <None Remove="Images\multiple_choice.png" />
-    <None Remove="Images\package_search.png" />
-    <None Remove="Images\reset.png" />
-    <None Remove="Images\restore.png" />
-    <None Remove="Images\search.png" />
-    <None Remove="Images\stop.png" />
-    <None Remove="Images\ThemeDark.png" />
-    <None Remove="Images\ThemeGreen.png" />
-    <None Remove="Images\Themes\Dark\about.png" />
-    <None Remove="Images\Themes\Dark\available_updates.png" />
-    <None Remove="Images\Themes\Dark\close.png" />
-    <None Remove="Images\Themes\Dark\c_sharp_logo.png" />
-    <None Remove="Images\Themes\Dark\delete.png" />
-    <None Remove="Images\Themes\Dark\delete_bin.png" />
-    <None Remove="Images\Themes\Dark\download.png" />
-    <None Remove="Images\Themes\Dark\github.png" />
-    <None Remove="Images\Themes\Dark\home_page.png" />
-    <None Remove="Images\Themes\Dark\horizontal_line.png" />
-    <None Remove="Images\Themes\Dark\loader.png" />
-    <None Remove="Images\Themes\Dark\maximize.png" />
-    <None Remove="Images\Themes\Dark\multiple_choice.png" />
-    <None Remove="Images\Themes\Dark\package_search.png" />
-    <None Remove="Images\Themes\Dark\reset.png" />
-    <None Remove="Images\Themes\Dark\restore.png" />
-    <None Remove="Images\Themes\Dark\search.png" />
-    <None Remove="Images\Themes\Dark\stop.png" />
-    <None Remove="Images\Themes\Green\about.png" />
-    <None Remove="Images\Themes\Green\available_updates.png" />
-    <None Remove="Images\Themes\Green\close.png" />
-    <None Remove="Images\Themes\Green\c_sharp_logo.png" />
-    <None Remove="Images\Themes\Green\delete.png" />
-    <None Remove="Images\Themes\Green\delete_bin.png" />
-    <None Remove="Images\Themes\Green\download.png" />
-    <None Remove="Images\Themes\Green\github.png" />
-    <None Remove="Images\Themes\Green\home_page.png" />
-    <None Remove="Images\Themes\Green\horizontal_line.png" />
-    <None Remove="Images\Themes\Green\loader.png" />
-    <None Remove="Images\Themes\Green\maximize.png" />
-    <None Remove="Images\Themes\Green\multiple_choice.png" />
-    <None Remove="Images\Themes\Green\package_search.png" />
-    <None Remove="Images\Themes\Green\reset.png" />
-    <None Remove="Images\Themes\Green\restore.png" />
-    <None Remove="Images\Themes\Green\search.png" />
-    <None Remove="Images\Themes\Green\stop.png" />
-    <None Remove="Updates\Update" />
-    <None Remove="首次运行请看这里！！！.txt" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="config.json" />
+		<None Remove="Images\about.png" />
+		<None Remove="Images\available_updates.png" />
+		<None Remove="Images\close.png" />
+		<None Remove="Images\c_sharp_logo.png" />
+		<None Remove="Images\delete.png" />
+		<None Remove="Images\delete_bin.png" />
+		<None Remove="Images\github.png" />
+		<None Remove="Images\home_page.png" />
+		<None Remove="Images\horizontal_line.png" />
+		<None Remove="Images\icon.ico" />
+		<None Remove="Images\icon.png" />
+		<None Remove="Images\loader.png" />
+		<None Remove="Images\maximize.png" />
+		<None Remove="Images\multiple_choice.png" />
+		<None Remove="Images\package_search.png" />
+		<None Remove="Images\reset.png" />
+		<None Remove="Images\restore.png" />
+		<None Remove="Images\search.png" />
+		<None Remove="Images\stop.png" />
+		<None Remove="Images\ThemeDark.png" />
+		<None Remove="Images\ThemeGreen.png" />
+		<None Remove="Images\Themes\Dark\about.png" />
+		<None Remove="Images\Themes\Dark\available_updates.png" />
+		<None Remove="Images\Themes\Dark\close.png" />
+		<None Remove="Images\Themes\Dark\c_sharp_logo.png" />
+		<None Remove="Images\Themes\Dark\delete.png" />
+		<None Remove="Images\Themes\Dark\delete_bin.png" />
+		<None Remove="Images\Themes\Dark\download.png" />
+		<None Remove="Images\Themes\Dark\github.png" />
+		<None Remove="Images\Themes\Dark\home_page.png" />
+		<None Remove="Images\Themes\Dark\horizontal_line.png" />
+		<None Remove="Images\Themes\Dark\loader.png" />
+		<None Remove="Images\Themes\Dark\maximize.png" />
+		<None Remove="Images\Themes\Dark\multiple_choice.png" />
+		<None Remove="Images\Themes\Dark\package_search.png" />
+		<None Remove="Images\Themes\Dark\reset.png" />
+		<None Remove="Images\Themes\Dark\restore.png" />
+		<None Remove="Images\Themes\Dark\search.png" />
+		<None Remove="Images\Themes\Dark\stop.png" />
+		<None Remove="Images\Themes\Green\about.png" />
+		<None Remove="Images\Themes\Green\available_updates.png" />
+		<None Remove="Images\Themes\Green\close.png" />
+		<None Remove="Images\Themes\Green\c_sharp_logo.png" />
+		<None Remove="Images\Themes\Green\delete.png" />
+		<None Remove="Images\Themes\Green\delete_bin.png" />
+		<None Remove="Images\Themes\Green\download.png" />
+		<None Remove="Images\Themes\Green\github.png" />
+		<None Remove="Images\Themes\Green\home_page.png" />
+		<None Remove="Images\Themes\Green\horizontal_line.png" />
+		<None Remove="Images\Themes\Green\loader.png" />
+		<None Remove="Images\Themes\Green\maximize.png" />
+		<None Remove="Images\Themes\Green\multiple_choice.png" />
+		<None Remove="Images\Themes\Green\package_search.png" />
+		<None Remove="Images\Themes\Green\reset.png" />
+		<None Remove="Images\Themes\Green\restore.png" />
+		<None Remove="Images\Themes\Green\search.png" />
+		<None Remove="Images\Themes\Green\stop.png" />
+		<None Remove="Updates\Update" />
+		<None Remove="首次运行请看这里！！！.txt" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="config.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="config.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="Images\icon.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\icon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\ThemeDark.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\ThemeGreen.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\about.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\available_updates.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\close.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\c_sharp_logo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\delete.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\delete_bin.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\download.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\github.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\home_page.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\horizontal_line.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\loader.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\maximize.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\multiple_choice.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\package_search.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\reset.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\restore.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\search.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Dark\stop.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\about.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\available_updates.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\close.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\c_sharp_logo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\delete.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\delete_bin.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\download.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\github.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\home_page.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\horizontal_line.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\loader.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\maximize.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\multiple_choice.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\package_search.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\reset.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\restore.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\search.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Themes\Green\stop.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Updates\Update">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="Images\icon.ico">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\icon.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\ThemeDark.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\ThemeGreen.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\about.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\available_updates.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\close.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\c_sharp_logo.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\delete.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\delete_bin.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\download.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\github.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\home_page.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\horizontal_line.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\loader.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\maximize.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\multiple_choice.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\package_search.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\reset.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\restore.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\search.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\stop.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\about.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\available_updates.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\close.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\c_sharp_logo.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\delete.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\delete_bin.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\download.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\github.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\home_page.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\horizontal_line.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\loader.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\maximize.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\multiple_choice.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\package_search.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\reset.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\restore.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\search.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\stop.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Updates\Update">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="首次运行请看这里！！！.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="首次运行请看这里！！！.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="JiuLing.CommonLibs" Version="1.1.12" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="JiuLing.CommonLibs" Version="1.1.12" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Resource.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resource.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resource.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
 
 </Project>

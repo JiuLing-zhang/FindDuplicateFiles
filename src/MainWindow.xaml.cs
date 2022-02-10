@@ -45,13 +45,21 @@ namespace FindDuplicateFiles
 
         private void LoadingAppConfig()
         {
-            string configPath = $"{GlobalArgs.AppPath}{GlobalArgs.AppConfigPath}";
-            string configString = File.ReadAllText(configPath);
-            GlobalArgs.AppConfig = System.Text.Json.JsonSerializer.Deserialize<AppConfigInfo>(configString);
+            if (!File.Exists(GlobalArgs.AppConfigPath))
+            {
+                GlobalArgs.AppConfig = new AppConfigInfo();
+            }
+            else
+            {
+                string json = File.ReadAllText(GlobalArgs.AppConfigPath);
+                GlobalArgs.AppConfig = System.Text.Json.JsonSerializer.Deserialize<AppConfigInfo>(json);
+            }
+            //TODO 这里可以为配置文件加入版本号，有更新时才覆盖保存
+            SaveAppConfig();
 
-            string updateConfigPath = $"{GlobalArgs.AppPath}{GlobalArgs.UpdateConfigPath}";
-            string updateConfigString = File.ReadAllText(updateConfigPath);
-            GlobalArgs.UpdateConfig = System.Text.Json.JsonSerializer.Deserialize<UpdateConfigInfo>(updateConfigString);
+            // string updateConfigPath = $"{GlobalArgs.AppPath}{GlobalArgs.UpdateConfigPath}";
+            //  string updateConfigString = File.ReadAllText(updateConfigPath);
+            // GlobalArgs.UpdateConfig = System.Text.Json.JsonSerializer.Deserialize<UpdateConfigInfo>(updateConfigString);
         }
 
         private void InitializeSearchCondition()
@@ -81,7 +89,7 @@ namespace FindDuplicateFiles
             ListViewDuplicateFile.ItemsSource = _myModel.DuplicateFiles;
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewDuplicateFile.ItemsSource);
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Key");
+            var groupDescription = new PropertyGroupDescription("Key");
             view.GroupDescriptions?.Add(groupDescription);
 
             RdoOnlyImageFile.ToolTip = $"包括：{GlobalArgs.AppConfig.ImageExtension}文件";
@@ -102,14 +110,14 @@ namespace FindDuplicateFiles
         }
         private void InitializeLoadingBlock()
         {
-            DoubleAnimation da = new DoubleAnimation
+            var da = new DoubleAnimation()
             {
                 From = 0,
                 To = 360,
                 Duration = new Duration(TimeSpan.FromSeconds(3)),
                 RepeatBehavior = RepeatBehavior.Forever
             };
-            RotateTransform rt = new RotateTransform();
+            var rt = new RotateTransform();
             ImgLoading.RenderTransform = rt;
             rt.BeginAnimation(RotateTransform.AngleProperty, da);
         }
@@ -209,15 +217,15 @@ namespace FindDuplicateFiles
             SearchMatchEnum searchMatch = 0;
             if (ChkFileName.IsChecked == true)
             {
-                searchMatch = searchMatch | SearchMatchEnum.Name;
+                searchMatch |= SearchMatchEnum.Name;
             }
             if (ChkFileSize.IsChecked == true)
             {
-                searchMatch = searchMatch | SearchMatchEnum.Size;
+                searchMatch |= SearchMatchEnum.Size;
             }
             if (ChkFileLastWriteTimeUtc.IsChecked == true)
             {
-                searchMatch = searchMatch | SearchMatchEnum.LastWriteTime;
+                searchMatch |= SearchMatchEnum.LastWriteTime;
             }
             if (searchMatch == 0)
             {
@@ -229,31 +237,31 @@ namespace FindDuplicateFiles
             SearchOptionEnum searchOption = 0;
             if (ChkIgnoreEmptyFile.IsChecked == true)
             {
-                searchOption = searchOption | SearchOptionEnum.IgnoreEmptyFile;
+                searchOption |= SearchOptionEnum.IgnoreEmptyFile;
             }
             if (ChkIgnoreHiddenFile.IsChecked == true)
             {
-                searchOption = searchOption | SearchOptionEnum.IgnoreHiddenFile;
+                searchOption |= SearchOptionEnum.IgnoreHiddenFile;
             }
             if (ChkIgnoreSystemFile.IsChecked == true)
             {
-                searchOption = searchOption | SearchOptionEnum.IgnoreSystemFile;
+                searchOption |= SearchOptionEnum.IgnoreSystemFile;
             }
             if (ChkIgnoreSmallFile.IsChecked == true)
             {
-                searchOption = searchOption | SearchOptionEnum.IgnoreSmallFile;
+                searchOption |= SearchOptionEnum.IgnoreSmallFile;
             }
             if (RdoOnlyImageFile.IsChecked == true)
             {
-                searchOption = searchOption | SearchOptionEnum.OnlyImageFile;
+                searchOption |= SearchOptionEnum.OnlyImageFile;
             }
             if (RdoOnlyMediaFile.IsChecked == true)
             {
-                searchOption = searchOption | SearchOptionEnum.OnlyMediaFile;
+                searchOption |= SearchOptionEnum.OnlyMediaFile;
             }
             if (RdoOnlyDocumentFile.IsChecked == true)
             {
-                searchOption = searchOption | SearchOptionEnum.OnlyDocumentFile;
+                searchOption |= SearchOptionEnum.OnlyDocumentFile;
             }
 
             SetBeginSearchStyle();
@@ -322,9 +330,8 @@ namespace FindDuplicateFiles
 
             string theme = tag.ToString();
             GlobalArgs.AppConfig.Theme = theme;
-            string appConfigString = System.Text.Json.JsonSerializer.Serialize(GlobalArgs.AppConfig);
-            string configPath = $"{GlobalArgs.AppPath}{GlobalArgs.AppConfigPath}";
-            File.WriteAllText(configPath, appConfigString);
+
+            SaveAppConfig();
 
             LoadingTheme(theme);
         }
@@ -379,7 +386,7 @@ namespace FindDuplicateFiles
         private void ListViewDuplicateFile_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var lv = sender as ListView;
-            if (!(lv?.SelectedItem is DuplicateFileModel selectFile))
+            if (lv?.SelectedItem is not DuplicateFileModel selectFile)
             {
                 return;
             }
@@ -490,8 +497,8 @@ namespace FindDuplicateFiles
                 MessageBox.Show("选择失败，系统内部错误", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            DuplicateFileModel checkedFile = chk.DataContext as DuplicateFileModel;
-            if (checkedFile == null)
+
+            if (chk.DataContext is not DuplicateFileModel checkedFile)
             {
                 MessageBox.Show("选择失败，系统内部错误", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -503,6 +510,17 @@ namespace FindDuplicateFiles
                 chk.IsChecked = false;
                 return;
             }
+        }
+
+        private void SaveAppConfig()
+        {
+            var directory = Path.GetDirectoryName(GlobalArgs.AppConfigPath) ?? throw new ArgumentException("配置文件路径异常");
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+            string appConfigString = System.Text.Json.JsonSerializer.Serialize(GlobalArgs.AppConfig);
+            File.WriteAllText(GlobalArgs.AppConfigPath, appConfigString);
         }
     }
 }

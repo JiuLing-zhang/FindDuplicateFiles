@@ -36,14 +36,6 @@
                 <Image Width="48" Height="48" Source="/Images/icon.png"></Image>
                 <TextBlock Style="{DynamicResource AppName}">重复文件查找</TextBlock>
                 <TextBlock Style="{DynamicResource VersionName}" Text="{Binding Version,Mode=OneWay}"></TextBlock>
-                <StackPanel Style="{DynamicResource UpdateDetailBlock}">
-                    <TextBlock Style="{DynamicResource UpdateInfo}" Text="{Binding UpdateMessage,Mode=OneWay}"></TextBlock>
-                    <TextBlock Style="{DynamicResource ShowDownload}">           
-                        <Hyperlink NavigateUri="{Binding DownloadUrl}" RequestNavigate="GoWebsite_RequestNavigate">
-                            <Image ToolTip="下载" Width="16" Source="{StaticResource ImgDownload}"></Image>
-                        </Hyperlink>
-                    </TextBlock>
-                </StackPanel>
                 <Button Click="BtnCheckUpdate_Click" Style="{DynamicResource CheckUpdate}">
                     检查更新
                 </Button>

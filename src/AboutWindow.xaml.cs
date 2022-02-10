@@ -35,29 +35,12 @@ namespace FindDuplicateFiles
 
         private void BtnCheckUpdate_Click(object sender, RoutedEventArgs e)
         {
-            _myModel.UpdateMessage = "正在查找更新....";
-            Task.Run(() =>
-            {
-                try
-                {
-                    var (isNewVersion, version, link) = new CheckForUpdates().Check();
-                    if (isNewVersion == false)
-                    {
-                        _myModel.UpdateMessage = "当前版本已经是最新版本！";
-                        return;
-                    }
-                    _myModel.UpdateMessage = $"发现新版本：{version}";
-                    _myModel.DownloadUrl = link;
-                }
-                catch (Exception ex)
-                {
-                    _myModel.UpdateMessage = $"检查更新失败，{ex.Message}";
-                }
-            });
+            var app = JiuLing.AutoUpgrade.Shell.AutoUpgradeFactory.Create();
+            app.UseHttpMode(Resource.AutoUpgradePath).Run();
         }
-        private void OpenUrl(string url)
+        private static void OpenUrl(string url)
         {
-            using Process compiler = new Process();
+            using var compiler = new Process();
             compiler.StartInfo.FileName = url;
             compiler.StartInfo.UseShellExecute = true;
             compiler.Start();

@@ -5,16 +5,6 @@
         <Setter Property="TextBlock.TextDecorations" Value="{x:Null}"></Setter>
     </Style>
 
-    <Style x:Key="ShowDownload" TargetType="TextBlock">
-        <Setter Property="Margin" Value="10,0,0,0"></Setter>
-        <Setter Property="Visibility" Value="Visible"></Setter>
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding DownloadUrl}" Value="https://github.com/JiuLing-zhang">
-                <Setter Property="Visibility" Value="Collapsed"></Setter>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-
     <Style x:Key="ChangeButtonIsMouseOver" TargetType="Button">
         <Setter Property="Template">
             <Setter.Value>
@@ -69,7 +59,7 @@
         <Setter Property="Width" Value="55"></Setter>
         <Setter Property="Height" Value="25"></Setter>
         <Setter Property="FontSize" Value="13"></Setter>
-        <Setter Property="Margin" Value="0,2,0,0"></Setter>
+        <Setter Property="Margin" Value="0,40,0,0"></Setter>
         <Setter Property="Foreground" Value="{DynamicResource FontForeground}"></Setter>
         <Setter Property="Background" Value="Transparent"></Setter>
     </Style>

@@ -2,20 +2,6 @@
 {
     public class AboutWindowViewModel : ViewModelBase
     {
-        private string _updateMessage;
-        /// <summary>
-        /// 更新消息
-        /// </summary>
-        public string UpdateMessage
-        {
-            get => _updateMessage;
-            set
-            {
-                _updateMessage = value;
-                OnPropertyChanged();
-            }
-        }
-
         private string _downloadUrl;
         /// <summary>
         /// 下载地址

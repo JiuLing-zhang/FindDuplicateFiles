@@ -61,11 +61,11 @@ namespace FindDuplicateFiles {
         }
         
         /// <summary>
-        ///   查找类似 这里填写自动更新检查地址 的本地化字符串。
+        ///   查找类似 http://162.14.66.2:9090/api/app/find-duplicate-files/windows 的本地化字符串。
         /// </summary>
-        internal static string UpdatePath {
+        internal static string AutoUpgradePath {
             get {
-                return ResourceManager.GetString("UpdatePath", resourceCulture);
+                return ResourceManager.GetString("AutoUpgradePath", resourceCulture);
             }
         }
     }

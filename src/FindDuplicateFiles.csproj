@@ -13,7 +13,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Remove="config.json" />
 		<None Remove="Images\about.png" />
 		<None Remove="Images\available_updates.png" />
 		<None Remove="Images\close.png" />
@@ -71,16 +70,8 @@
 		<None Remove="Images\Themes\Green\restore.png" />
 		<None Remove="Images\Themes\Green\search.png" />
 		<None Remove="Images\Themes\Green\stop.png" />
-		<None Remove="Updates\Update" />
 		<None Remove="首次运行请看这里！！！.txt" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<Content Include="config.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-
 	<ItemGroup>
 		<Content Include="Images\icon.ico">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -200,9 +191,6 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Images\Themes\Green\stop.png">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Updates\Update">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>

@@ -76,4 +76,3 @@ ModelManifest.xml
 #Backup file  
 *.bak
 .vs
-/src/Updates/Update

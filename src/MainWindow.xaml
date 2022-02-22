@@ -93,7 +93,7 @@
                 <!-- 左侧功能面板 -->
                 <Grid Grid.Column="0" >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="100"></RowDefinition>
+                        <RowDefinition Height="120"></RowDefinition>
                         <RowDefinition Height="200"></RowDefinition>
                         <RowDefinition Height="240"></RowDefinition>
                         <RowDefinition Height="50"></RowDefinition>
@@ -106,7 +106,8 @@
                                 <TextBlock FontWeight="Bold" Foreground="{DynamicResource FontForeground}" VerticalAlignment="Center">匹配方式</TextBlock>
                                 <CheckBox Name="ChkFileName" Foreground="{DynamicResource FontForeground}" Margin="0,2,0,5">文件名</CheckBox>
                                 <CheckBox Name="ChkFileSize" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">文件大小</CheckBox>
-                                <CheckBox Name="ChkFileLastWriteTimeUtc" Foreground="{DynamicResource FontForeground}">文件修改时间</CheckBox>
+                                <CheckBox Name="ChkFileLastWriteTimeUtc" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">文件修改时间</CheckBox>
+                                <CheckBox Name="ChkMD5" Foreground="{DynamicResource FontForeground}">MD5（速度慢，准确性高）</CheckBox>
                             </StackPanel>
                         </Border>
                     </Grid>

@@ -100,7 +100,13 @@ namespace FindDuplicateFiles.SearchFile
                     fileKey = $"{fileKey}${fileInfo.LastWriteTime:yyyy-MM-dd HH:mm:ss}";
                 }
 
-                var newFile = new List<SimpleFileInfo> {fileInfo};
+                if ((_searchMatch & SearchMatchEnum.MD5) == SearchMatchEnum.MD5)
+                {
+                    string md5 = JiuLing.CommonLibs.Security.MD5Utils.GetFileValueToLower(fileInfo.Path);
+                    fileKey = $"{fileKey}${md5}";
+                }
+
+                var newFile = new List<SimpleFileInfo> { fileInfo };
                 var resultFile = _duplicateFiles.AddOrUpdate(fileKey, newFile, (x, oldValue) =>
                 {
                     oldValue.Add(fileInfo);

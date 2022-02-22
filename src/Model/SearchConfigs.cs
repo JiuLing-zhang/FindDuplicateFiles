@@ -18,7 +18,8 @@ namespace FindDuplicateFiles.Model
     {
         Name = 1,
         Size = 2,
-        LastWriteTime = 4
+        LastWriteTime = 4,
+        MD5 = 8,
     }
     /// <summary>
     /// 查找选项

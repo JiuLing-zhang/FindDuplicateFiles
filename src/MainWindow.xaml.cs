@@ -65,9 +65,10 @@ namespace FindDuplicateFiles
         private void InitializeSearchCondition()
         {
             //匹配方式
-            ChkFileName.IsChecked = true;
-            ChkFileSize.IsChecked = true;
-            ChkFileLastWriteTimeUtc.IsChecked = true;
+            ChkFileName.IsChecked = false;
+            ChkFileSize.IsChecked = false;
+            ChkFileLastWriteTimeUtc.IsChecked = false;
+            ChkMD5.IsChecked = true;
 
             //选项
             ChkIgnoreEmptyFile.IsChecked = true;
@@ -226,6 +227,10 @@ namespace FindDuplicateFiles
             if (ChkFileLastWriteTimeUtc.IsChecked == true)
             {
                 searchMatch |= SearchMatchEnum.LastWriteTime;
+            }
+            if (ChkMD5.IsChecked == true)
+            {
+                searchMatch |= SearchMatchEnum.MD5;
             }
             if (searchMatch == 0)
             {

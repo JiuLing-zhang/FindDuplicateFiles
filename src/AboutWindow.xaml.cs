@@ -34,6 +34,10 @@ namespace FindDuplicateFiles
         private void BtnCheckUpdate_Click(object sender, RoutedEventArgs e)
         {
             var app = JiuLing.AutoUpgrade.Shell.AutoUpgradeFactory.Create();
+            app.SetUpgrade(x =>
+            {
+                x.IsCheckSign = true;
+            });
             app.UseHttpMode(Resource.AutoUpgradePath).Run();
         }
         private static void OpenUrl(string url)

@@ -132,7 +132,15 @@
                         <Border BorderBrush="{DynamicResource BlockBorder}" BorderThickness="1">
                             <StackPanel Margin="5">
                                 <TextBlock FontWeight="Bold" Foreground="{DynamicResource FontForeground}" VerticalAlignment="Center">查找路径</TextBlock>
-                                <ListBox Name="ListBoxSearchFolders" ItemsSource="{Binding}" Height="160" Background="Transparent" BorderBrush="{DynamicResource BlockBorder}" Margin="0,5,0,0">
+                                <ListBox Name="ListBoxSearchFolders" 
+                                         ItemsSource="{Binding}" 
+                                         Height="160" 
+                                         Background="Transparent" 
+                                         BorderBrush="{DynamicResource BlockBorder}" 
+                                         Margin="0,5,0,0"
+                                         AllowDrop="True"
+                                         Drop="ListBoxSearchFolders_Drop"
+                                         >
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -144,7 +152,7 @@
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
-                                <Button Margin="0,7,0,0" Name="BtnAddSearchFolder" Click="BtnAddSearchFolder_Click" Width="500" Height="30" Style="{StaticResource ChangeButtonIsMouseOver}" Background="{DynamicResource BlockBorder}" Foreground="{DynamicResource FontForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" >添加</Button>
+                                <Button Margin="0,7,0,0" Name="BtnAddSearchFolder" Click="BtnAddSearchFolder_Click" Width="230" Height="30" Style="{StaticResource ChangeButtonIsMouseOver}" Background="{DynamicResource BlockBorder}" Foreground="{DynamicResource FontForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" >添加</Button>
                             </StackPanel>
                         </Border>
                     </Grid>

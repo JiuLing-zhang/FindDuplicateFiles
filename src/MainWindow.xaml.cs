@@ -172,6 +172,11 @@ namespace FindDuplicateFiles
                 return;
             }
 
+            AddSearchFolderOnly(path);
+        }
+
+        private void AddSearchFolderOnly(string path)
+        {
             if (_myModel.SearchFolders.Contains(path))
             {
                 return;
@@ -526,6 +531,24 @@ namespace FindDuplicateFiles
             }
             string appConfigString = System.Text.Json.JsonSerializer.Serialize(GlobalArgs.AppConfig);
             File.WriteAllText(GlobalArgs.AppConfigPath, appConfigString);
+        }
+
+        private void ListBoxSearchFolders_Drop(object sender, DragEventArgs e)
+        {
+            var directories = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (directories == null)
+            {
+                return;
+            }
+
+            foreach (var directory in directories)
+            {
+                if (!Directory.Exists(directory))
+                {
+                    continue;
+                }
+                AddSearchFolderOnly(directory);
+            }
         }
     }
 }

@@ -202,7 +202,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="JiuLing.AutoUpgrade" Version="1.2.3" />
+		<PackageReference Include="JiuLing.AutoUpgrade" Version="1.2.4" />
 		<PackageReference Include="JiuLing.CommonLibs" Version="1.2.3" />
 	</ItemGroup>
 

@@ -139,15 +139,15 @@
                                          BorderBrush="{DynamicResource BlockBorder}" 
                                          Margin="0,5,0,0"
                                          AllowDrop="True"
-                                         Drop="ListBoxSearchFolders_Drop"
+                                         Drop="ListBoxSearchFolders_Drop" 
                                          >
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                <Button Name="BtnRemoveSearchFolder" Click="BtnRemoveSearchFolder_Click" Tag="{Binding }" ToolTip="删除" Width="14" Height="14" Background="Transparent" Margin="-3,0,3,0" Style="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
+                                                <Button Name="BtnRemoveSearchFolder" Click="BtnRemoveSearchFolder_Click" Tag="{Binding DirectoryName}" ToolTip="删除" Width="14" Height="14" Background="Transparent" Margin="-3,0,3,0" Style="{StaticResource ChangeButtonIsMouseOverNoOpacity}">
                                                     <Image Source="{StaticResource ImgDelete}"></Image>
                                                 </Button>
-                                                <TextBlock Foreground="{DynamicResource FontForeground}" VerticalAlignment="Center" Text="{Binding }"></TextBlock>
+                                                <TextBlock Foreground="{DynamicResource FontForeground}" VerticalAlignment="Center" Text="{Binding DirectoryName }"></TextBlock>
                                             </StackPanel>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
@@ -186,26 +186,48 @@
                     </Grid.ColumnDefinitions>
 
                     <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="2">
-
                         <Border BorderBrush="{DynamicResource BlockBorder}" BorderThickness="1">
-                            <DockPanel>
+                            <Grid x:Name="grid1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                    <RowDefinition Height="0"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                </Grid.RowDefinitions>
                                 <!-- 重复文件列表功能区 -->
-                                <StackPanel Height="25" DockPanel.Dock="Top" Orientation="Horizontal" Margin="2,5,0,5">
-                                    <Button Name="BtnChooseFile" Click="BtnChooseFile_Click" ToolTip="批量选中重复文件" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent">
+                                <StackPanel Grid.Row="0" Height="25" Orientation="Horizontal" Margin="2,5,0,5">
+                                    <Button Name="BtnChooseFile" Click="BtnChooseFile_Click" ToolTip="一键选中重复文件" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent">
                                         <Image Name="ImgMultipleChoice" Width="20" Height="20" Source="{StaticResource ImgMultipleChoice}"></Image>
                                     </Button>
-                                    <Button Name="BtnDeleteFile" Click="BtnDeleteFile_Click" ToolTip="删除选中文件" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent">
+                                    <Button Name="BtnFilter" Click="BtnFilter_Click" ToolTip="自定义选择重复文件" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent">
+                                        <Image Name="ImgFilter" Width="20" Height="20" Source="{StaticResource ImgMultipleChoice}"></Image>
+                                    </Button>
+                                    <Button Name="BtnDeleteFile" Click="BtnDeleteFile_Click" ToolTip="删除选中文件" Margin="10,0,0,0" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent">
                                         <Image Name="ImgDeleteBin" Width="20" Height="20" Source="{StaticResource ImgDeleteBin}"></Image>
                                     </Button>
-
                                     <!-- loading模块 -->
                                     <StackPanel Visibility="{Binding IsShowLoading, Mode=OneWay, Converter={StaticResource BoolToVisConverter}}" Style="{StaticResource LoadingStackPanel}">
                                         <Image Name="ImgLoading" Source="{StaticResource ImgLoader}" Style="{StaticResource Loading}"></Image>
                                         <TextBlock Text="{Binding JobMessage,Mode=OneWay}" Style="{DynamicResource LoadingTextBlock}"></TextBlock>
                                     </StackPanel>
                                 </StackPanel>
+
+                                <!-- 筛选条件 -->
+                                <StackPanel Grid.Row="1">
+                                    <TextBlock Foreground="{DynamicResource FontForeground}" VerticalAlignment="Center">从下方选择要删除的文件所在路径</TextBlock>
+                                    <ListBox x:Name="ListBoxDirectoryFilter" ItemsSource="{Binding }" Background="Transparent" >
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel  Orientation="Horizontal">
+                                                    <RadioButton GroupName="RadioButtonFilter" IsChecked="{Binding IsSelected, Mode=TwoWay}" Checked="RadioButtonFilter_Checked" />
+                                                    <TextBlock Text="{Binding DirectoryName}" Margin="3,0,0,0" Foreground="{DynamicResource FontForeground}"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
                                 <!-- 重复文件列表 -->
                                 <ListView 
+                                    Grid.Row="2"
                                     Name="ListViewDuplicateFile" 
                                     SelectionChanged="ListViewDuplicateFile_SelectionChanged"
                                     VirtualizingPanel.IsVirtualizing="True"
@@ -271,7 +293,8 @@
                                         </GroupStyle>
                                     </ListView.GroupStyle>
                                 </ListView>
-                            </DockPanel>
+
+                            </Grid>
                         </Border>
                     </Grid>
                     <Grid Name="GridImage" Grid.Column="1" Grid.Row="1" Background="{DynamicResource Title}" Visibility="Hidden" Margin="0,0,18,18">

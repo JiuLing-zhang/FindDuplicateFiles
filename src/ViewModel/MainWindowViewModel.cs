@@ -6,23 +6,24 @@ namespace FindDuplicateFiles.ViewModel
     {
         public MainWindowViewModel()
         {
-            SearchFolders = new ObservableCollection<string>();
+            SearchDirectory = new ObservableCollection<SearchDirectoryModel>();
             DuplicateFiles = new ObservableCollection<DuplicateFileModel>();
         }
 
-        private ObservableCollection<string> _searchFolders;
+        private ObservableCollection<SearchDirectoryModel> _searchDirectory;
         /// <summary>
-        /// 已选取的要搜索的文件夹
+        /// 要搜索的文件夹集合
         /// </summary>
-        public ObservableCollection<string> SearchFolders
+        public ObservableCollection<SearchDirectoryModel> SearchDirectory
         {
-            get => _searchFolders;
+            get => _searchDirectory;
             set
             {
-                _searchFolders = value;
+                _searchDirectory = value;
                 OnPropertyChanged();
             }
         }
+
 
         private ObservableCollection<DuplicateFileModel> _duplicateFiles;
         /// <summary>

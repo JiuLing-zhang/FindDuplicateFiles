@@ -77,7 +77,7 @@ namespace FindDuplicateFiles
             ChkIgnoreSmallFile.IsChecked = false;
             RdoAllFile.IsChecked = true;
 
-            _myModel.SearchFolders.Clear();
+            _myModel.SearchDirectory.Clear();
         }
 
 
@@ -86,7 +86,8 @@ namespace FindDuplicateFiles
         /// </summary>
         private void BindingItemsSource()
         {
-            ListBoxSearchFolders.ItemsSource = _myModel.SearchFolders;
+            ListBoxSearchFolders.ItemsSource = _myModel.SearchDirectory;
+            ListBoxDirectoryFilter.ItemsSource = _myModel.SearchDirectory;
             ListViewDuplicateFile.ItemsSource = _myModel.DuplicateFiles;
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewDuplicateFile.ItemsSource);
@@ -177,11 +178,14 @@ namespace FindDuplicateFiles
 
         private void AddSearchFolderOnly(string path)
         {
-            if (_myModel.SearchFolders.Contains(path))
+            if (_myModel.SearchDirectory.Any(x => x.DirectoryName == path))
             {
                 return;
             }
-            _myModel.SearchFolders.Add(path);
+            _myModel.SearchDirectory.Add(new SearchDirectoryModel()
+            {
+                DirectoryName = path
+            });
         }
 
         private void BtnRemoveSearchFolder_Click(object sender, RoutedEventArgs e)
@@ -192,7 +196,9 @@ namespace FindDuplicateFiles
                 return;
             }
 
-            _myModel.SearchFolders.Remove(tag.ToString());
+            string path = tag.ToString();
+            var obj = _myModel.SearchDirectory.First(x => x.DirectoryName == path);
+            _myModel.SearchDirectory.Remove(obj);
         }
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
@@ -213,7 +219,7 @@ namespace FindDuplicateFiles
 
         private void BeginSearch()
         {
-            if (_myModel.SearchFolders.Count == 0)
+            if (_myModel.SearchDirectory.Count == 0)
             {
                 MessageBox.Show("请选择要查找的文件夹", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Stop);
                 return;
@@ -278,7 +284,7 @@ namespace FindDuplicateFiles
             _myModel.DuplicateFiles.Clear();
             var config = new SearchConfigs()
             {
-                Folders = new List<string>(_myModel.SearchFolders.ToList()),
+                Folders = new List<string>(_myModel.SearchDirectory.Select(x => x.DirectoryName).ToList()),
                 SearchMatch = searchMatch,
                 SearchOption = searchOption
             };
@@ -358,6 +364,7 @@ namespace FindDuplicateFiles
 
                 ImgSearch.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/Themes/{GlobalArgs.AppConfig.Theme}/search.png"));
                 ImgReset.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/Themes/{GlobalArgs.AppConfig.Theme}/reset.png"));
+                ImgFilter.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/Themes/{GlobalArgs.AppConfig.Theme}/filter.png"));
                 ImgMultipleChoice.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/Themes/{GlobalArgs.AppConfig.Theme}/multiple_choice.png"));
                 ImgDeleteBin.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/Themes/{GlobalArgs.AppConfig.Theme}/delete_bin.png"));
                 ImgLoading.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/Themes/{GlobalArgs.AppConfig.Theme}/loader.png"));
@@ -470,21 +477,37 @@ namespace FindDuplicateFiles
                     return;
                 }
 
-                if (MessageBox.Show($"确认要删除选中文件吗？文件删除后不可恢复！", "重复文件查找", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                var selectCount = _myModel.DuplicateFiles.Count(x => x.IsCheckedFile);
+                if (MessageBox.Show($"确认要删除选中文件吗？文件删除后不可恢复！{System.Environment.NewLine}待删除的文件总数：{selectCount}", "重复文件查找", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
                 {
                     return;
                 }
 
-                foreach (var file in _myModel.DuplicateFiles)
+                //删除文件
+                for (int i = _myModel.DuplicateFiles.Count - 1; i >= 0; i--)
                 {
-                    if (file.IsCheckedFile == false)
+                    if (_myModel.DuplicateFiles[i].IsCheckedFile == false)
                     {
                         continue;
                     }
-                    System.IO.File.Delete(file.Path);
+                    System.IO.File.Delete(_myModel.DuplicateFiles[i].Path);
+                    _myModel.DuplicateFiles.RemoveAt(i);
                 }
 
-                _myModel.DuplicateFiles.Clear();
+                //文件删除后，清除不再重复的文件
+                var singleKeys = _myModel.DuplicateFiles
+                    .GroupBy(x => x.Key).Select(x => new { Key = x.Key, Count = x.Count() })
+                    .Where(x => x.Count < 2)
+                    .Select(x => x.Key)
+                    .ToList();
+                for (int i = _myModel.DuplicateFiles.Count - 1; i >= 0; i--)
+                {
+                    if (!singleKeys.Contains(_myModel.DuplicateFiles[i].Key))
+                    {
+                        continue;
+                    }
+                    _myModel.DuplicateFiles.RemoveAt(i);
+                }
                 MessageBox.Show("删除完成", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
@@ -548,6 +571,50 @@ namespace FindDuplicateFiles
                     continue;
                 }
                 AddSearchFolderOnly(directory);
+            }
+        }
+
+        private void BtnFilter_Click(object sender, RoutedEventArgs e)
+        {
+            if (grid1.RowDefinitions[1].Height.GridUnitType == GridUnitType.Pixel)
+            {
+                grid1.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Auto);
+            }
+            else
+            {
+                grid1.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Pixel);
+            }
+        }
+
+        private void RadioButtonFilter_Checked(object sender, RoutedEventArgs e)
+        {
+            var directory = _myModel.SearchDirectory.FirstOrDefault(x => x.IsSelected)?.DirectoryName;
+            if (directory.IsEmpty())
+            {
+                MessageBox.Show("出错了：获取目录失败！", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            //清除上次选中的遗留状态
+            foreach (var duplicateFile in _myModel.DuplicateFiles)
+            {
+                duplicateFile.IsCheckedFile = false;
+            }
+
+            //查找所选文件夹下所有重复文件的 key
+            var filterFilesKeys = _myModel.DuplicateFiles.Where(x => x.Path.IndexOf(directory) == 0).Select(x => x.Key).ToList();
+            foreach (var duplicateFile in _myModel.DuplicateFiles)
+            {
+                if (duplicateFile.Path.IndexOf(directory) != 0)
+                {
+                    continue;
+                }
+
+                if (!filterFilesKeys.Contains(duplicateFile.Key))
+                {
+                    continue;
+                }
+                duplicateFile.IsCheckedFile = true;
             }
         }
     }

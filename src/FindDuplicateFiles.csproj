@@ -9,7 +9,7 @@
 		<Win32Resource />
 		<Authors>九零</Authors>
 		<Product>重复文件查找</Product>
-		<Version>1.7.1</Version>
+		<Version>1.7.2</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -41,6 +41,7 @@
 		<None Remove="Images\Themes\Dark\delete.png" />
 		<None Remove="Images\Themes\Dark\delete_bin.png" />
 		<None Remove="Images\Themes\Dark\download.png" />
+		<None Remove="Images\Themes\Dark\filter.png" />
 		<None Remove="Images\Themes\Dark\github.png" />
 		<None Remove="Images\Themes\Dark\home_page.png" />
 		<None Remove="Images\Themes\Dark\horizontal_line.png" />
@@ -59,6 +60,7 @@
 		<None Remove="Images\Themes\Green\delete.png" />
 		<None Remove="Images\Themes\Green\delete_bin.png" />
 		<None Remove="Images\Themes\Green\download.png" />
+		<None Remove="Images\Themes\Green\filter.png" />
 		<None Remove="Images\Themes\Green\github.png" />
 		<None Remove="Images\Themes\Green\home_page.png" />
 		<None Remove="Images\Themes\Green\horizontal_line.png" />
@@ -105,6 +107,9 @@
 		</Content>
 		<Content Include="Images\Themes\Dark\download.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Dark\filter.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Images\Themes\Dark\github.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -159,6 +164,9 @@
 		</Content>
 		<Content Include="Images\Themes\Green\download.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Images\Themes\Green\filter.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Images\Themes\Green\github.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

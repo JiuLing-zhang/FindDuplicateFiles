@@ -69,6 +69,10 @@ namespace FindDuplicateFiles.SearchFile
                     return;
                 }
 
+                if (!Directory.Exists(folderPath))
+                {
+                    return;
+                }
                 Directory.GetDirectories(folderPath).ToList().ForEach(path =>
                 {
                     //继续遍历文件夹内容

@@ -125,7 +125,7 @@
     <Style x:Key="TitleTheme" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{DynamicResource Title}"></Setter>
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
-        <Setter Property="Text" Value="换肤"></Setter>
+        <Setter Property="Text" Value="主题"></Setter>
     </Style>
 
     <Style x:Key="MenuButton" TargetType="Button" BasedOn="{StaticResource ChangeButtonIsMouseOverNoOpacity}">

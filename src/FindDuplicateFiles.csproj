@@ -9,7 +9,7 @@
 		<Win32Resource />
 		<Authors>九零</Authors>
 		<Product>重复文件查找</Product>
-		<Version>1.7.2</Version>
+		<Version>1.7.3</Version>
 	</PropertyGroup>
 
 	<ItemGroup>

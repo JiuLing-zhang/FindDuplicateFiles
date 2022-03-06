@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:FindDuplicateFiles"
         mc:Ignorable="d"
         Title="重复文件查找" 
-        Height="650" Width="1000"
+        Height="700" 
+        Width="1000"
+        MinHeight="700"
+        MinWidth="1000"
         WindowStartupLocation="CenterScreen" Icon="/Images/icon.png"
         MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <WindowChrome.WindowChrome>
@@ -94,7 +97,7 @@
                 <Grid Grid.Column="0" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="120"></RowDefinition>
-                        <RowDefinition Height="200"></RowDefinition>
+                        <RowDefinition Height="240"></RowDefinition>
                         <RowDefinition Height="240"></RowDefinition>
                         <RowDefinition Height="50"></RowDefinition>
                     </Grid.RowDefinitions>
@@ -124,6 +127,8 @@
                                 <RadioButton Name="RdoOnlyImageFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">仅查找图片文件</RadioButton>
                                 <RadioButton Name="RdoOnlyMediaFile" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">仅查找媒体文件</RadioButton>
                                 <RadioButton Name="RdoOnlyDocumentFile" Foreground="{DynamicResource FontForeground}">仅查找文档文件</RadioButton>
+                                <CheckBox Name="ChkPreviewImage" Foreground="{DynamicResource FontForeground}" Margin="0,10,0,5" ToolTip="点击图片文件时对文件进行预览">启用图片文件预览</CheckBox>
+                                <CheckBox Name="ChkDeleteEmptyDirectory" Foreground="{DynamicResource FontForeground}" Margin="0,2,0,5" ToolTip="如果删除文件后文件夹为空，则删除文件夹">删除时移除空目录</CheckBox>
                             </StackPanel>
                         </Border>
                     </Grid>
@@ -131,7 +136,7 @@
                     <Grid Grid.Row="2" Background="{DynamicResource GridBackground}" Margin="0,0,7,7">
                         <Border BorderBrush="{DynamicResource BlockBorder}" BorderThickness="1">
                             <StackPanel Margin="5">
-                                <TextBlock FontWeight="Bold" Foreground="{DynamicResource FontForeground}" VerticalAlignment="Center">查找路径</TextBlock>
+                                <TextBlock FontWeight="Bold" Foreground="{DynamicResource FontForeground}" VerticalAlignment="Center">查找路径（这里也支持拖拽哦~~）</TextBlock>
                                 <ListBox Name="ListBoxSearchFolders" 
                                          ItemsSource="{Binding}" 
                                          Height="160" 

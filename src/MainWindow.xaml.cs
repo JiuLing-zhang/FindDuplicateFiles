@@ -76,6 +76,8 @@ namespace FindDuplicateFiles
             ChkIgnoreSystemFile.IsChecked = true;
             ChkIgnoreSmallFile.IsChecked = false;
             RdoAllFile.IsChecked = true;
+            ChkPreviewImage.IsChecked = false;
+            ChkDeleteEmptyDirectory.IsChecked = false;
 
             _myModel.SearchDirectory.Clear();
         }
@@ -182,6 +184,13 @@ namespace FindDuplicateFiles
             {
                 return;
             }
+
+            if (_myModel.SearchDirectory.Any(x => x.DirectoryName.IndexOf(path) == 0 || path.IndexOf(x.DirectoryName) == 0))
+            {
+                MessageBox.Show("添加失败：查找路径不能相互包含", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             _myModel.SearchDirectory.Add(new SearchDirectoryModel()
             {
                 DirectoryName = path
@@ -402,6 +411,11 @@ namespace FindDuplicateFiles
 
         private void ListViewDuplicateFile_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (ChkPreviewImage.IsChecked == false)
+            {
+                return;
+            }
+
             var lv = sender as ListView;
             if (lv?.SelectedItem is not DuplicateFileModel selectFile)
             {
@@ -490,7 +504,18 @@ namespace FindDuplicateFiles
                     {
                         continue;
                     }
-                    System.IO.File.Delete(_myModel.DuplicateFiles[i].Path);
+
+                    string fileFullName = _myModel.DuplicateFiles[i].Path;
+                    string directory = Path.GetDirectoryName(fileFullName);
+                    if (File.Exists(fileFullName))
+                    {
+                        File.Delete(fileFullName);
+                    }
+                    if (ChkDeleteEmptyDirectory.IsChecked == true && Directory.GetDirectories(directory).Length == 0 && Directory.GetFiles(directory).Length == 0)
+                    {
+                        Directory.Delete(directory);
+                    }
+
                     _myModel.DuplicateFiles.RemoveAt(i);
                 }
 

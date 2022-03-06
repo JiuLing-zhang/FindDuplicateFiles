@@ -10,10 +10,25 @@
 
 </div>
 
-## FindDuplicateFiles（重复文件查找工具）
-一个`.NET 6 WPF`写的 **重复文件查找工具**，解放你的硬盘空间，红盘用户的福音。  
+![main.png](https://s2.loli.net/2022/03/06/jEdDteQGzLZ3m1l.png)
 
-![FindDuplicateFiles.png](https://i.loli.net/2021/07/24/XiqF6fy8xlrpzwc.png)  
+## 使用说明  
+* 选项 - 启用图片文件预览  
+启用时，在搜索结果中点击图片文件，右下角会出现图片预览结果。  
 
-## :three: License
+* 选项 - 删除时移除空目录  
+删除文件的时候，如果文件夹中只剩余当前文件，删除的时候会顺便删除文件夹。  
+
+* 结果区域 - 一键选中重复文件  
+自动选中所有重复文件（每个文件只保留一份）。  
+
+* 结果区域 - 自定义选择重复文件  
+弹出筛选窗口，用户可以根据查找路径选择本次要删除的目标文件夹。
+
+* 其它  
+其它选项都比较通俗易懂，还请同学自行摸索。  
+
+![detail.png](https://s2.loli.net/2022/03/06/Oj1hEw3vC7KWZTN.png)  
+
+## License  
 MIT License

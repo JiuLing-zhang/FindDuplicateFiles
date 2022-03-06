@@ -1,5 +1,5 @@
 <p align="center">
-<a href="#" target="_blank"><img src="https://s2.loli.net/2022/03/05/fyQLjMeCwJpHo2k.png" ></a>
+<a href="https://github.com/JiuLing-zhang/FindDuplicateFiles" target="_blank"><img src="https://s2.loli.net/2022/03/06/3DONSquF6CVTYX5.png" ></a>
 </p>
 <h1 align="center">解放你的硬盘空间，红盘用户的福音</h1>
 <div align="center">

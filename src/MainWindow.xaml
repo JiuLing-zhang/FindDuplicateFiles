@@ -161,21 +161,56 @@
                             </StackPanel>
                         </Border>
                     </Grid>
-                    <Grid Grid.Row="3" Margin="0,0,7,7">
-                        <StackPanel Orientation="Horizontal">
-                            <Button Name="BtnSearch" Click="BtnSearch_Click" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent" Foreground="{DynamicResource FontForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="95,0,0,0">
-                                <WrapPanel Width="80" Height="30" >
-                                    <Image Name="ImgSearch" Width="24" Height="24" Source="{StaticResource ImgSearch}" Margin="10,5,0,0"></Image>
-                                    <TextBlock Name="TxtSearch" Width="46" VerticalAlignment="Center" Text="查找"/>
+                    <Grid Grid.Row="3"
+                          Margin="0,0,7,7">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <Button
+                                Grid.Column="0"
+                                Name="BtnReset" 
+                                Click="BtnReset_Click" 
+                                Style="{StaticResource ChangeButtonIsMouseOver}" 
+                                Background="Transparent" 
+                                Foreground="{DynamicResource FontForeground}" 
+                                FontWeight="Bold"
+                                FontSize="15">
+                                <WrapPanel>
+                                    <Image
+                                        Name="ImgReset" 
+                                        Width="24" 
+                                        Height="24" 
+                                        Source="{StaticResource ImgReset}" />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Text="恢复默认配置"/>
                                 </WrapPanel>
                             </Button>
-                            <Button Name="BtnReset" Click="BtnReset_Click" Style="{StaticResource ChangeButtonIsMouseOver}" Background="Transparent" Foreground="{DynamicResource FontForeground}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" Margin="0,0,10,0">
-                                <WrapPanel Width="80" Height="30" >
-                                    <Image Name="ImgReset" Width="24" Height="24" Source="{StaticResource ImgReset}" Margin="10,5,0,0"></Image>
-                                    <TextBlock Width="46" VerticalAlignment="Center" Text="重置"/>
+                            <Button 
+                                Grid.Column="2"
+                                Name="BtnSearch" 
+                                Click="BtnSearch_Click" 
+                                Style="{StaticResource ChangeButtonIsMouseOver}" 
+                                Background="Transparent" 
+                                Foreground="{DynamicResource FontForeground}" 
+                                FontWeight="Bold" 
+                                FontSize="15">
+                                <WrapPanel>
+                                    <Image 
+                                        Name="ImgSearch" 
+                                        Width="24" 
+                                        Height="24" 
+                                        Source="{StaticResource ImgSearch}"/>
+                                    <TextBlock 
+                                        Name="TxtSearch"
+                                        VerticalAlignment="Center" 
+                                        Text="查找"/>
                                 </WrapPanel>
                             </Button>
-                        </StackPanel>
+                        </Grid>
                     </Grid>
                 </Grid>
                 <!-- 列表主面板 -->

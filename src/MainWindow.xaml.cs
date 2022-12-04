@@ -71,6 +71,7 @@ namespace FindDuplicateFiles
             ChkMD5.IsChecked = true;
 
             //选项
+            ChkOnlyFileName.IsChecked = false;
             ChkIgnoreEmptyFile.IsChecked = true;
             ChkIgnoreHiddenFile.IsChecked = true;
             ChkIgnoreSystemFile.IsChecked = true;
@@ -260,6 +261,7 @@ namespace FindDuplicateFiles
 
             //选项
             SearchOptionEnum searchOption = 0;
+            var searchOptionData = new SearchOptionData();
             if (ChkIgnoreEmptyFile.IsChecked == true)
             {
                 searchOption |= SearchOptionEnum.IgnoreEmptyFile;
@@ -288,14 +290,30 @@ namespace FindDuplicateFiles
             {
                 searchOption |= SearchOptionEnum.OnlyDocumentFile;
             }
-
+            if (ChkOnlyFileName.IsChecked == true)
+            {
+                var onlyFileNames = TxtOnlyFileNames.Text.Trim();
+                if (onlyFileNames.IsEmpty())
+                {
+                    MessageBox.Show("请输入要查找的文件名", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Stop);
+                    TxtOnlyFileNames.Focus();
+                    return;
+                }
+                searchOptionData.OnlyFileNames = new List<string>();
+                searchOption |= SearchOptionEnum.OnlyFileName;
+                foreach (var onlyFileName in onlyFileNames.Split('|'))
+                {
+                    searchOptionData.OnlyFileNames.Add(onlyFileName.Trim().ToLower());
+                }
+            }
             SetBeginSearchStyle();
             _myModel.DuplicateFiles.Clear();
             var config = new SearchConfigs()
             {
                 Folders = new List<string>(_myModel.SearchDirectory.Select(x => x.DirectoryName).ToList()),
                 SearchMatch = searchMatch,
-                SearchOption = searchOption
+                SearchOption = searchOption,
+                SearchOptionData = searchOptionData
             };
             _searchFilesJob.Start(config);
         }
@@ -641,6 +659,17 @@ namespace FindDuplicateFiles
                 }
                 duplicateFile.IsCheckedFile = true;
             }
+        }
+
+        private void ChkOnlyFileName_Checked(object sender, RoutedEventArgs e)
+        {
+            TxtOnlyFileNames.IsEnabled = true;
+        }
+
+        private void ChkOnlyFileName_Unchecked(object sender, RoutedEventArgs e)
+        {
+            TxtOnlyFileNames.Text = "";
+            TxtOnlyFileNames.IsEnabled = false;
         }
     }
 }

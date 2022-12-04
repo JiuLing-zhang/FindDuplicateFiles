@@ -35,9 +35,11 @@ namespace FindDuplicateFiles.SearchFile
         /// </summary>
         public Action EventSearchFinished;
 
+        private SearchConfigs _searchConfig;
         public async void Start(SearchConfigs config)
         {
             _isStop = false;
+            _searchConfig = config;
             await Task.Run(() =>
             {
                 _checkDuplicateQueue = new CheckDuplicateQueue
@@ -47,12 +49,12 @@ namespace FindDuplicateFiles.SearchFile
                     EventSearchFinished = EventSearchFinished
                 };
 
-                _checkDuplicateQueue.Start(config.SearchMatch);
-                foreach (string folderPath in config.Folders)
+                _checkDuplicateQueue.Start(_searchConfig.SearchMatch);
+                foreach (string folderPath in _searchConfig.Folders)
                 {
                     EachDirectory(folderPath, paths =>
                     {
-                        CalcFilesInfo(paths, config.SearchOption);
+                        CalcFilesInfo(paths);
                     });
                 }
 
@@ -87,49 +89,53 @@ namespace FindDuplicateFiles.SearchFile
             }
         }
 
-        private void CalcFilesInfo(List<string> paths, SearchOptionEnum searchOption)
+        private void CalcFilesInfo(List<string> paths)
         {
             EventMessage?.Invoke($"读取文件：{string.Join(",", paths)}");
             //根据路径加载文件信息
             var files = paths.Select(path => new FileInfo(path)).ToList();
 
             //条件过滤器
-            if ((searchOption & SearchOptionEnum.IgnoreEmptyFile) == SearchOptionEnum.IgnoreEmptyFile)
+            if ((_searchConfig.SearchOption & SearchOptionEnum.IgnoreEmptyFile) == SearchOptionEnum.IgnoreEmptyFile)
             {
                 IFileSearchFilter filter = new IgnoreEmptyFileFilter();
                 files = filter.FilterByCondition(files);
             }
-            if ((searchOption & SearchOptionEnum.IgnoreHiddenFile) == SearchOptionEnum.IgnoreHiddenFile)
+            if ((_searchConfig.SearchOption & SearchOptionEnum.IgnoreHiddenFile) == SearchOptionEnum.IgnoreHiddenFile)
             {
                 IFileSearchFilter filter = new IgnoreHiddenFileFilter();
                 files = filter.FilterByCondition(files);
             }
-            if ((searchOption & SearchOptionEnum.IgnoreSmallFile) == SearchOptionEnum.IgnoreSmallFile)
+            if ((_searchConfig.SearchOption & SearchOptionEnum.IgnoreSmallFile) == SearchOptionEnum.IgnoreSmallFile)
             {
                 IFileSearchFilter filter = new IgnoreSmallFileFilter(1024);
                 files = filter.FilterByCondition(files);
             }
-            if ((searchOption & SearchOptionEnum.IgnoreSystemFile) == SearchOptionEnum.IgnoreSystemFile)
+            if ((_searchConfig.SearchOption & SearchOptionEnum.IgnoreSystemFile) == SearchOptionEnum.IgnoreSystemFile)
             {
                 IFileSearchFilter filter = new IgnoreExtensionFilter(GlobalArgs.AppConfig.SystemExtension.Split(';').ToList());
                 files = filter.FilterByCondition(files);
             }
-            if ((searchOption & SearchOptionEnum.OnlyDocumentFile) == SearchOptionEnum.OnlyDocumentFile)
+            if ((_searchConfig.SearchOption & SearchOptionEnum.OnlyDocumentFile) == SearchOptionEnum.OnlyDocumentFile)
             {
                 IFileSearchFilter filter = new OnlyExtensionFilter(GlobalArgs.AppConfig.DocumentExtension.Split(';').ToList());
                 files = filter.FilterByCondition(files);
             }
-            if ((searchOption & SearchOptionEnum.OnlyImageFile) == SearchOptionEnum.OnlyImageFile)
+            if ((_searchConfig.SearchOption & SearchOptionEnum.OnlyImageFile) == SearchOptionEnum.OnlyImageFile)
             {
                 IFileSearchFilter filter = new OnlyExtensionFilter(GlobalArgs.AppConfig.ImageExtension.Split(';').ToList());
                 files = filter.FilterByCondition(files);
             }
-            if ((searchOption & SearchOptionEnum.OnlyMediaFile) == SearchOptionEnum.OnlyMediaFile)
+            if ((_searchConfig.SearchOption & SearchOptionEnum.OnlyMediaFile) == SearchOptionEnum.OnlyMediaFile)
             {
                 IFileSearchFilter filter = new OnlyExtensionFilter(GlobalArgs.AppConfig.MediaExtension.Split(';').ToList());
                 files = filter.FilterByCondition(files);
             }
-
+            if ((_searchConfig.SearchOption & SearchOptionEnum.OnlyFileName) == SearchOptionEnum.OnlyFileName)
+            {
+                IFileSearchFilter filter = new OnlyFileNameFilter(_searchConfig.SearchOptionData.OnlyFileNames);
+                files = filter.FilterByCondition(files);
+            }
             files.ForEach(file =>
             {
                 //符合条件的文件写入队列

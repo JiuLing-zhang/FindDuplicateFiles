@@ -8,6 +8,7 @@ namespace FindDuplicateFiles.Model
         public List<string> Folders { get; set; }
         public SearchMatchEnum SearchMatch { get; set; }
         public SearchOptionEnum SearchOption { get; set; }
+        public SearchOptionData SearchOptionData { get; set; }
     }
 
     /// <summary>
@@ -34,5 +35,14 @@ namespace FindDuplicateFiles.Model
         OnlyMediaFile = 16,
         OnlyDocumentFile = 32,
         IgnoreSystemFile = 64,
+        OnlyFileName = 128
+    }
+
+    /// <summary>
+    /// 查找选项的数据
+    /// </summary>
+    public class SearchOptionData
+    {
+        public List<string> OnlyFileNames { get; set; }
     }
 }

@@ -110,7 +110,7 @@
                                 <CheckBox Name="ChkFileName" Foreground="{DynamicResource FontForeground}" Margin="0,2,0,5">文件名</CheckBox>
                                 <CheckBox Name="ChkFileSize" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">文件大小</CheckBox>
                                 <CheckBox Name="ChkFileLastWriteTimeUtc" Foreground="{DynamicResource FontForeground}" Margin="0,0,0,5">文件修改时间</CheckBox>
-                                <CheckBox Name="ChkMD5" Foreground="{DynamicResource FontForeground}">MD5（速度慢，准确性高）</CheckBox>
+                                <CheckBox Name="ChkMD5" Click="ChkMD5_Click" Foreground="{DynamicResource FontForeground}">MD5（速度慢，准确性高）</CheckBox>
                             </StackPanel>
                         </Border>
                     </Grid>

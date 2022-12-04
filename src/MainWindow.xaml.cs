@@ -65,10 +65,10 @@ namespace FindDuplicateFiles
         private void InitializeSearchCondition()
         {
             //匹配方式
-            ChkFileName.IsChecked = false;
-            ChkFileSize.IsChecked = false;
-            ChkFileLastWriteTimeUtc.IsChecked = false;
-            ChkMD5.IsChecked = true;
+            ChkFileName.IsChecked = true;
+            ChkFileSize.IsChecked = true;
+            ChkFileLastWriteTimeUtc.IsChecked = true;
+            ChkMD5.IsChecked = false;
 
             //选项
             ChkOnlyFileName.IsChecked = false;
@@ -670,6 +670,12 @@ namespace FindDuplicateFiles
         {
             TxtOnlyFileNames.Text = "";
             TxtOnlyFileNames.IsEnabled = false;
+        }
+
+        private void ChkMD5_Click(object sender, RoutedEventArgs e)
+        {
+            ChkMD5.IsChecked = false;
+            MessageBox.Show("改功能暂不可用", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 }

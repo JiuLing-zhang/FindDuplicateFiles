@@ -1,5 +1,4 @@
-﻿using FindDuplicateFiles.Common;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
@@ -42,9 +41,13 @@ namespace FindDuplicateFiles.SearchFile
         /// 搜索完成
         /// </summary>
         public Action EventSearchFinished;
+
+        /// <summary>
+        /// 正在执行的任务总数
+        /// </summary>
+        private int _searchingCount;
         public async void Start(SearchMatchEnum searchMatch)
         {
-
             _isStop = false;
             _isFinished = false;
             EventMessage?.Invoke("准备查找....");
@@ -57,7 +60,6 @@ namespace FindDuplicateFiles.SearchFile
                     {
                         if (_isFinished)
                         {
-                            EventSearchFinished.Invoke();
                             return;
                         }
                         continue;
@@ -76,6 +78,7 @@ namespace FindDuplicateFiles.SearchFile
         /// <param name="fileInfo"></param>
         private async void SearchDuplicate(SimpleFileInfo fileInfo)
         {
+            Interlocked.Increment(ref _searchingCount);
             await MySemaphoreSlim.WaitAsync();
             try
             {
@@ -83,7 +86,7 @@ namespace FindDuplicateFiles.SearchFile
                 {
                     return;
                 }
-                EventMessage?.Invoke($"重复校验：{fileInfo.Path}");
+                EventMessage?.Invoke($"检查文件：{fileInfo.Path}");
                 string fileKey = "";
                 if ((_searchMatch & SearchMatchEnum.Name) == SearchMatchEnum.Name)
                 {
@@ -107,7 +110,7 @@ namespace FindDuplicateFiles.SearchFile
                 }
 
                 var newFile = new List<SimpleFileInfo> { fileInfo };
-                var resultFile = _duplicateFiles.AddOrUpdate(fileKey, newFile, (x, oldValue) =>
+                var resultFile = _duplicateFiles.AddOrUpdate(fileKey, newFile, (_, oldValue) =>
                 {
                     oldValue.Add(fileInfo);
                     return oldValue;
@@ -127,6 +130,10 @@ namespace FindDuplicateFiles.SearchFile
             finally
             {
                 MySemaphoreSlim.Release();
+                if (Interlocked.Decrement(ref _searchingCount) == 0 && _isFinished)
+                {
+                    EventSearchFinished.Invoke();
+                }
             }
         }
 

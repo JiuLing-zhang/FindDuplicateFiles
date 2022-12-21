@@ -672,10 +672,5 @@ namespace FindDuplicateFiles
             TxtOnlyFileNames.IsEnabled = false;
         }
 
-        private void ChkMD5_Click(object sender, RoutedEventArgs e)
-        {
-            ChkMD5.IsChecked = false;
-            MessageBox.Show("改功能暂不可用", "重复文件查找", MessageBoxButton.OK, MessageBoxImage.Warning);
-        }
     }
 }

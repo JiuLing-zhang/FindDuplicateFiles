@@ -61,7 +61,7 @@ namespace FindDuplicateFiles {
         }
         
         /// <summary>
-        ///   查找类似 http://162.14.66.2:9090/api/app/find-duplicate-files/windows 的本地化字符串。
+        ///   查找类似 http://162.14.66.2:9000/api/app/581671619f5131a82ea6b813329be6f2/windows 的本地化字符串。
         /// </summary>
         internal static string AutoUpgradePath {
             get {

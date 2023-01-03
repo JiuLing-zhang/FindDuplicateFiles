@@ -16,7 +16,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 7.0.x
 
       - name: Restore dependencies
         run: dotnet restore
@@ -31,7 +31,7 @@ jobs:
       - name: Create zip
         shell: pwsh
         # 配置【编译后的文件地址】
-        run: Compress-Archive -Path .\src\bin\Release\net6.0-windows\* -DestinationPath .\src\bin\Release\FindDuplicateFiles_${{ steps.tagName.outputs.tag }}.zip
+        run: Compress-Archive -Path .\src\bin\Release\net7.0-windows\* -DestinationPath .\src\bin\Release\FindDuplicateFiles_${{ steps.tagName.outputs.tag }}.zip
 
       - name: Release
         uses: softprops/action-gh-release@v1

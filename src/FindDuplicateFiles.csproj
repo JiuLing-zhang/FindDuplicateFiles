@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net6.0-windows</TargetFramework>
+		<TargetFramework>net7.0-windows</TargetFramework>
 		<UseWPF>true</UseWPF>
 		<UseWindowsForms>true</UseWindowsForms>
 		<ApplicationIcon>icon.ico</ApplicationIcon>
@@ -210,8 +210,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="JiuLing.AutoUpgrade" Version="1.2.4" />
-		<PackageReference Include="JiuLing.CommonLibs" Version="1.2.3" />
+		<PackageReference Include="JiuLing.AutoUpgrade" Version="1.2.8" />
+		<PackageReference Include="JiuLing.CommonLibs" Version="1.5.2" />
 	</ItemGroup>
 
 	<ItemGroup>

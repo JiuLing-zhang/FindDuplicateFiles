@@ -1,5 +1,5 @@
 <p align="center">
-<a href="https://github.com/JiuLing-zhang/FindDuplicateFiles" target="_blank"><img src="https://s2.loli.net/2022/03/06/3DONSquF6CVTYX5.png" ></a>
+<a href="https://github.com/JiuLing-zhang/FindDuplicateFiles" target="_blank"><img src="https://github.com/JiuLing-zhang/FindDuplicateFiles/raw/main/docs/resources/images/logo.png" ></a>
 </p>
 <h1 align="center">解放你的硬盘空间，红盘用户的福音</h1>
 <div align="center">
@@ -10,7 +10,7 @@
 
 </div>
 
-![main.png](https://s2.loli.net/2022/03/06/jEdDteQGzLZ3m1l.png)
+![demo1.png](https://github.com/JiuLing-zhang/FindDuplicateFiles/raw/main/docs/resources/images/demo1.png)
 
 ## 使用说明  
 * 选项 - 启用图片文件预览  
@@ -28,7 +28,7 @@
 * 其它  
 其它选项都比较通俗易懂，还请同学自行摸索。  
 
-![detail.png](https://s2.loli.net/2022/03/06/Oj1hEw3vC7KWZTN.png)  
+![demo2.png](https://github.com/JiuLing-zhang/FindDuplicateFiles/raw/main/docs/resources/images/demo2.png)  
 
 ## License  
 MIT License

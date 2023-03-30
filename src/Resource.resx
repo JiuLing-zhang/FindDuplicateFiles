@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AutoUpgradePath" xml:space="preserve">
-    <value>http://162.14.66.2:9000/api/app/581671619f5131a82ea6b813329be6f2/windows</value>
+    <value>http://api.jiuling.cc/app/check-update/581671619f5131a82ea6b813329be6f2/windows</value>
   </data>
 </root>
